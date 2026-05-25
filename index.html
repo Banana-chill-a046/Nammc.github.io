@@ -4,19 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>NamMC SMP | Máy chủ Minecraft Sinh tồn Đích thực</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" href="https://images2.imgbox.com/6e/43/AM9bEJVa_o.png">
+    <link rel="shortcut icon" type="image/png" href="https://images2.imgbox.com/6e/43/AM9bEJVa_o.png">
+    
+    <!-- Font mềm mại cho tab, heading nhỏ gọn -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
-            font-family: 'Inter', sans-serif;
+            /* PHÔNG CHỮ CHÍNH: Comic Sans MS (gần gũi, việt hoá tốt) */
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', 'Segoe UI Emoji', cursive, sans-serif;
             background: linear-gradient(145deg, #b8e1fc 0%, #8fc9f0 40%, #6eb0dc 100%);
             color: #1e2f2c;
             line-height: 1.5;
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
+        }
+
+        /* Chữ trong các thẻ tab, button, badge dùng Arial mềm mại hơn */
+        .nav-link, .radmin-badge, .section-title, .feature h3, .rule-item h3, .donate-card h3, .footer, button, .quick-step h3, .hero-tag {
+            font-family: 'Inter', 'Segoe UI', 'Arial', sans-serif;
         }
 
         /* Nền mây di chuyển */
@@ -92,13 +109,22 @@
             width: auto;
             border-radius: 14px;
         }
-        .logo h1 {
+        /* CHỮ NAMMC SMP 7 MÀU CẦU VỒNG */
+        .rainbow-text {
             font-size: 2rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #4a6e2c, #e0a120);
+            background: linear-gradient(90deg, 
+                #ff0000, #ff7700, #ffff00, 
+                #00ff00, #0000ff, #4b0082, #9400d3);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
+            background-size: 200% auto;
+            animation: shimmer 3s linear infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
         }
         .logo p {
             font-size: 0.7rem;
@@ -108,6 +134,7 @@
             display: inline-block;
             padding: 4px 12px;
             border-radius: 30px;
+            font-family: 'Inter', sans-serif;
         }
         .nav-links {
             display: flex;
@@ -173,6 +200,7 @@
             -webkit-background-clip: text;
             color: transparent;
             margin-bottom: 20px;
+            font-family: 'Comic Sans MS', cursive;
         }
         .hero-tag {
             font-size: 1.2rem;
@@ -235,6 +263,7 @@
             cursor: pointer;
             font-weight: 600;
             border: 1px solid #f5bc6e;
+            font-size: 0.9rem;
         }
 
         /* Luật lệ dài chi tiết */
@@ -308,6 +337,7 @@
             .navbar { flex-direction: column; text-align: center; }
             .nav-links { justify-content: center; }
             .section-title { font-size: 1.6rem; }
+            .rainbow-text { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -321,7 +351,7 @@
         <div class="logo">
             <img src="https://images2.imgbox.com/6e/43/AM9bEJVa_o.png" alt="NamMC Logo">
             <div>
-                <h1>NamMC SMP</h1>
+                <h1 class="rainbow-text">NamMC SMP</h1>
                 <p>🌾 Hành Trình Sinh Tồn Đích Thực</p>
             </div>
         </div>
@@ -354,7 +384,7 @@
         </div>
     </div>
 
-    <!-- CÁCH CHƠI - NHANH CHI TIẾT -->
+    <!-- CÁCH CHƠI - 2 MẠNG RADMIN -->
     <div id="page-howtoplay" class="page">
         <div class="mine-card">
             <div class="section-title"><i class="fas fa-plug"></i> 🎮 CÁCH CHƠI - KẾT NỐI NHANH</div>
@@ -369,9 +399,10 @@
                 <div class="quick-step">
                     <i class="fas fa-network-wired"></i>
                     <h3>Bước 2</h3>
-                    <p>Join Network</p>
-                    <div class="radmin-badge">📡 Mạng: <strong>NammcZ1</strong></div>
-                    <div class="radmin-badge" style="margin-top: 5px;">🔑 Mật khẩu: <strong>2113226</strong></div>
+                    <p>Join Network (chọn 1 trong 2 mạng):</p>
+                    <div class="radmin-badge">📡 Mạng 1: <strong>NammcZ1</strong></div>
+                    <div class="radmin-badge" style="margin-top: 5px;">📡 Mạng 2: <strong>NammcZ2</strong></div>
+                    <div class="radmin-badge" style="margin-top: 5px; background:#3d5436;">🔑 Mật khẩu chung: <strong>2113226</strong></div>
                 </div>
                 <div class="quick-step">
                     <i class="fas fa-gamepad"></i>
@@ -385,7 +416,7 @@
                 <h3 style="color: #ffdd99; margin-bottom: 15px;"><i class="fas fa-star-of-life"></i> MẸO NHANH:</h3>
                 <p>✅ <strong>Radmin VPN</strong> phải <span style="color:#ffaa00;">bật và kết nối</span> trước khi mở Minecraft</p>
                 <p>✅ Kiểm tra kết nối bằng lệnh <code style="background:#2c3a2a; padding:3px 8px; border-radius:12px;">ping 10.15.10.5</code> trong CMD</p>
-                <p>✅ Nếu không vào được, thử tắt firewall hoặc thêm exception cho Radmin</p>
+                <p>✅ Nếu mạng NammcZ1 đông, hãy thử chuyển sang NammcZ2 (cùng mật khẩu)</p>
                 <p>✅ Dùng phiên bản Minecraft Java Edition 1.20.x trở lên</p>
             </div>
         </div>
