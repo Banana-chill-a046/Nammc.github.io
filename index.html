@@ -9,8 +9,8 @@
     <link rel="icon" type="image/png" href="https://images2.imgbox.com/6e/43/AM9bEJVa_o.png">
     <link rel="shortcut icon" type="image/png" href="https://images2.imgbox.com/6e/43/AM9bEJVa_o.png">
     
-    <!-- Font mềm mại cho tab -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- PHÔNG CHỮ ARIAL (DỄ NHÌN) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <style>
@@ -21,19 +21,13 @@
         }
 
         body {
-            /* PHÔNG CHỮ CHÍNH: Comic Sans MS */
-            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', 'Segoe UI Emoji', cursive, sans-serif;
+            font-family: 'Inter', 'Arial', sans-serif;
             background: linear-gradient(145deg, #b8e1fc 0%, #8fc9f0 40%, #6eb0dc 100%);
             color: #1e2f2c;
             line-height: 1.5;
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
-        }
-
-        /* Chữ trong thẻ tab, button dùng Arial mềm mại */
-        .nav-link, .radmin-badge, .section-title, .feature h3, .rule-item h3, .donate-card h3, .footer, button, .quick-step h3, .hero-tag {
-            font-family: 'Inter', 'Segoe UI', 'Arial', sans-serif;
         }
 
         /* Nền mây di chuyển */
@@ -109,7 +103,7 @@
             width: auto;
             border-radius: 14px;
         }
-        /* CHỮ NAMMC SMP 7 MÀU CẦU VỒNG */
+        /* CHỮ LOGO 7 MÀU CẦU VỒNG */
         .rainbow-text {
             font-size: 2rem;
             font-weight: 800;
@@ -121,6 +115,7 @@
             color: transparent;
             background-size: 200% auto;
             animation: shimmer 3s linear infinite;
+            font-family: 'Inter', 'Arial', sans-serif;
         }
         @keyframes shimmer {
             0% { background-position: 0% center; }
@@ -148,6 +143,7 @@
             transition: 0.2s;
             border-bottom: 3px solid transparent;
             cursor: pointer;
+            font-family: 'Inter', 'Arial', sans-serif;
         }
         .nav-link.active {
             border-bottom-color: #f5a623;
@@ -185,9 +181,7 @@
             border-left: 8px solid #f5a623;
             padding-left: 24px;
             margin-bottom: 32px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            font-family: 'Inter', 'Arial', sans-serif;
         }
 
         /* Trang chủ */
@@ -199,6 +193,7 @@
             -webkit-background-clip: text;
             color: transparent;
             margin-bottom: 20px;
+            font-family: 'Inter', 'Arial', sans-serif;
         }
         .hero-tag {
             font-size: 1.2rem;
@@ -229,9 +224,9 @@
         }
         .feature:hover { transform: translateY(-10px); background: #fffff2; border-color: #f5a623; }
         .feature i { font-size: 2.8rem; color: #e68a2e; margin-bottom: 16px; }
-        .feature h3 { font-size: 1.6rem; color: #4b6e2a; }
+        .feature h3 { font-size: 1.6rem; color: #4b6e2a; font-family: 'Inter', 'Arial', sans-serif; }
 
-        /* Cách chơi nhanh */
+        /* Cách chơi */
         .quick-steps {
             display: flex;
             flex-wrap: wrap;
@@ -249,7 +244,7 @@
             border: 1px solid #f7cf8c;
         }
         .quick-step i { font-size: 2.5rem; color: #e68a2e; margin-bottom: 12px; }
-        .quick-step h3 { font-size: 1.5rem; color: #bc761f; margin-bottom: 10px; }
+        .quick-step h3 { font-size: 1.5rem; color: #bc761f; margin-bottom: 10px; font-family: 'Inter', 'Arial', sans-serif; }
         .radmin-badge {
             background: #2c3a2a;
             color: #f9e4b3;
@@ -283,6 +278,7 @@
             margin-bottom: 18px;
             border-bottom: 2px dashed #f5bc6e;
             padding-bottom: 8px;
+            font-family: 'Inter', 'Arial', sans-serif;
         }
         .rule-item ul, .rule-item p { margin-left: 20px; color: #2c4824; margin-top: 10px; }
         .rule-item li { margin: 10px 0; line-height: 1.5; }
@@ -308,7 +304,7 @@
         }
         .donate-card:hover { transform: translateY(-8px); background: #fffaf0; }
         .donate-icon { font-size: 3.8rem; margin-bottom: 12px; color: #e68a2e; }
-        .donate-card h3 { font-size: 2rem; margin: 12px 0 8px; font-weight: 800; color: #7e591f; }
+        .donate-card h3 { font-size: 2rem; margin: 12px 0 8px; font-weight: 800; color: #7e591f; font-family: 'Inter', 'Arial', sans-serif; }
         .qr-container {
             background: #fef2e0;
             border-radius: 32px;
@@ -337,6 +333,7 @@
             .section-title { font-size: 1.6rem; }
             .rainbow-text { font-size: 1.5rem; }
         }
+        button, .radmin-badge { cursor: pointer; }
     </style>
 </head>
 <body>
@@ -370,19 +367,19 @@
                     <i class="fas fa-cube"></i> Bạn đang tìm kiếm một thế giới Minecraft SMP đúng nghĩa?
                 </div>
                 <p style="margin-top: 32px; background: rgba(30,35,20,0.7); padding: 18px 28px; border-radius: 64px; color: #ffefcf;">
-                    <i class="fas fa-dragon"></i> Chào mừng bạn đến với NamMC SMP – Máy chủ Minecraft sinh tồn thế hệ mới, nơi biến những khối vuông kỳ diệu thành những kỷ niệm vô giá!
+                    <i class="fas fa-dragon"></i> Chào mừng bạn đến với NamMC SMP – Máy chủ Minecraft sinh tồn thế hệ mới!
                 </p>
             </div>
             <div class="feature-grid">
-                <div class="feature"><i class="fas fa-users"></i><h3>200+</h3><p>Thành viên thân thiện</p></div>
-                <div class="feature"><i class="fas fa-tachometer-alt"></i><h3>24/7</h3><p>Hoạt động liên tục</p></div>
-                <div class="feature"><i class="fas fa-shield-virus"></i><h3>Anti-Cheat</h3><p>Công bằng tuyệt đối</p></div>
-                <div class="feature"><i class="fas fa-leaf"></i><h3>Không Reset</h3><p>Thế giới vĩnh cửu</p></div>
+                <div class="feature"><i class="fas fa-users"></i><h3>200+</h3><p>Thành viên</p></div>
+                <div class="feature"><i class="fas fa-tachometer-alt"></i><h3>24/7</h3><p>Hoạt động</p></div>
+                <div class="feature"><i class="fas fa-shield-virus"></i><h3>Anti-Cheat</h3><p>Công bằng</p></div>
+                <div class="feature"><i class="fas fa-leaf"></i><h3>Không Reset</h3><p>Vĩnh cửu</p></div>
             </div>
         </div>
     </div>
 
-    <!-- CÁCH CHƠI - 2 MẠNG RADMIN + IP MỚI -->
+    <!-- CÁCH CHƠI -->
     <div id="page-howtoplay" class="page">
         <div class="mine-card">
             <div class="section-title"><i class="fas fa-plug"></i> 🎮 CÁCH CHƠI - KẾT NỐI NHANH</div>
@@ -430,9 +427,9 @@
                 <div class="rule-item">
                     <h3><i class="fas fa-comment-dots"></i> 1. HÀNH VI ỨNG XỬ</h3>
                     <ul>
-                        <li>❌ <strong>KHÔNG TOXIC</strong>: Chửi thề, xúc phạm, phân biệt vùng miền, nói tục quá mức → <span class="highlight">Cảnh cáo + Kick</span></li>
-                        <li>❌ <strong>KHÔNG SPAM</strong>: Chat lặp nội dung, quảng cáo server khác, spam ký tự → <span class="highlight">Mute 1-7 ngày</span></li>
-                        <li>❌ <strong>KHÔNG GÂY WAR</strong>: Kéo bè kéo cánh, tạo xung đột không đáng có → <span class="highlight">Ban tạm thời</span></li>
+                        <li>❌ <strong>KHÔNG TOXIC</strong>: Chửi thề, xúc phạm, phân biệt vùng miền → <span class="highlight">Cảnh cáo + Kick</span></li>
+                        <li>❌ <strong>KHÔNG SPAM</strong>: Chat lặp nội dung, quảng cáo server khác → <span class="highlight">Mute 1-7 ngày</span></li>
+                        <li>❌ <strong>KHÔNG GÂY WAR</strong>: Kéo bè kéo cánh, tạo xung đột → <span class="highlight">Ban tạm thời</span></li>
                         <li>✅ <strong>TÔN TRỌNG</strong>: Hãy cư xử văn minh, giúp đỡ người mới</li>
                     </ul>
                 </div>
@@ -440,11 +437,10 @@
                 <div class="rule-item">
                     <h3><i class="fas fa-dice-d6"></i> 2. LỐI CHƠI - GAMEPLAY</h3>
                     <ul>
-                        <li>🚫 <strong>NGHIÊM CẤM HACK</strong>: X-ray, KillAura, Fly, Speed, Clicker, AutoMine → <span class="highlight">BAN VĨNH VIỄN</span></li>
+                        <li>🚫 <strong>NGHIÊM CẤM HACK</strong>: X-ray, KillAura, Fly, Speed → <span class="highlight">BAN VĨNH VIỄN</span></li>
                         <li>🚫 <strong>CẤM GRIEFING</strong>: Phá hoại công trình người khác → <span class="highlight">Ban 30 ngày + đền bù</span></li>
                         <li>🚫 <strong>CẤM TRỘM CẮP</strong>: Lấy đồ khi chưa được phép → <span class="highlight">Ban 14 ngày + trả đồ</span></li>
                         <li>⚠️ <strong>KHÔNG LỢI DỤNG BUG</strong>: Dupe đồ, exploit → <span class="highlight">Ban vĩnh viễn</span></li>
-                        <li>⚠️ <strong>PVP CÓ ĐỒNG Ý</strong>: Kill người chơi khi chưa được đồng ý → <span class="highlight">Cảnh cáo + phạt vàng</span></li>
                     </ul>
                 </div>
 
@@ -452,9 +448,8 @@
                     <h3><i class="fas fa-vpn"></i> 3. RADMIN & HỆ THỐNG</h3>
                     <ul>
                         <li>🔐 <strong>BẢO MẬT</strong>: Không chia sẻ tài khoản Radmin VPN cho người lạ</li>
-                        <li>🖥️ <strong>KHÔNG LAG SERVER</strong>: Không xây máy redstone quá tải, spam entity → <span class="highlight">Cảnh cáo + phá hủy máy</span></li>
+                        <li>🖥️ <strong>KHÔNG LAG SERVER</strong>: Không xây máy redstone quá tải → <span class="highlight">Cảnh cáo + phá hủy máy</span></li>
                         <li>📢 <strong>BÁO LỖI NGAY</strong>: Gặp bug phải báo Admin để xử lý</li>
-                        <li>🔞 <strong>NỘI DUNG 18+</strong>: Cấm chia sẻ nội dung nhạy cảm → <span class="highlight">Ban ngay lập tức</span></li>
                     </ul>
                 </div>
 
@@ -464,7 +459,6 @@
                         <li>🏠 <strong>CLAIM ĐẤT</strong>: Dùng GriefPrevention (cầm vàng → //) để bảo vệ công trình</li>
                         <li>📏 <strong>KHÔNG XÂY SÁT SPAWN</strong>: Cách spawn ít nhất 200 block</li>
                         <li>🧹 <strong>DỌN DẸP</strong>: Công trình bỏ hoang >30 ngày có thể bị dọn</li>
-                        <li>🏷️ <strong>GHI TÊN CÔNG TRÌNH</strong>: Nên để biển tên để tránh nhầm lẫn</li>
                     </ul>
                 </div>
             </div>
@@ -552,7 +546,7 @@
         });
     });
 
-    // Copy IP mới
+    // Copy IP
     document.getElementById('serverIpBox')?.addEventListener('click', () => {
         navigator.clipboard.writeText('26.161.161.70:25565');
         const oldHtml = document.getElementById('serverIpBox').innerHTML;
