@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>NamMC SMP | Minecraft Survival Server</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #1a2a1f;
+            color: #1e2a1c;
+            line-height: 1.5;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* === BACKGROUND VỚI SHADER MINECRAFT & LÀNG MỜ === */
+        .shader-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+        /* Hình nền ngôi làng Minecraft (mờ) */
+        .village-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://i.imgur.com/6Y9Gf3N.jpeg');
+            background-size: cover;
+            background-position: center 30%;
+            background-repeat: no-repeat;
+            filter: blur(3px) brightness(0.75) saturate(1.1);
+            transform: scale(1.02);
+            opacity: 0.85;
+        }
+        /* Lớp gradient shader động như Minecraft */
+        .shader-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(255,235,170,0.15) 0%, rgba(80,140,70,0.25) 100%);
+            pointer-events: none;
+        }
+        /* Hiệu ứng ánh sáng động (shader) */
+        .light-shaft {
+            position: absolute;
+            top: -20%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background: radial-gradient(ellipse at 40% 30%, rgba(255,245,180,0.08) 0%, transparent 70%);
+            animation: lightMove 18s infinite alternate;
+            pointer-events: none;
+        }
+        @keyframes lightMove {
+            0% { transform: translateX(-5%) translateY(-3%) rotate(0deg); opacity: 0.5; }
+            100% { transform: translateX(8%) translateY(5%) rotate(3deg); opacity: 0.9; }
+        }
+        /* Pixel dust (hiệu ứng hạt sáng như minecraft) */
+        .pixel-dust {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(2px 2px at 20px 40px, #fff9c4, rgba(0,0,0,0)),
+                              radial-gradient(1px 1px at 70px 120px, #ffe0a3, rgba(0,0,0,0));
+            background-size: 180px 180px, 130px 130px;
+            background-repeat: repeat;
+            opacity: 0.3;
+            animation: dustFloat 30s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes dustFloat {
+            0% { background-position: 0 0, 0 0; }
+            100% { background-position: 200px 200px, -150px 150px; }
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 32px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Header & Nav - trong suốt nhưng sáng */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 18px 32px;
+            margin: 20px 0 20px;
+            background: rgba(255, 250, 225, 0.75);
+            backdrop-filter: blur(12px);
+            border-radius: 60px;
+            border: 1px solid rgba(245, 200, 100, 0.6);
+            box-shadow: 0 8px 28px rgba(0,0,0,0.1);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo img {
+            height: 55px;
+            width: auto;
+            border-radius: 14px;
+            filter: drop-shadow(0 2px 6px #d4a259);
+        }
+        .logo h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4a6e2c, #e0a120);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .logo p {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #4d5a2e;
+            background: #fff6e0cc;
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 30px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 36px;
+        }
+        .nav-link {
+            color: #2e4a2a;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 8px 0;
+            transition: 0.2s;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+        }
+        .nav-link.active {
+            border-bottom-color: #f5a623;
+            color: #c5711a;
+        }
+        .nav-link:hover {
+            border-bottom-color: #f5a623;
+            color: #d97a1c;
+            transform: translateY(-2px);
+        }
+
+        /* Pages */
+        .page {
+            display: none;
+            animation: fadeUp 0.45s ease;
+        }
+        .page.active-page {
+            display: block;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Card style sáng, trong suốt như kính */
+        .mine-card {
+            background: rgba(255, 250, 235, 0.82);
+            backdrop-filter: blur(14px);
+            border-radius: 48px;
+            padding: 40px 38px;
+            margin: 48px 0;
+            border: 1px solid rgba(245, 190, 80, 0.7);
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #3f6b2f;
+            border-left: 8px solid #f5a623;
+            padding-left: 24px;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Trang chủ */
+        .hero {
+            text-align: center;
+            padding: 20px 0;
+        }
+        .hero h2 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #417c2c, #f0a020);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+        }
+        .hero-tag {
+            font-size: 1.2rem;
+            background: rgba(30, 40, 20, 0.65);
+            backdrop-filter: blur(6px);
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 80px;
+            font-weight: 500;
+            color: #ffefc0;
+            border: 1px solid #f5bc6e;
+        }
+        .feature-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            justify-content: center;
+            margin-top: 48px;
+        }
+        .feature {
+            background: rgba(255, 248, 225, 0.9);
+            border-radius: 40px;
+            padding: 28px 20px;
+            width: 220px;
+            text-align: center;
+            transition: 0.25s;
+            border: 1px solid #ffda99;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+        }
+        .feature:hover {
+            transform: translateY(-10px);
+            background: #fffff2;
+            border-color: #f5a623;
+            box-shadow: 0 20px 28px -8px rgba(0,0,0,0.15);
+        }
+        .feature i {
+            font-size: 2.8rem;
+            color: #e68a2e;
+            margin-bottom: 16px;
+        }
+        .feature h3 {
+            font-size: 1.6rem;
+            color: #4b6e2a;
+        }
+
+        /* Cách chơi bước */
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            justify-content: center;
+        }
+        .step {
+            background: rgba(255, 245, 220, 0.9);
+            border-radius: 48px;
+            padding: 28px 24px;
+            flex: 1;
+            min-width: 240px;
+            text-align: center;
+            border: 1px solid #f7cf8c;
+            transition: 0.2s;
+        }
+        .step:hover {
+            transform: scale(1.02);
+            background: #fffef5;
+            border-color: #f5a623;
+        }
+        .step i {
+            font-size: 2.8rem;
+            color: #e68a2e;
+            margin-bottom: 16px;
+        }
+        .step h3 {
+            font-size: 1.7rem;
+            margin-bottom: 12px;
+            color: #bc761f;
+        }
+        .radmin-badge {
+            background: #2c3a2a;
+            color: #f9e4b3;
+            padding: 12px 18px;
+            border-radius: 48px;
+            font-family: monospace;
+            margin-top: 15px;
+            display: inline-block;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.1s;
+            border: 1px solid #f5bc6e;
+        }
+        .radmin-badge:active {
+            transform: scale(0.97);
+        }
+
+        /* Luật lệ */
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
+        }
+        .rule-item {
+            background: rgba(255, 248, 228, 0.9);
+            border-radius: 38px;
+            padding: 24px;
+            border-left: 6px solid #f5a623;
+            transition: 0.2s;
+        }
+        .rule-item:hover {
+            background: #fffef0;
+            transform: translateX(6px);
+        }
+        .rule-item h3 {
+            font-size: 1.5rem;
+            color: #bb771f;
+            margin-bottom: 14px;
+        }
+        .rule-item ul {
+            margin-left: 20px;
+            color: #2c4824;
+        }
+        .rule-item li {
+            margin: 8px 0;
+        }
+
+        /* DONATE 2 QR với ảnh đã cho */
+        .donate-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 48px;
+            justify-content: center;
+            margin: 30px 0 20px;
+        }
+        .donate-card {
+            flex: 1;
+            min-width: 280px;
+            background: rgba(255, 245, 225, 0.92);
+            backdrop-filter: blur(4px);
+            border-radius: 56px;
+            padding: 34px 28px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid #f5bc6e;
+            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.15);
+        }
+        .donate-card:hover {
+            transform: translateY(-8px);
+            background: #fffaf0;
+            border-color: #f5a623;
+        }
+        .donate-icon {
+            font-size: 3.8rem;
+            margin-bottom: 12px;
+            color: #e68a2e;
+        }
+        .donate-card h3 {
+            font-size: 2rem;
+            margin: 12px 0 8px;
+            font-weight: 800;
+            color: #7e591f;
+        }
+        .qr-container {
+            background: #fef2e0;
+            border-radius: 32px;
+            padding: 16px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .qr-container img {
+            max-width: 100%;
+            max-height: 170px;
+            border-radius: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .donate-note {
+            background: #ecdbbd;
+            border-radius: 40px;
+            padding: 12px;
+            margin-top: 16px;
+            font-size: 0.85rem;
+            color: #4d3a1c;
+        }
+        .footer {
+            text-align: center;
+            padding: 36px 0 32px;
+            border-top: 1px solid #f5bc6e;
+            margin-top: 30px;
+            background: rgba(245, 235, 205, 0.7);
+            backdrop-filter: blur(6px);
+            border-radius: 40px 40px 0 0;
+        }
+        @media (max-width: 780px) {
+            .container { padding: 0 20px; }
+            .navbar { flex-direction: column; align-items: stretch; text-align: center; }
+            .nav-links { justify-content: center; }
+            .section-title { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Background Shader + Làng Minecraft mờ -->
+<div class="shader-bg">
+    <div class="village-bg"></div>
+    <div class="shader-overlay"></div>
+    <div class="light-shaft"></div>
+    <div class="pixel-dust"></div>
+</div>
+
+<div class="container">
+    <!-- Navbar với logo bạn cung cấp -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="https://images2.imgbox.com/6e/43/AM9bEJVa_o.png" alt="NamMC Logo" onerror="this.src='https://via.placeholder.com/60?text=NamMC'">
+            <div>
+                <h1>NamMC SMP</h1>
+                <p>🌾 Hành Trình Sinh Tồn Đích Thực</p>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a class="nav-link active" data-page="home">🏡 Trang chủ</a>
+            <a class="nav-link" data-page="howtoplay">🎮 Cách chơi</a>
+            <a class="nav-link" data-page="rules">📜 Luật lệ</a>
+            <a class="nav-link" data-page="donate">💝 Donate</a>
+        </div>
+    </nav>
+
+    <!-- ========= TRANG CHỦ ========= -->
+    <div id="page-home" class="page active-page">
+        <div class="mine-card">
+            <div class="hero">
+                <h2>🌟 [NamMC SMP] - Hành Trình Sinh Tồn Đích Thực, Cộng Đồng Văn Minh! 🌟</h2>
+                <div class="hero-tag">
+                    <i class="fas fa-cube"></i> Bạn đang tìm kiếm một thế giới Minecraft SMP đúng nghĩa? Nơi bạn có thể thỏa sức xây dựng, kết bạn và trải nghiệm những tính năng độc đáo mà không sợ bị nhàm chán?
+                </div>
+                <p style="margin-top: 32px; font-size: 1.15rem; background: rgba(30,35,20,0.7); padding: 18px 28px; border-radius: 64px; color: #ffefcf; backdrop-filter: blur(6px);">
+                    <i class="fas fa-dragon"></i> Chào mừng bạn đến với NamMC SMP – Máy chủ Minecraft sinh tồn thế hệ mới, nơi biến những khối vuông kỳ diệu thành những kỷ niệm vô giá!
+                </p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature"><i class="fas fa-users"></i><h3>200+</h3><p>Thành viên thân thiện</p></div>
+                <div class="feature"><i class="fas fa-tachometer-alt"></i><h3>24/7</h3><p>Hoạt động liên tục</p></div>
+                <div class="feature"><i class="fas fa-shield-virus"></i><h3>Anti-Cheat</h3><p>Công bằng tuyệt đối</p></div>
+                <div class="feature"><i class="fas fa-leaf"></i><h3>Không Reset</h3><p>Thế giới vĩnh cửu</p></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========= CÁCH CHƠI ========= -->
+    <div id="page-howtoplay" class="page">
+        <div class="mine-card">
+            <div class="section-title"><i class="fas fa-plug"></i> 🛠️ Hướng Dẫn Kết Nối Vào Server (Chỉ 3 bước)</div>
+            <p style="margin-bottom: 28px;">Để tham gia thế giới NamMC, bạn chỉ cần làm theo các bước siêu đơn giản sau:</p>
+            <div class="steps">
+                <div class="step">
+                    <i class="fas fa-download"></i>
+                    <h3>Bước 1</h3>
+                    <p>Tải và cài đặt <strong>Radmin VPN</strong> (miễn phí).</p>
+                    <div class="radmin-badge" id="downloadRadminBtn">📥 Tải ngay</div>
+                </div>
+                <div class="step">
+                    <i class="fas fa-network-wired"></i>
+                    <h3>Bước 2</h3>
+                    <p>Join Network với thông tin:</p>
+                    <div class="radmin-badge" style="background: #3d5436;">
+                        📡 Mạng: <strong>NammcZ1</strong> &nbsp;|&nbsp; 🔑 MK: <strong>2113226</strong>
+                    </div>
+                </div>
+                <div class="step">
+                    <i class="fas fa-gamepad"></i>
+                    <h3>Bước 3</h3>
+                    <p>Nhập IP Server Minecraft:</p>
+                    <div class="radmin-badge" id="serverIpBox" data-ip="10.10.10.5:25565">
+                        📌 10.10.10.5:25565 &nbsp; <i class="fas fa-copy"></i> (click copy)
+                    </div>
+                    <p style="font-size: 0.8rem; margin-top: 12px;">✅ Đã kết nối Radmin xong mới vào game nhé!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========= LUẬT LỆ ========= -->
+    <div id="page-rules" class="page">
+        <div class="mine-card">
+            <div class="section-title"><i class="fas fa-scroll"></i> 📜 NỘI QUY SERVER NAMMC SMP</div>
+            <p style="margin-bottom: 20px;">Để cộng đồng luôn văn minh và vui vẻ, hãy cùng tuân thủ những điều sau:</p>
+            <div class="rules-grid">
+                <div class="rule-item">
+                    <h3><i class="fas fa-comment-dots"></i> 1. Hành Vi Ứng Xử</h3>
+                    <ul>
+                        <li>❌ Không Toxic, chửi thề, phân biệt vùng miền.</li>
+                        <li>❌ Không spam, quảng cáo server khác.</li>
+                        <li>✅ Giữ không gian thoải mái, thân thiện.</li>
+                    </ul>
+                </div>
+                <div class="rule-item">
+                    <h3><i class="fas fa-dice-d6"></i> 2. Lối Chơi Công Bằng</h3>
+                    <ul>
+                        <li>🚫 Nghiêm cấm hack, X-ray, hit-box → Ban vĩnh viễn.</li>
+                        <li>🚫 Không phá nhà (griefing), trộm cắp tài sản.</li>
+                        <li>⚠️ Không lợi dụng bug, dupe đồ, farm quá tải.</li>
+                    </ul>
+                </div>
+                <div class="rule-item">
+                    <h3><i class="fas fa-vpn"></i> 3. Radmin & Hệ thống</h3>
+                    <ul>
+                        <li>🔐 Bảo mật tài khoản, không chia sẻ VPN cho người lạ.</li>
+                        <li>🖥️ Không xây máy lag (redstone quá tải, spam entity).</li>
+                        <li>⚡ Báo lỗi ngay cho Admin khi gặp sự cố.</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="background: #e7dbbc; border-radius: 48px; padding: 16px; margin-top: 32px; text-align: center; font-weight: bold; color: #3e552a;">
+                💡 Vi phạm sẽ bị Cảnh cáo → Kick → Ban vĩnh viễn. Quyết định của Admin là cuối cùng!
+            </div>
+        </div>
+    </div>
+
+    <!-- ========= DONATE ========= -->
+    <div id="page-donate" class="page">
+        <div class="mine-card">
+            <div class="section-title"><i class="fas fa-hand-holding-heart"></i> 💖 Ủng hộ máy chủ</div>
+            <p style="margin-bottom: 16px;">Cảm ơn bạn đã đồng hành! Mọi đóng góp giúp NamMC SMP ngày càng phát triển.</p>
+            <div class="donate-row" id="donateRoot">
+                <!-- QR sẽ được JS chèn từ biến -->
+            </div>
+            <p style="text-align:center; margin-top: 28px; background: #f5e5ccee; border-radius: 60px; padding: 10px;">
+                ✨ Mỗi đóng góp đều là động lực để chúng tôi duy trì server tốt nhất ✨
+            </p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p><i class="fas fa-crown"></i> NamMC SMP - Nơi những khối vuông kết nối triệu trái tim.<br>© 2025 Cộng đồng NamMC. Phi lợi nhuận, thuần túy đam mê.</p>
+        <div style="margin-top: 12px;">
+            <i class="fab fa-discord"></i> Discord.gg/NamMC &nbsp;|&nbsp; 
+            <i class="fab fa-youtube"></i> Youtube NamMC &nbsp;|&nbsp;
+            <i class="fab fa-facebook"></i> Facebook Group
+        </div>
+    </footer>
+</div>
+
+<script>
+    // QR Code từ biến bạn yêu cầu (giữ nguyên)
+    var QR_MOMO = 'https://images2.imgbox.com/7b/16/QBdOOyJr_o.png';
+    var QR_ZALO = 'https://images2.imgbox.com/64/b8/JlxuSl0x_o.png';
+
+    function renderDonate() {
+        const container = document.getElementById('donateRoot');
+        if (!container) return;
+        container.innerHTML = `
+            <div class="donate-card">
+                <div class="donate-icon"><i class="fab fa-microsoft"></i></div>
+                <h3>💜 MOMO</h3>
+                <div class="qr-container">
+                    <img src="${QR_MOMO}" alt="QR Momo" onerror="this.src='https://placehold.co/300x200?text=QR+Momo'">
+                </div>
+                <div class="donate-note">
+                    <i class="fas fa-phone-alt"></i> Quét mã Momo để ủng hộ máy chủ
+                </div>
+            </div>
+            <div class="donate-card">
+                <div class="donate-icon"><i class="fas fa-qrcode"></i></div>
+                <h3>💚 ZaloPay</h3>
+                <div class="qr-container">
+                    <img src="${QR_ZALO}" alt="QR ZaloPay" onerror="this.src='https://placehold.co/300x200?text=QR+ZaloPay'">
+                </div>
+                <div class="donate-note">
+                    <i class="fas fa-mobile-alt"></i> Quét mã ZaloPay để ủng hộ server
+                </div>
+            </div>
+        `;
+    }
+
+    // Chuyển trang tab
+    const pages = {
+        home: document.getElementById('page-home'),
+        howtoplay: document.getElementById('page-howtoplay'),
+        rules: document.getElementById('page-rules'),
+        donate: document.getElementById('page-donate')
+    };
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    function switchPage(pageId) {
+        Object.keys(pages).forEach(key => pages[key].classList.remove('active-page'));
+        pages[pageId].classList.add('active-page');
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('data-page') === pageId) link.classList.add('active');
+        });
+        if (pageId === 'donate') renderDonate();
+    }
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const page = link.getAttribute('data-page');
+            if (page === 'home') switchPage('home');
+            else if (page === 'howtoplay') switchPage('howtoplay');
+            else if (page === 'rules') switchPage('rules');
+            else if (page === 'donate') switchPage('donate');
+        });
+    });
+
+    // Copy IP
+    const ipBox = document.getElementById('serverIpBox');
+    if (ipBox) {
+        ipBox.addEventListener('click', () => {
+            const ip = ipBox.getAttribute('data-ip') || "10.10.10.5:25565";
+            navigator.clipboard.writeText(ip);
+            const oldHtml = ipBox.innerHTML;
+            ipBox.innerHTML = '✅ Đã copy IP: ' + ip;
+            setTimeout(() => { ipBox.innerHTML = oldHtml; }, 1500);
+        });
+    }
+
+    const radminBtn = document.getElementById('downloadRadminBtn');
+    if (radminBtn) radminBtn.addEventListener('click', () => window.open('https://www.radmin-vpn.com/', '_blank'));
+
+    renderDonate();
+
+    // Một chút hiệu ứng động cho shader (optional)
+    console.log("NamMC SMP - Giao diện sáng, shader Minecraft & làng mờ background");
+</script>
+</body>
+</html>
