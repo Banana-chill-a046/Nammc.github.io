@@ -3,34 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>NamMC SMP | Máy chủ Minecraft Sinh tồn Đích thực</title>
-    
-    <!-- FAVICON -->
+    <title>NamMC SMP | Server Minecraft</title>
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://images2.imgbox.com/6e/43/AM9bEJVa_o.png">
     <link rel="shortcut icon" type="image/png" href="https://images2.imgbox.com/6e/43/AM9bEJVa_o.png">
-    
-    <!-- PHÔNG CHỮ ARIAL (DỄ NHÌN) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', 'Arial', sans-serif;
             background: linear-gradient(145deg, #b8e1fc 0%, #8fc9f0 40%, #6eb0dc 100%);
             color: #1e2f2c;
             line-height: 1.5;
             min-height: 100vh;
-            position: relative;
             overflow-x: hidden;
         }
-
-        /* Nền mây di chuyển */
         .sky {
             position: fixed;
             top: 0;
@@ -47,13 +35,11 @@
             border-radius: 80%;
             filter: blur(18px);
             animation: floatCloud linear infinite;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
         }
         @keyframes floatCloud {
-            0% { transform: translateX(-20vw) translateY(0); opacity: 0.5; }
-            100% { transform: translateX(120vw) translateY(-15px); opacity: 0.95; }
+            0% { transform: translateX(-20vw); opacity: 0.5; }
+            100% { transform: translateX(120vw); opacity: 0.95; }
         }
-
         .sunlight {
             position: fixed;
             top: -20%;
@@ -69,16 +55,7 @@
             0% { opacity: 0.4; transform: scale(1); }
             100% { opacity: 0.8; transform: scale(1.05); }
         }
-
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 0 32px;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Header */
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 2; }
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -86,85 +63,40 @@
             flex-wrap: wrap;
             gap: 20px;
             padding: 18px 32px;
-            margin: 20px 0 20px;
+            margin: 20px 0;
             background: rgba(255, 250, 225, 0.75);
             backdrop-filter: blur(12px);
             border-radius: 60px;
             border: 1px solid rgba(245, 200, 100, 0.6);
-            box-shadow: 0 8px 28px rgba(0,0,0,0.1);
         }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .logo img {
-            height: 55px;
-            width: auto;
-            border-radius: 14px;
-        }
-        /* CHỮ LOGO 7 MÀU CẦU VỒNG */
+        .logo { display: flex; align-items: center; gap: 15px; }
+        .logo img { height: 55px; border-radius: 14px; }
         .rainbow-text {
             font-size: 2rem;
             font-weight: 800;
-            background: linear-gradient(90deg, 
-                #ff0000, #ff7700, #ffff00, 
-                #00ff00, #0000ff, #4b0082, #9400d3);
+            background: linear-gradient(90deg, #ff0000, #ff7700, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
-            background-size: 200% auto;
-            animation: shimmer 3s linear infinite;
-            font-family: 'Inter', 'Arial', sans-serif;
+            animation: shimmer 3s infinite;
         }
-        @keyframes shimmer {
-            0% { background-position: 0% center; }
-            100% { background-position: 200% center; }
-        }
-        .logo p {
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: #4d5a2e;
-            background: #fff6e0cc;
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 30px;
-        }
-        .nav-links {
-            display: flex;
-            gap: 36px;
-        }
+        @keyframes shimmer { 0% { background-position: 0%; } 100% { background-position: 200%; } }
+        .logo p { font-size: 0.7rem; background: #fff6e0cc; padding: 4px 12px; border-radius: 30px; }
+        .nav-links { display: flex; gap: 36px; flex-wrap: wrap; }
         .nav-link {
             color: #2e4a2a;
             text-decoration: none;
             font-weight: 700;
             font-size: 1.1rem;
             padding: 8px 0;
-            transition: 0.2s;
             border-bottom: 3px solid transparent;
             cursor: pointer;
-            font-family: 'Inter', 'Arial', sans-serif;
+            transition: 0.2s;
         }
-        .nav-link.active {
-            border-bottom-color: #f5a623;
-            color: #c5711a;
-        }
-        .nav-link:hover {
-            border-bottom-color: #f5a623;
-            color: #d97a1c;
-            transform: translateY(-2px);
-        }
-
-        .page {
-            display: none;
-            animation: fadeUp 0.45s ease;
-        }
+        .nav-link.active, .nav-link:hover { border-bottom-color: #f5a623; color: #c5711a; }
+        .page { display: none; animation: fadeUp 0.45s ease; }
         .page.active-page { display: block; }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .mine-card {
             background: rgba(255, 250, 235, 0.85);
             backdrop-filter: blur(14px);
@@ -172,7 +104,6 @@
             padding: 40px 38px;
             margin: 48px 0;
             border: 1px solid rgba(245, 190, 80, 0.7);
-            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.15);
         }
         .section-title {
             font-size: 2rem;
@@ -181,10 +112,7 @@
             border-left: 8px solid #f5a623;
             padding-left: 24px;
             margin-bottom: 32px;
-            font-family: 'Inter', 'Arial', sans-serif;
         }
-
-        /* Trang chủ */
         .hero { text-align: center; padding: 20px 0; }
         .hero h2 {
             font-size: 2.5rem;
@@ -192,17 +120,12 @@
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
-            margin-bottom: 20px;
-            font-family: 'Inter', 'Arial', sans-serif;
         }
         .hero-tag {
-            font-size: 1.2rem;
-            background: rgba(30, 40, 20, 0.65);
-            backdrop-filter: blur(6px);
+            background: rgba(30,40,20,0.65);
             display: inline-block;
             padding: 14px 32px;
             border-radius: 80px;
-            font-weight: 500;
             color: #ffefc0;
             border: 1px solid #f5bc6e;
         }
@@ -214,7 +137,7 @@
             margin-top: 48px;
         }
         .feature {
-            background: rgba(255, 248, 225, 0.9);
+            background: rgba(255,248,225,0.9);
             border-radius: 40px;
             padding: 28px 20px;
             width: 220px;
@@ -222,11 +145,9 @@
             transition: 0.25s;
             border: 1px solid #ffda99;
         }
-        .feature:hover { transform: translateY(-10px); background: #fffff2; border-color: #f5a623; }
+        .feature:hover { transform: translateY(-10px); background: #fffff2; }
         .feature i { font-size: 2.8rem; color: #e68a2e; margin-bottom: 16px; }
-        .feature h3 { font-size: 1.6rem; color: #4b6e2a; font-family: 'Inter', 'Arial', sans-serif; }
-
-        /* Cách chơi */
+        .feature h3 { font-size: 1.6rem; color: #4b6e2a; }
         .quick-steps {
             display: flex;
             flex-wrap: wrap;
@@ -235,7 +156,7 @@
             margin-bottom: 40px;
         }
         .quick-step {
-            background: rgba(255, 245, 220, 0.95);
+            background: rgba(255,245,220,0.95);
             border-radius: 48px;
             padding: 25px;
             flex: 1;
@@ -244,47 +165,38 @@
             border: 1px solid #f7cf8c;
         }
         .quick-step i { font-size: 2.5rem; color: #e68a2e; margin-bottom: 12px; }
-        .quick-step h3 { font-size: 1.5rem; color: #bc761f; margin-bottom: 10px; font-family: 'Inter', 'Arial', sans-serif; }
+        .quick-step h3 { font-size: 1.5rem; color: #bc761f; }
         .radmin-badge {
             background: #2c3a2a;
             color: #f9e4b3;
             padding: 10px 16px;
             border-radius: 48px;
-            font-family: monospace;
-            margin-top: 12px;
             display: inline-block;
             cursor: pointer;
             font-weight: 600;
             border: 1px solid #f5bc6e;
-            font-size: 0.9rem;
+            margin-top: 10px;
         }
-
-        /* Luật lệ */
         .rules-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 28px;
         }
         .rule-item {
-            background: rgba(255, 248, 228, 0.95);
+            background: rgba(255,248,228,0.95);
             border-radius: 38px;
             padding: 28px;
             border-left: 6px solid #f5a623;
         }
-        .rule-item:hover { background: #fffef0; transform: translateX(6px); }
         .rule-item h3 {
             font-size: 1.6rem;
             color: #bb771f;
             margin-bottom: 18px;
             border-bottom: 2px dashed #f5bc6e;
             padding-bottom: 8px;
-            font-family: 'Inter', 'Arial', sans-serif;
         }
-        .rule-item ul, .rule-item p { margin-left: 20px; color: #2c4824; margin-top: 10px; }
-        .rule-item li { margin: 10px 0; line-height: 1.5; }
-        .rule-item .highlight { color: #c0392b; font-weight: bold; }
-
-        /* Donate */
+        .rule-item ul { margin-left: 20px; color: #2c4824; }
+        .rule-item li { margin: 10px 0; }
         .donate-row {
             display: flex;
             flex-wrap: wrap;
@@ -293,66 +205,47 @@
             margin: 30px 0 20px;
         }
         .donate-card {
-            flex: 1;
-            min-width: 280px;
-            background: rgba(255, 245, 225, 0.92);
+            background: rgba(255,245,225,0.92);
             border-radius: 56px;
             padding: 34px 28px;
             text-align: center;
-            transition: all 0.3s;
+            transition: 0.3s;
             border: 1px solid #f5bc6e;
+            width: 280px;
         }
         .donate-card:hover { transform: translateY(-8px); background: #fffaf0; }
-        .donate-icon { font-size: 3.8rem; margin-bottom: 12px; color: #e68a2e; }
-        .donate-card h3 { font-size: 2rem; margin: 12px 0 8px; font-weight: 800; color: #7e591f; font-family: 'Inter', 'Arial', sans-serif; }
-        .qr-container {
-            background: #fef2e0;
-            border-radius: 32px;
-            padding: 16px;
-            margin: 20px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .qr-container img { max-width: 100%; max-height: 170px; border-radius: 24px; }
-        .donate-note { background: #ecdbbd; border-radius: 40px; padding: 12px; margin-top: 16px; font-size: 0.85rem; color: #4d3a1c; }
-
+        .donate-icon { font-size: 3.8rem; color: #e68a2e; }
+        .donate-card h3 { font-size: 2rem; color: #7e591f; }
+        .qr-container img { max-width: 160px; border-radius: 24px; margin: 16px 0; }
         .footer {
             text-align: center;
             padding: 36px 0 32px;
             border-top: 1px solid #f5bc6e;
             margin-top: 30px;
-            background: rgba(245, 235, 205, 0.7);
-            backdrop-filter: blur(6px);
+            background: rgba(245,235,205,0.7);
             border-radius: 40px 40px 0 0;
         }
         @media (max-width: 780px) {
             .container { padding: 0 20px; }
             .navbar { flex-direction: column; text-align: center; }
             .nav-links { justify-content: center; }
-            .section-title { font-size: 1.6rem; }
             .rainbow-text { font-size: 1.5rem; }
         }
-        button, .radmin-badge { cursor: pointer; }
     </style>
 </head>
 <body>
-
 <div class="sky" id="skyLayer"></div>
 <div class="sunlight"></div>
-
 <div class="container">
     <nav class="navbar">
         <div class="logo">
             <img src="https://images2.imgbox.com/6e/43/AM9bEJVa_o.png" alt="NamMC Logo">
-            <div>
-                <h1 class="rainbow-text">NamMC SMP</h1>
-                <p>🌾 Hành Trình Sinh Tồn Đích Thực</p>
-            </div>
+            <div><h1 class="rainbow-text">NamMC SMP</h1><p>🌾 Java + Bedrock — Không pay-to-win</p></div>
         </div>
         <div class="nav-links">
             <a class="nav-link active" data-page="home">🏡 Trang chủ</a>
-            <a class="nav-link" data-page="howtoplay">🎮 Cách chơi</a>
+            <a class="nav-link" data-page="howtoplay_java">💻 Java (PC)</a>
+            <a class="nav-link" data-page="howtoplay_pe">📱 Bedrock (PE)</a>
             <a class="nav-link" data-page="rules">📜 Luật lệ</a>
             <a class="nav-link" data-page="donate">💝 Donate</a>
         </div>
@@ -362,16 +255,14 @@
     <div id="page-home" class="page active-page">
         <div class="mine-card">
             <div class="hero">
-                <h2>🌟 [NamMC SMP] - Hành Trình Sinh Tồn Đích Thực, Cộng Đồng Văn Minh! 🌟</h2>
-                <div class="hero-tag">
-                    <i class="fas fa-cube"></i> Bạn đang tìm kiếm một thế giới Minecraft SMP đúng nghĩa?
-                </div>
+                <h2>🌟 NamMC SMP - Hành Trình Sinh Tồn Đích Thực</h2>
+                <div class="hero-tag"><i class="fas fa-cube"></i> Cộng đồng văn minh — Không reset — Không pay-to-win</div>
                 <p style="margin-top: 32px; background: rgba(30,35,20,0.7); padding: 18px 28px; border-radius: 64px; color: #ffefcf;">
-                    <i class="fas fa-dragon"></i> Chào mừng bạn đến với NamMC SMP – Máy chủ Minecraft sinh tồn thế hệ mới!
+                    <i class="fas fa-dragon"></i> Chào mừng bạn đến với NamMC SMP – Nơi những khối vuông kết nối triệu trái tim!
                 </p>
             </div>
             <div class="feature-grid">
-                <div class="feature"><i class="fas fa-users"></i><h3>200+</h3><p>Thành viên</p></div>
+                <div class="feature"><i class="fas fa-users"></i><h3>150+</h3><p>Thành viên</p></div>
                 <div class="feature"><i class="fas fa-tachometer-alt"></i><h3>24/7</h3><p>Hoạt động</p></div>
                 <div class="feature"><i class="fas fa-shield-virus"></i><h3>Anti-Cheat</h3><p>Công bằng</p></div>
                 <div class="feature"><i class="fas fa-leaf"></i><h3>Không Reset</h3><p>Vĩnh cửu</p></div>
@@ -379,40 +270,39 @@
         </div>
     </div>
 
-    <!-- CÁCH CHƠI -->
-    <div id="page-howtoplay" class="page">
+    <!-- JAVA (PC) -->
+    <div id="page-howtoplay_java" class="page">
         <div class="mine-card">
-            <div class="section-title"><i class="fas fa-plug"></i> 🎮 CÁCH CHƠI - KẾT NỐI NHANH</div>
-            
+            <div class="section-title"><i class="fas fa-plug"></i> 💻 CÁCH CHƠI - MÁY TÍNH (JAVA)</div>
             <div class="quick-steps">
-                <div class="quick-step">
-                    <i class="fas fa-download"></i>
-                    <h3>Bước 1</h3>
-                    <p>Tải <strong>Radmin VPN</strong> (miễn phí)</p>
-                    <div class="radmin-badge" id="downloadRadminBtn">📥 Tải ngay</div>
-                </div>
-                <div class="quick-step">
-                    <i class="fas fa-network-wired"></i>
-                    <h3>Bước 2</h3>
-                    <p>Join Network (chọn 1 trong 2 mạng):</p>
-                    <div class="radmin-badge">📡 Mạng 1: <strong>NammcZ1</strong></div>
-                    <div class="radmin-badge" style="margin-top: 5px;">📡 Mạng 2: <strong>NammcZ2</strong></div>
-                    <div class="radmin-badge" style="margin-top: 5px; background:#3d5436;">🔑 Mật khẩu chung: <strong>2113226</strong></div>
-                </div>
-                <div class="quick-step">
-                    <i class="fas fa-gamepad"></i>
-                    <h3>Bước 3</h3>
-                    <p>Vào Minecraft → Multiplayer</p>
-                    <div class="radmin-badge" id="serverIpBox">📌 IP: <strong>26.161.161.70:25565</strong> <i class="fas fa-copy"></i></div>
-                </div>
+                <div class="quick-step"><i class="fas fa-download"></i><h3>Bước 1</h3><p>Tải <strong>Radmin VPN</strong></p><div class="radmin-badge" id="downloadRadminBtn">📥 Tải ngay</div></div>
+                <div class="quick-step"><i class="fas fa-network-wired"></i><h3>Bước 2</h3><p>Join Network: <strong>NammcZ1</strong> hoặc <strong>NammcZ2</strong><br>🔑 Mật khẩu: <strong>2113226</strong></p></div>
+                <div class="quick-step"><i class="fas fa-gamepad"></i><h3>Bước 3</h3><p>Minecraft → Multiplayer</p><div class="radmin-badge" id="serverIpBox">📌 IP: <strong>26.161.161.70:25565</strong> <i class="fas fa-copy"></i></div></div>
             </div>
+            <div style="background: rgba(0,0,0,0.5); border-radius: 32px; padding: 20px; color: #fff0c0;">
+                <p>✅ <strong>Radmin VPN</strong> phải bật trước khi mở Minecraft</p>
+                <p>✅ Kiểm tra kết nối: <code>ping 26.161.161.70</code> trong CMD</p>
+                <p>✅ Dùng Minecraft Java Edition 1.8 → 1.20</p>
+            </div>
+        </div>
+    </div>
 
-            <div style="background: rgba(0,0,0,0.5); border-radius: 32px; padding: 20px; margin-top: 20px; color: #fff0c0;">
-                <h3 style="color: #ffdd99; margin-bottom: 15px;"><i class="fas fa-star-of-life"></i> MẸO NHANH:</h3>
-                <p>✅ <strong>Radmin VPN</strong> phải <span style="color:#ffaa00;">bật và kết nối</span> trước khi mở Minecraft</p>
-                <p>✅ Kiểm tra kết nối bằng lệnh <code style="background:#2c3a2a; padding:3px 8px; border-radius:12px;">ping 26.161.161.70</code> trong CMD</p>
-                <p>✅ Nếu mạng NammcZ1 đông, hãy thử chuyển sang NammcZ2 (cùng mật khẩu)</p>
-                <p>✅ Dùng phiên bản Minecraft Java Edition 1.20.x trở lên</p>
+    <!-- BEDROCK (PE) - ĐÃ XÓA WIFI -->
+    <div id="page-howtoplay_pe" class="page">
+        <div class="mine-card">
+            <div class="section-title"><i class="fas fa-mobile-alt"></i> 📱 CÁCH CHƠI - ĐIỆN THOẠI (BEDROCK / PE)</div>
+            <div class="quick-steps">
+                <div class="quick-step"><i class="fas fa-globe"></i><h3>Cách 1</h3><p><strong>ZeroTier (Internet)</strong></p><div class="radmin-badge" id="ztDownload">📥 Tải ZeroTier</div><div class="radmin-badge" style="margin-top:5px">🆔 Network ID: <strong>154a350c8626105e</strong></div></div>
+                <div class="quick-step"><i class="fas fa-network-wired"></i><h3>Cách 2</h3><p><strong>Radmin (PC) + ZeroTier (điện thoại)</strong></p><p>PC dùng Radmin, điện thoại dùng ZeroTier cùng mạng</p></div>
+            </div>
+            <div style="background: rgba(0,0,0,0.5); border-radius: 32px; padding: 20px; color: #fff0c0;">
+                <h3 style="color:#ffdd99">📌 HƯỚNG DẪN ZEROTIER:</h3>
+                <p>1️⃣ Tải ZeroTier: <button class="radmin-badge" onclick="window.open('https://www.zerotier.com/download/','_blank')">Windows</button> <button class="radmin-badge" onclick="window.open('https://play.google.com/store/apps/details?id=com.zerotier.one','_blank')">Android</button> <button class="radmin-badge" onclick="window.open('https://apps.apple.com/app/zerotier-one/id1084101492','_blank')">iOS</button></p>
+                <p>2️⃣ Mở ZeroTier → Join Network → Nhập ID: <code>154a350c8626105e</code></p>
+                <p>3️⃣ Vào <strong>https://my.zerotier.com</strong> → Đăng nhập → Tick chọn thiết bị để cấp quyền</p>
+                <p>4️⃣ Lấy IP của PC (Managed IPs, ví dụ <strong>10.147.20.x</strong>) → Nhập vào Minecraft PE: <strong>10.147.20.x:19132</strong></p>
+                <p>📌 <strong>Lưu ý:</strong> Server Bedrock yêu cầu phiên bản <strong>1.20.x</strong> trở lên. Cổng mặc định: <strong>19132</strong> (UDP)</p>
+                <p>🔁 Nếu gặp khó khăn, hãy thử dùng <strong>Tailscale</strong> (dễ hơn, tương tự ZeroTier)</p>
             </div>
         </div>
     </div>
@@ -420,54 +310,14 @@
     <!-- LUẬT LỆ -->
     <div id="page-rules" class="page">
         <div class="mine-card">
-            <div class="section-title"><i class="fas fa-scroll"></i> 📜 NỘI QUY CHI TIẾT NAMMC SMP</div>
-            <p style="margin-bottom: 25px; font-style: italic;">🔔 Đọc kỹ nội quy để tránh bị phạt! Mọi hành vi vi phạm đều có log ghi lại.</p>
-            
+            <div class="section-title"><i class="fas fa-scroll"></i> 📜 NỘI QUY NAMMC SMP</div>
             <div class="rules-grid">
-                <div class="rule-item">
-                    <h3><i class="fas fa-comment-dots"></i> 1. HÀNH VI ỨNG XỬ</h3>
-                    <ul>
-                        <li>❌ <strong>KHÔNG TOXIC</strong>: Chửi thề, xúc phạm, phân biệt vùng miền → <span class="highlight">Cảnh cáo + Kick</span></li>
-                        <li>❌ <strong>KHÔNG SPAM</strong>: Chat lặp nội dung, quảng cáo server khác → <span class="highlight">Mute 1-7 ngày</span></li>
-                        <li>❌ <strong>KHÔNG GÂY WAR</strong>: Kéo bè kéo cánh, tạo xung đột → <span class="highlight">Ban tạm thời</span></li>
-                        <li>✅ <strong>TÔN TRỌNG</strong>: Hãy cư xử văn minh, giúp đỡ người mới</li>
-                    </ul>
-                </div>
-
-                <div class="rule-item">
-                    <h3><i class="fas fa-dice-d6"></i> 2. LỐI CHƠI - GAMEPLAY</h3>
-                    <ul>
-                        <li>🚫 <strong>NGHIÊM CẤM HACK</strong>: X-ray, KillAura, Fly, Speed → <span class="highlight">BAN VĨNH VIỄN</span></li>
-                        <li>🚫 <strong>CẤM GRIEFING</strong>: Phá hoại công trình người khác → <span class="highlight">Ban 30 ngày + đền bù</span></li>
-                        <li>🚫 <strong>CẤM TRỘM CẮP</strong>: Lấy đồ khi chưa được phép → <span class="highlight">Ban 14 ngày + trả đồ</span></li>
-                        <li>⚠️ <strong>KHÔNG LỢI DỤNG BUG</strong>: Dupe đồ, exploit → <span class="highlight">Ban vĩnh viễn</span></li>
-                    </ul>
-                </div>
-
-                <div class="rule-item">
-                    <h3><i class="fas fa-vpn"></i> 3. RADMIN & HỆ THỐNG</h3>
-                    <ul>
-                        <li>🔐 <strong>BẢO MẬT</strong>: Không chia sẻ tài khoản Radmin VPN cho người lạ</li>
-                        <li>🖥️ <strong>KHÔNG LAG SERVER</strong>: Không xây máy redstone quá tải → <span class="highlight">Cảnh cáo + phá hủy máy</span></li>
-                        <li>📢 <strong>BÁO LỖI NGAY</strong>: Gặp bug phải báo Admin để xử lý</li>
-                    </ul>
-                </div>
-
-                <div class="rule-item">
-                    <h3><i class="fas fa-building"></i> 4. XÂY DỰNG & CLAIM</h3>
-                    <ul>
-                        <li>🏠 <strong>CLAIM ĐẤT</strong>: Dùng GriefPrevention (cầm vàng → //) để bảo vệ công trình</li>
-                        <li>📏 <strong>KHÔNG XÂY SÁT SPAWN</strong>: Cách spawn ít nhất 200 block</li>
-                        <li>🧹 <strong>DỌN DẸP</strong>: Công trình bỏ hoang >30 ngày có thể bị dọn</li>
-                    </ul>
-                </div>
+                <div class="rule-item"><h3><i class="fas fa-comment-dots"></i> 1. HÀNH VI</h3><ul><li>❌ Không toxic, chửi thề</li><li>❌ Không spam, quảng cáo</li><li>✅ Tôn trọng người chơi khác</li></ul></div>
+                <div class="rule-item"><h3><i class="fas fa-dice-d6"></i> 2. GAMEPLAY</h3><ul><li>🚫 Cấm hack, X-ray, fly</li><li>🚫 Không phá nhà, trộm cắp</li><li>⚠️ Không lợi dụng bug</li></ul></div>
+                <div class="rule-item"><h3><i class="fas fa-vpn"></i> 3. HỆ THỐNG</h3><ul><li>🔐 Bảo mật tài khoản</li><li>🖥️ Không gây lag server</li><li>📢 Báo lỗi cho Admin</li></ul></div>
             </div>
-
-            <div style="background: #2c2b1f; border-radius: 48px; padding: 20px; margin-top: 32px; text-align: center; border: 1px solid #f5a623;">
-                <i class="fas fa-gavel" style="font-size: 2rem; color: #f5a623;"></i>
-                <p style="margin-top: 10px; font-weight: bold;">⚠️ HÌNH THỨC XỬ PHẠT THEO CẤP ĐỘ ⚠️</p>
-                <p>Cảnh cáo → Mute/Kick → Ban tạm thời (3-30 ngày) → Ban vĩnh viễn</p>
-                <p style="margin-top: 10px; font-size: 0.9rem;">📌 Quyết định của Admin là cuối cùng!</p>
+            <div style="background:#2c2b1f; border-radius:48px; padding:20px; margin-top:32px; text-align:center;">
+                <p>⚠️ Hình thức xử phạt: Cảnh cáo → Mute/Kick → Ban tạm (3-30 ngày) → Ban vĩnh viễn</p>
             </div>
         </div>
     </div>
@@ -475,37 +325,18 @@
     <!-- DONATE -->
     <div id="page-donate" class="page">
         <div class="mine-card">
-            <div class="section-title"><i class="fas fa-hand-holding-heart"></i> 💖 Ủng hộ máy chủ</div>
-            <p style="margin-bottom: 16px;">Cảm ơn bạn đã đồng hành! Mọi đóng góp giúp NamMC SMP ngày càng phát triển.</p>
+            <div class="section-title"><i class="fas fa-hand-holding-heart"></i> Ủng hộ máy chủ</div>
             <div class="donate-row">
-                <div class="donate-card">
-                    <div class="donate-icon"><i class="fab fa-microsoft"></i></div>
-                    <h3>💜 MOMO</h3>
-                    <div class="qr-container">
-                        <img src="https://images2.imgbox.com/7b/16/QBdOOyJr_o.png" alt="QR Momo">
-                    </div>
-                    <div class="donate-note">Quét mã Momo để ủng hộ máy chủ</div>
-                </div>
-                <div class="donate-card">
-                    <div class="donate-icon"><i class="fas fa-qrcode"></i></div>
-                    <h3>💚 ZaloPay</h3>
-                    <div class="qr-container">
-                        <img src="https://images2.imgbox.com/64/b8/JlxuSl0x_o.png" alt="QR ZaloPay">
-                    </div>
-                    <div class="donate-note">Quét mã ZaloPay ủng hộ server</div>
-                </div>
+                <div class="donate-card"><div class="donate-icon"><i class="fab fa-microsoft"></i></div><h3>MOMO</h3><div class="qr-container"><img src="https://images2.imgbox.com/7b/16/QBdOOyJr_o.png" alt="QR Momo"></div><div>Quét mã để ủng hộ</div></div>
+                <div class="donate-card"><div class="donate-icon"><i class="fas fa-qrcode"></i></div><h3>ZaloPay</h3><div class="qr-container"><img src="https://images2.imgbox.com/64/b8/JlxuSl0x_o.png" alt="QR ZaloPay"></div><div>Quét mã ủng hộ server</div></div>
             </div>
-            <p style="text-align:center; margin-top: 20px; font-size: 0.85rem; color: #5a4a2a;">✨ Ủng hộ hoàn toàn tự nguyện ✨</p>
         </div>
     </div>
 
-    <footer class="footer">
-        <p><i class="fas fa-crown"></i> NamMC SMP - Nơi những khối vuông kết nối triệu trái tim.<br>© 2025 Cộng đồng NamMC</p>
-    </footer>
+    <footer class="footer"><p><i class="fas fa-crown"></i> NamMC SMP - Java + Bedrock | © 2026 Cộng đồng NamMC</p></footer>
 </div>
 
 <script>
-    // Tạo mây động
     function createClouds() {
         const sky = document.getElementById('skyLayer');
         for (let i = 0; i < 18; i++) {
@@ -521,15 +352,14 @@
     }
     createClouds();
 
-    // Chuyển trang
     const pages = {
         home: document.getElementById('page-home'),
-        howtoplay: document.getElementById('page-howtoplay'),
+        howtoplay_java: document.getElementById('page-howtoplay_java'),
+        howtoplay_pe: document.getElementById('page-howtoplay_pe'),
         rules: document.getElementById('page-rules'),
         donate: document.getElementById('page-donate')
     };
     const navLinks = document.querySelectorAll('.nav-link');
-
     function switchPage(pageId) {
         Object.keys(pages).forEach(key => pages[key].classList.remove('active-page'));
         pages[pageId].classList.add('active-page');
@@ -538,7 +368,6 @@
             if (link.getAttribute('data-page') === pageId) link.classList.add('active');
         });
     }
-
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
@@ -546,19 +375,14 @@
         });
     });
 
-    // Copy IP
     document.getElementById('serverIpBox')?.addEventListener('click', () => {
         navigator.clipboard.writeText('26.161.161.70:25565');
-        const oldHtml = document.getElementById('serverIpBox').innerHTML;
-        document.getElementById('serverIpBox').innerHTML = '✅ Đã copy IP!';
-        setTimeout(() => {
-            document.getElementById('serverIpBox').innerHTML = '📌 IP: <strong>26.161.161.70:25565</strong> <i class="fas fa-copy"></i>';
-        }, 1500);
+        const old = document.getElementById('serverIpBox').innerHTML;
+        document.getElementById('serverIpBox').innerHTML = 'Đã copy IP!';
+        setTimeout(() => { document.getElementById('serverIpBox').innerHTML = old; }, 1500);
     });
-
-    document.getElementById('downloadRadminBtn')?.addEventListener('click', () => {
-        window.open('https://www.radmin-vpn.com/', '_blank');
-    });
+    document.getElementById('downloadRadminBtn')?.addEventListener('click', () => window.open('https://www.radmin-vpn.com/', '_blank'));
+    document.getElementById('ztDownload')?.addEventListener('click', () => window.open('https://www.zerotier.com/download/', '_blank'));
 </script>
 </body>
 </html>
