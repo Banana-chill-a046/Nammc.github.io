@@ -338,6 +338,7 @@
     async function askGroq(question){
         if(!window.GROQ_CONFIG||!window.GROQ_CONFIG.API_KEY) return "⚠️ API key chưa được cấu hình.";
         const system = `Bạn là trợ lý AI của server Minecraft tên "NamMC SMP". 
+        Xưng hô tôi bạn không chửi bậy !
 CHỈ trả lời các câu hỏi liên quan đến Minecraft, server NamMC, mod, cách chơi, luật lệ, IP, Radmin.
 TUYỆT ĐỐI KHÔNG trả lời bất kỳ câu hỏi nào không liên quan đến Minecraft.
 Nếu câu hỏi không liên quan, trả lời: "❌ Tôi chỉ hỗ trợ các vấn đề về Minecraft và server NamMC SMP."
