@@ -17,7 +17,6 @@
             overflow-x: hidden;
             position: relative;
         }
-        /* Nền sao băng + mây */
         .star-bg {
             position: fixed;
             top: 0;
@@ -69,8 +68,6 @@
             100% { opacity: 0.8; transform: scale(1.2); }
         }
         .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 2; }
-        
-        /* Glass Navbar */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -115,11 +112,9 @@
             cursor: pointer;
         }
         .nav-link.active, .nav-link:hover { border-bottom-color: #00aaff; color: #00aaff; text-shadow: 0 0 8px #0088ff; transform: translateY(-2px); }
-        
         .page { display: none; animation: fadeInUp 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
         .page.active-page { display: block; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        
         .glass-card {
             background: rgba(0, 20, 40, 0.55);
             backdrop-filter: blur(16px);
@@ -174,8 +169,6 @@
         .discord-notice { text-align: center; margin-top: 30px; padding: 16px; background: rgba(0, 100, 200, 0.2); border-radius: 40px; border: 1px solid #00aaff; transition: 0.2s; }
         .discord-notice:hover { background: rgba(0, 150, 255, 0.3); transform: scale(1.01); }
         .footer { text-align: center; padding: 35px 0 25px; border-top: 1px solid #00aaff; margin-top: 40px; transition: 0.3s; }
-        
-        /* CHATBOT CỐ ĐỊNH */
         #chatbot-fixed {
             position: fixed;
             bottom: 20px;
@@ -248,7 +241,7 @@
         </div>
     </nav>
 
-    <div id="page-home" class="page active-page"><div class="glass-card"><div style="text-align:center;"><h2 style="font-family: 'Orbitron';">NAMMC SMP</h2><p>Hành Trình Sinh Tồn Đích Thực</p><div style="background:rgba(0,100,200,0.2);display:inline-block;padding:10px 25px;border-radius:40px;"><i class="fas fa-gem"></i> No Pay-to-Win | Active Community</div></div>
+    <div id="page-home" class="page active-page"><div class="glass-card"><div style="text-align:center;"><h2 style="font-family: 'Orbitron';">NAMMC SMP</h2><p>Hành Trình Sinh Tồn Đích Thực</p><div style="background:rgba(0,100,200,0.2);display:inline-block;padding:10px 25px;border-radius:40px;"><i class="fas fa-gem"></i> Active Community</div></div>
     <div class="feature-grid"><div class="feature"><i class="fas fa-users"></i><h3>150+</h3><p>Thành viên</p></div><div class="feature"><i class="fas fa-tachometer-alt"></i><h3>20 TPS</h3><p>Luôn mượt</p></div><div class="feature"><i class="fas fa-shield-virus"></i><h3>Anti-Cheat</h3><p>Công bằng</p></div><div class="feature"><i class="fas fa-infinity"></i><h3>Không Reset</h3><p>Vĩnh cửu</p></div></div>
     <div style="text-align:center;margin-top:40px;"><h3><i class="fas fa-star"></i> Đánh giá máy chủ</h3><div class="rating-stars" id="starRating"><i class="far fa-star" data-value="1"></i><i class="far fa-star" data-value="2"></i><i class="far fa-star" data-value="3"></i><i class="far fa-star" data-value="4"></i><i class="far fa-star" data-value="5"></i></div><p id="ratingMessage"></p></div></div></div>
     <div id="page-howtoplay_java" class="page"><div class="glass-card"><div class="section-title"><i class="fas fa-laptop-code"></i> JAVA EDITION</div><div class="steps-grid"><div class="step-card"><i class="fas fa-download"></i><h3>Bước 1</h3><p><button class="ip-badge" id="downloadRadminBtn"><i class="fas fa-cloud-download-alt"></i> Tải Radmin</button></p></div><div class="step-card"><i class="fas fa-network-wired"></i><h3>Bước 2</h3><p>NammcZ1 / NammcZ2<br><i class="fas fa-key"></i> <strong>2113226</strong></p></div><div class="step-card"><i class="fas fa-gamepad"></i><h3>Bước 3</h3><p><span class="ip-badge" id="serverIpBox"><i class="fas fa-copy"></i> 26.161.161.70:25565</span></p></div></div></div></div>
@@ -256,7 +249,7 @@
     <div id="page-rank" class="page"><div class="glass-card"><div class="section-title"><i class="fas fa-trophy"></i> BẢNG XẾP HẠNG</div><table class="rank-table" id="rankTable"><thead><tr><th>#</th><th>Người chơi</th><th>Kill</th><th>Rank</th><th>Thưởng</th></tr></thead><tbody id="rankBody"></tbody></table><button class="ip-badge" id="refreshRankBtn"><i class="fas fa-sync-alt"></i> Tải lại</button></div></div>
     <div id="page-rules" class="page"><div class="glass-card"><div class="section-title"><i class="fas fa-gavel"></i> NỘI QUY</div><div class="rules-grid"><div class="rule-item"><h3><i class="fas fa-comment-dots"></i> HÀNH VI</h3><ul><li>Không Toxic</li><li>Không Spam</li><li>Tôn trọng</li></ul></div><div class="rule-item"><h3><i class="fas fa-dice-d6"></i> GAMEPLAY</h3><ul><li>Cấm Hack</li><li>Cấm Griefing</li><li>Không Bug lợi</li></ul></div><div class="rule-item"><h3><i class="fas fa-vpn"></i> HỆ THỐNG</h3><ul><li>Bảo mật</li><li>Không Lag</li><li>Báo lỗi Admin</li></ul></div></div><div class="discord-notice"><i class="fab fa-discord"></i> discord.gg/TRcuDzCqK</div></div></div>
     <div id="page-donate" class="page"><div class="glass-card"><div class="section-title"><i class="fas fa-heart"></i> ỦNG HỘ</div><div class="donate-row"><div class="donate-card"><i class="fab fa-microsoft"></i><h3>MOMO</h3><img src="https://images2.imgbox.com/7b/16/QBdOOyJr_o.png" width="140"><p>Quét mã</p></div><div class="donate-card"><i class="fas fa-qrcode"></i><h3>ZALOPAY</h3><img src="https://images2.imgbox.com/64/b8/JlxuSl0x_o.png" width="140"><p>Quét mã</p></div></div></div></div>
-    <footer class="footer"><p><i class="fas fa-crown"></i> NamMC SMP — Where blocks become stories</p><p>© 2025 NamMC | ⭐ Đánh giá 5 sao ủng hộ chúng tôi!</p></footer>
+    <footer class="footer"><p><i class="fas fa-crown"></i> NamMC SMP — Where blocks become stories</p><p>© 2026 NamMC | ⭐ Đánh giá 5 sao ủng hộ chúng tôi!</p></footer>
 </div>
 
 <div id="chatbot-fixed"><img src="https://images2.imgbox.com/f9/f2/5UmO3Plu_o.png" alt="Chatbot"></div>
@@ -266,60 +259,175 @@
     <div class="chat-input-area"><input type="text" id="chat-input" placeholder="Hỏi về luật, rank, cách chơi..."><button id="send-chat"><i class="fas fa-paper-plane"></i></button></div>
 </div>
 
-<script src="groq-config.js"></script>
+<script src="config.js"></script>
 <script>
 (function(){
-    if(window.location.pathname.includes('admin.html')){ document.getElementById('chatbot-fixed').style.display='none'; document.getElementById('chat-window').style.display='none'; return; }
+    if(window.location.pathname.includes('admin.html')){ 
+        document.getElementById('chatbot-fixed').style.display='none'; 
+        document.getElementById('chat-window').style.display='none'; 
+        return; 
+    }
     // Tạo hiệu ứng mây, sao băng
-    for(let i=0;i<8;i++){ let cloud=document.createElement('div'); cloud.classList.add('cloud'); cloud.style.width=100+Math.random()*200+'px'; cloud.style.height=50+Math.random()*100+'px'; cloud.style.top=Math.random()*80+'%'; cloud.style.animationDuration=20+Math.random()*40+'s'; cloud.style.animationDelay=Math.random()*30+'s'; document.getElementById('cloudsContainer').appendChild(cloud); }
-    for(let i=0;i<15;i++){ let star=document.createElement('div'); star.classList.add('shooting-star'); star.style.top=Math.random()*80+'%'; star.style.left=Math.random()*100+'%'; star.style.animationDuration=1+Math.random()*4+'s'; star.style.animationDelay=Math.random()*20+'s'; document.getElementById('shootingStarsContainer').appendChild(star); }
+    for(let i=0;i<8;i++){ 
+        let cloud=document.createElement('div'); 
+        cloud.classList.add('cloud'); 
+        cloud.style.width=100+Math.random()*200+'px'; 
+        cloud.style.height=50+Math.random()*100+'px'; 
+        cloud.style.top=Math.random()*80+'%'; 
+        cloud.style.animationDuration=20+Math.random()*40+'s'; 
+        cloud.style.animationDelay=Math.random()*30+'s'; 
+        document.getElementById('cloudsContainer').appendChild(cloud); 
+    }
+    for(let i=0;i<15;i++){ 
+        let star=document.createElement('div'); 
+        star.classList.add('shooting-star'); 
+        star.style.top=Math.random()*80+'%'; 
+        star.style.left=Math.random()*100+'%'; 
+        star.style.animationDuration=1+Math.random()*4+'s'; 
+        star.style.animationDelay=Math.random()*20+'s'; 
+        document.getElementById('shootingStarsContainer').appendChild(star); 
+    }
     
-    // Chatbot logic với hiệu ứng gõ
-    const chatFixed=document.getElementById('chatbot-fixed'), chatWindow=document.getElementById('chat-window'), closeChat=document.getElementById('close-chat'), sendBtn=document.getElementById('send-chat'), chatInput=document.getElementById('chat-input'), messagesDiv=document.getElementById('chat-messages');
+    // Chatbot logic
+    const chatFixed=document.getElementById('chatbot-fixed');
+    const chatWindow=document.getElementById('chat-window');
+    const closeChat=document.getElementById('close-chat');
+    const sendBtn=document.getElementById('send-chat');
+    const chatInput=document.getElementById('chat-input');
+    const messagesDiv=document.getElementById('chat-messages');
+    
     chatFixed.onclick=()=>{ chatWindow.style.display='flex'; };
     closeChat.onclick=()=>{ chatWindow.style.display='none'; };
+    
     async function askGroq(question){
         if(!window.GROQ_CONFIG||!window.GROQ_CONFIG.API_KEY) return "⚠️ API key chưa được cấu hình.";
         const system="Bạn là trợ lý AI của server Minecraft NamMC SMP. Luật: không hack, không phá nhà, tôn trọng. Rank: NHẬP MÔN,CHIẾN BINH,THANH SẮT,HOÀNG KIM,KIM CƯƠNG,ĐẠI GIA,BẠC TỶ,LORD,CHÚA TỂ. IP Java:26.161.161.70:25565, IP Bedrock:seen-detected.gl.at.ply.gg:30284, Radmin: NammcZ1/Z2 mk2113226. Trả lời ngắn gọn, thân thiện.";
         try{
             const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
-                method:'POST', headers:{'Content-Type':'application/json','Authorization':`Bearer ${window.GROQ_CONFIG.API_KEY}`},
-                body:JSON.stringify({model:window.GROQ_CONFIG.MODEL||'mixtral-8x7b-32768',messages:[{role:"system",content:system},{role:"user",content:question}],temperature:0.7,max_tokens:400})
+                method:'POST', 
+                headers:{
+                    'Content-Type':'application/json',
+                    'Authorization':`Bearer ${window.GROQ_CONFIG.API_KEY}`
+                },
+                body:JSON.stringify({
+                    model:window.GROQ_CONFIG.MODEL||'mixtral-8x7b-32768',
+                    messages:[
+                        {role:"system", content:system},
+                        {role:"user", content:question}
+                    ],
+                    temperature:0.7,
+                    max_tokens:400
+                })
             });
             const data=await res.json();
+            if(data.error) return `❌ Lỗi: ${data.error.message}`;
             return data.choices[0].message.content;
-        }catch(e){ return "❌ Lỗi kết nối AI. Thử lại sau."; }
+        }catch(e){ 
+            console.error(e);
+            return "❌ Lỗi kết nối AI. Thử lại sau."; 
+        }
     }
+    
     async function sendMessage(){
-        const q=chatInput.value.trim(); if(!q) return;
+        const q=chatInput.value.trim(); 
+        if(!q) return;
         messagesDiv.innerHTML+=`<div class="message-user"><span>${escapeHtml(q)}</span></div>`;
-        chatInput.value=''; messagesDiv.scrollTop=messagesDiv.scrollHeight;
-        const typingDiv=document.createElement('div'); typingDiv.className='message-bot typing-indicator'; typingDiv.innerHTML='<span><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span> đang suy nghĩ...</span>';
-        messagesDiv.appendChild(typingDiv); messagesDiv.scrollTop=messagesDiv.scrollHeight;
+        chatInput.value=''; 
+        messagesDiv.scrollTop=messagesDiv.scrollHeight;
+        
+        const typingDiv=document.createElement('div'); 
+        typingDiv.className='message-bot typing-indicator'; 
+        typingDiv.innerHTML='<span><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span> đang suy nghĩ...</span>';
+        messagesDiv.appendChild(typingDiv); 
+        messagesDiv.scrollTop=messagesDiv.scrollHeight;
+        
         const reply=await askGroq(q);
         messagesDiv.removeChild(typingDiv);
-        // Hiệu ứng gõ chữ từng ký tự
-        const replyDiv=document.createElement('div'); replyDiv.className='message-bot'; replyDiv.innerHTML='<span></span>';
-        messagesDiv.appendChild(replyDiv); messagesDiv.scrollTop=messagesDiv.scrollHeight;
+        
+        const replyDiv=document.createElement('div'); 
+        replyDiv.className='message-bot'; 
+        replyDiv.innerHTML='<span></span>';
+        messagesDiv.appendChild(replyDiv); 
+        messagesDiv.scrollTop=messagesDiv.scrollHeight;
+        
         const span=replyDiv.querySelector('span');
-        for(let i=0;i<reply.length;i++){ span.innerHTML+=reply[i]; await new Promise(r=>setTimeout(r,20)); messagesDiv.scrollTop=messagesDiv.scrollHeight; }
+        for(let i=0;i<reply.length;i++){ 
+            span.innerHTML+=reply[i]; 
+            await new Promise(r=>setTimeout(r,20)); 
+            messagesDiv.scrollTop=messagesDiv.scrollHeight; 
+        }
     }
+    
     sendBtn.onclick=sendMessage;
     chatInput.addEventListener('keypress',e=>{ if(e.key==='Enter') sendMessage(); });
-    function escapeHtml(str){ return str.replace(/[&<>]/g,function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
     
-    // 5 sao, rank, tab...
-    const stars=document.querySelectorAll('#starRating i'), ratingMsg=document.getElementById('ratingMessage');
-    const saved=localStorage.getItem('serverRating'); if(saved) setRating(parseInt(saved));
-    stars.forEach(star=>{ star.addEventListener('click',function(){ let val=parseInt(this.getAttribute('data-value')); localStorage.setItem('serverRating',val); setRating(val); ratingMsg.innerText=`Cảm ơn bạn đã đánh giá ${val} ⭐!`; }); });
-    function setRating(val){ stars.forEach((star,idx)=>{ if(idx<val){ star.classList.remove('far'); star.classList.add('fas'); star.classList.add('active'); } else { star.classList.remove('fas'); star.classList.add('far'); star.classList.remove('active'); } }); }
+    function escapeHtml(str){ 
+        return str.replace(/[&<>]/g,function(m){ 
+            if(m==='&') return '&amp;'; 
+            if(m==='<') return '&lt;'; 
+            if(m==='>') return '&gt;'; 
+            return m;
+        }); 
+    }
+    
+    // 5 sao rating
+    const stars=document.querySelectorAll('#starRating i');
+    const ratingMsg=document.getElementById('ratingMessage');
+    const saved=localStorage.getItem('serverRating'); 
+    if(saved) setRating(parseInt(saved));
+    stars.forEach(star=>{ 
+        star.addEventListener('click',function(){ 
+            let val=parseInt(this.getAttribute('data-value')); 
+            localStorage.setItem('serverRating',val); 
+            setRating(val); 
+            ratingMsg.innerText=`Cảm ơn bạn đã đánh giá ${val} ⭐!`; 
+        }); 
+    });
+    function setRating(val){ 
+        stars.forEach((star,idx)=>{ 
+            if(idx<val){ 
+                star.classList.remove('far'); 
+                star.classList.add('fas'); 
+                star.classList.add('active'); 
+            } else { 
+                star.classList.remove('fas'); 
+                star.classList.add('far'); 
+                star.classList.remove('active'); 
+            } 
+        }); 
+    }
+    
+    // Rank
     const mockPlayers=[{name:"Player1",kills:320,rank:"CHÚA TỂ",reward:"50,000"},{name:"Player2",kills:210,rank:"LORD",reward:"20,000"},{name:"Player3",kills:120,rank:"ĐẠI GIA",reward:"10,000"}];
-    function loadRank(){ let body=document.getElementById('rankBody'); if(!body) return; body.innerHTML=mockPlayers.map((p,idx)=>`<tr><td>${idx+1}</td><td>${p.name}</td><td>${p.kills}</td><td>${p.rank}</td><td>${p.reward}</td></tr>`).join(''); }
-    document.getElementById('refreshRankBtn')?.addEventListener('click',loadRank); loadRank();
-    const pages={home:document.getElementById('page-home'),howtoplay_java:document.getElementById('page-howtoplay_java'),howtoplay_pe:document.getElementById('page-howtoplay_pe'),rank:document.getElementById('page-rank'),rules:document.getElementById('page-rules'),donate:document.getElementById('page-donate')};
+    function loadRank(){ 
+        let body=document.getElementById('rankBody'); 
+        if(!body) return; 
+        body.innerHTML=mockPlayers.map((p,idx)=>`<tr><td>${idx+1}</td><td>${p.name}</td><td>${p.kills}</td><td>${p.rank}</td><td>${p.reward}</td></tr>`).join(''); 
+    }
+    document.getElementById('refreshRankBtn')?.addEventListener('click',loadRank); 
+    loadRank();
+    
+    // Tab
+    const pages={
+        home:document.getElementById('page-home'),
+        howtoplay_java:document.getElementById('page-howtoplay_java'),
+        howtoplay_pe:document.getElementById('page-howtoplay_pe'),
+        rank:document.getElementById('page-rank'),
+        rules:document.getElementById('page-rules'),
+        donate:document.getElementById('page-donate')
+    };
     const navLinks=document.querySelectorAll('.nav-link');
-    function switchPage(pageId){ Object.keys(pages).forEach(k=>pages[k].classList.remove('active-page')); pages[pageId].classList.add('active-page'); navLinks.forEach(l=>{ l.classList.remove('active'); if(l.getAttribute('data-page')===pageId) l.classList.add('active'); }); }
+    function switchPage(pageId){ 
+        Object.keys(pages).forEach(k=>pages[k].classList.remove('active-page')); 
+        pages[pageId].classList.add('active-page'); 
+        navLinks.forEach(l=>{ 
+            l.classList.remove('active'); 
+            if(l.getAttribute('data-page')===pageId) l.classList.add('active'); 
+        }); 
+    }
     navLinks.forEach(l=>l.addEventListener('click',e=>{ e.preventDefault(); switchPage(l.getAttribute('data-page')); }));
+    
+    // Copy IP
     document.getElementById('serverIpBox')?.addEventListener('click',()=>{ navigator.clipboard.writeText('26.161.161.70:25565'); alert('✅ Đã copy IP Java!'); });
     document.getElementById('peIpBox')?.addEventListener('click',()=>{ navigator.clipboard.writeText('seen-detected.gl.at.ply.gg:30284'); alert('✅ Đã copy IP Bedrock!'); });
     document.getElementById('downloadRadminBtn')?.addEventListener('click',()=>window.open('https://www.radmin-vpn.com/'));
