@@ -349,7 +349,7 @@ Trả lời ngắn gọn, thân thiện, dễ hiểu.`;
                 method:'POST', 
                 headers:{'Content-Type':'application/json','Authorization':`Bearer ${window.GROQ_CONFIG.API_KEY}`},
                 body:JSON.stringify({
-                    model:window.GROQ_CONFIG.MODEL||'mixtral-8x7b-32768',
+                    model:window.GROQ_CONFIG.MODEL||'llama-3.1-8b-instant',
                     messages:[{role:"system",content:system},{role:"user",content:question}],
                     temperature:0.5,
                     max_tokens:500
