@@ -162,10 +162,6 @@
         .discord-notice { text-align: center; margin-top: 30px; padding: 16px; background: rgba(0, 100, 200, 0.2); border-radius: 40px; border: 1px solid #00aaff; transition: 0.2s; }
         .discord-notice:hover { background: rgba(0, 150, 255, 0.3); transform: scale(1.01); }
         .footer { text-align: center; padding: 35px 0 25px; border-top: 1px solid #00aaff; margin-top: 40px; transition: 0.3s; }
-        .training-list { list-style: none; padding-left: 0; }
-        .training-list li { margin: 15px 0; padding-left: 25px; position: relative; }
-        .training-list li:before { content: "▸"; color: #00aaff; position: absolute; left: 0; }
-        .training-list code { background: #111; padding: 2px 8px; border-radius: 12px; color: #00aaff; }
         #chatbot-fixed {
             position: fixed;
             bottom: 20px;
@@ -232,32 +228,81 @@
             <a class="nav-link active" data-page="home">HOME</a>
             <a class="nav-link" data-page="howtoplay_java">JAVA</a>
             <a class="nav-link" data-page="howtoplay_pe">BEDROCK</a>
-            <a class="nav-link" data-page="training">🎓 HUẤN LUYỆN</a>
             <a class="nav-link" data-page="rules">RULES</a>
             <a class="nav-link" data-page="donate">DONATE</a>
         </div>
     </nav>
 
     <!-- HOME -->
-    <div id="page-home" class="page active-page"><div class="glass-card"><div style="text-align:center;"><h2 style="font-family: 'Orbitron';">NAMMC SMP</h2><p>Hành Trình Sinh Tồn Đích Thực</p><div style="background:rgba(0,100,200,0.2);display:inline-block;padding:10px 25px;border-radius:40px;"><i class="fas fa-gem"></i> Active Community</div></div>
-    <div class="feature-grid"><div class="feature"><i class="fas fa-users"></i><h3>150+</h3><p>Thành viên</p></div><div class="feature"><i class="fas fa-tachometer-alt"></i><h3>20 TPS</h3><p>Luôn mượt</p></div><div class="feature"><i class="fas fa-shield-virus"></i><h3>Anti-Cheat</h3><p>Công bằng</p></div><div class="feature"><i class="fas fa-infinity"></i><h3>Không Reset</h3><p>Vĩnh cửu</p></div></div></div></div>
+    <div id="page-home" class="page active-page">
+        <div class="glass-card">
+            <div style="text-align:center;">
+                <h2 style="font-family: 'Orbitron';">NAMMC SMP</h2>
+                <p>Hành Trình Sinh Tồn Đích Thực</p>
+                <div style="background:rgba(0,100,200,0.2);display:inline-block;padding:10px 25px;border-radius:40px;">
+                    <i class="fas fa-gem"></i> Active Community
+                </div>
+            </div>
+            <div class="feature-grid">
+                <div class="feature"><i class="fas fa-users"></i><h3>150+</h3><p>Thành viên</p></div>
+                <div class="feature"><i class="fas fa-tachometer-alt"></i><h3>20 TPS</h3><p>Luôn mượt</p></div>
+                <div class="feature"><i class="fas fa-shield-virus"></i><h3>Anti-Cheat</h3><p>Công bằng</p></div>
+                <div class="feature"><i class="fas fa-infinity"></i><h3>Không Reset</h3><p>Vĩnh cửu</p></div>
+            </div>
+        </div>
+    </div>
 
     <!-- JAVA -->
-    <div id="page-howtoplay_java" class="page"><div class="glass-card"><div class="section-title"><i class="fas fa-laptop-code"></i> JAVA EDITION</div><div class="steps-grid"><div class="step-card"><i class="fas fa-download"></i><h3>Bước 1</h3><p><button class="ip-badge" id="downloadRadminBtn"><i class="fas fa-cloud-download-alt"></i> Tải Radmin</button></p></div><div class="step-card"><i class="fas fa-network-wired"></i><h3>Bước 2</h3><p>NammcZ1 / NammcZ2<br><i class="fas fa-key"></i> <strong>2113226</strong></p></div><div class="step-card"><i class="fas fa-gamepad"></i><h3>Bước 3</h3><p><span class="ip-badge" id="serverIpBox"><i class="fas fa-copy"></i> 26.161.161.70:25565</span></p></div></div></div></div>
+    <div id="page-howtoplay_java" class="page">
+        <div class="glass-card">
+            <div class="section-title"><i class="fas fa-laptop-code"></i> JAVA EDITION</div>
+            <div class="steps-grid">
+                <div class="step-card"><i class="fas fa-download"></i><h3>Bước 1</h3><p><button class="ip-badge" id="downloadRadminBtn"><i class="fas fa-cloud-download-alt"></i> Tải Radmin</button></p></div>
+                <div class="step-card"><i class="fas fa-network-wired"></i><h3>Bước 2</h3><p>NammcZ1 / NammcZ2<br><i class="fas fa-key"></i> <strong>2113226</strong></p></div>
+                <div class="step-card"><i class="fas fa-gamepad"></i><h3>Bước 3</h3><p><span class="ip-badge" id="serverIpBox"><i class="fas fa-copy"></i> 26.161.161.70:25565</span></p></div>
+            </div>
+        </div>
+    </div>
 
     <!-- BEDROCK -->
-    <div id="page-howtoplay_pe" class="page"><div class="glass-card"><div class="section-title"><i class="fas fa-mobile-alt"></i> BEDROCK (PE)</div><div class="steps-grid"><div class="step-card"><i class="fas fa-gamepad"></i><h3>Kết nối</h3><p><span class="ip-badge" id="peIpBox"><i class="fas fa-copy"></i> seen-detected.gl.at.ply.gg:30284</span></p><p>Phiên bản: 1.20.x</p></div><div class="step-card"><i class="fas fa-shield-alt"></i><h3>Bảo vệ</h3><p>Anti-Cheat Active</p></div></div></div></div>
-
-    <!-- HUẤN LUYỆN -->
-    <div id="page-training" class="page"><div class="glass-card"><div class="section-title"><i class="fas fa-graduation-cap"></i> 🎓 HUẤN LUYỆN TÂN BINH</div><div style="display: flex; flex-wrap: wrap; gap: 30px;"><div style="flex:1"><h3 style="color:#00aaff;">📌 Cài đặt Radmin VPN</h3><ul class="training-list"><li>Tải Radmin VPN tại <strong>radmin-vpn.com</strong></li><li>Cài đặt và mở phần mềm</li><li>Bấm <strong>Join Network</strong> → Nhập tên mạng: <code>NammcZ1</code> hoặc <code>NammcZ2</code></li><li>Mật khẩu: <code>2113226</code></li><li>Bật kết nối (đèn xanh)</li></ul></div><div style="flex:1"><h3 style="color:#00aaff;">🎮 Cách vào game</h3><ul class="training-list"><li><strong>Java Edition:</strong> Multiplayer → Add Server → IP <code>26.161.161.70:25565</code></li><li><strong>Bedrock (PE):</strong> Play → Servers → Add Server → IP <code>seen-detected.gl.at.ply.gg:30284</code></li><li>Lưu ý: Phải <strong>bật Radmin VPN</strong> trước khi mở game!</li></ul></div><div style="flex:1"><h3 style="color:#00aaff;">⚡ Lệnh cơ bản</h3><ul class="training-list"><li><code>/spawn</code> - Về điểm spawn</li><li><code>/claim</code> - Claim đất (dùng vàng → chọn vùng)</li><li><code>/kit</code> - Nhận đồ khởi đầu</li><li><code>/msg &lt;tên&gt;</code> - Nhắn tin riêng</li><li><code>/tpaccept</code> - Đồng ý dịch chuyển</li></ul></div></div><div style="margin-top: 30px; background: rgba(0,100,200,0.2); border-radius: 24px; padding: 20px;"><h3 style="color:#ffaa00;">⚠️ Lưu ý quan trọng</h3><ul class="training-list"><li><strong>Không hack</strong> (X-ray, fly, speed) → sẽ bị ban vĩnh viễn</li><li><strong>Không phá nhà, trộm cắp</strong> → báo Admin nếu bị grief</li><li><strong>Tôn trọng người chơi khác</strong> → chat lịch sự, không toxic</li><li>Gặp lỗi? Liên hệ <strong>Discord</strong> hoặc tag <strong>Admin</strong> trong game</li></ul></div></div></div>
+    <div id="page-howtoplay_pe" class="page">
+        <div class="glass-card">
+            <div class="section-title"><i class="fas fa-mobile-alt"></i> BEDROCK (PE)</div>
+            <div class="steps-grid">
+                <div class="step-card"><i class="fas fa-gamepad"></i><h3>Kết nối</h3><p><span class="ip-badge" id="peIpBox"><i class="fas fa-copy"></i> seen-detected.gl.at.ply.gg:30284</span></p><p>Phiên bản: 1.20.x</p></div>
+                <div class="step-card"><i class="fas fa-shield-alt"></i><h3>Bảo vệ</h3><p>Anti-Cheat Active</p></div>
+            </div>
+        </div>
+    </div>
 
     <!-- RULES -->
-    <div id="page-rules" class="page"><div class="glass-card"><div class="section-title"><i class="fas fa-gavel"></i> NỘI QUY</div><div class="rules-grid"><div class="rule-item"><h3><i class="fas fa-comment-dots"></i> HÀNH VI</h3><ul><li>Không Toxic</li><li>Không Spam</li><li>Tôn trọng</li></ul></div><div class="rule-item"><h3><i class="fas fa-dice-d6"></i> GAMEPLAY</h3><ul><li>Cấm Hack</li><li>Cấm Griefing</li><li>Không Bug lợi</li></ul></div><div class="rule-item"><h3><i class="fas fa-vpn"></i> HỆ THỐNG</h3><ul><li>Bảo mật</li><li>Không Lag</li><li>Báo lỗi Admin</li></ul></div></div><div class="discord-notice"><i class="fab fa-discord"></i> discord.gg/TRcuDzCqK</div></div></div>
+    <div id="page-rules" class="page">
+        <div class="glass-card">
+            <div class="section-title"><i class="fas fa-gavel"></i> NỘI QUY</div>
+            <div class="rules-grid">
+                <div class="rule-item"><h3><i class="fas fa-comment-dots"></i> HÀNH VI</h3><ul><li>Không Toxic</li><li>Không Spam</li><li>Tôn trọng</li></ul></div>
+                <div class="rule-item"><h3><i class="fas fa-dice-d6"></i> GAMEPLAY</h3><ul><li>Cấm Hack</li><li>Cấm Griefing</li><li>Không Bug lợi</li></ul></div>
+                <div class="rule-item"><h3><i class="fas fa-vpn"></i> HỆ THỐNG</h3><ul><li>Bảo mật</li><li>Không Lag</li><li>Báo lỗi Admin</li></ul></div>
+            </div>
+            <div class="discord-notice"><i class="fab fa-discord"></i> discord.gg/TRcuDzCqK</div>
+        </div>
+    </div>
 
     <!-- DONATE -->
-    <div id="page-donate" class="page"><div class="glass-card"><div class="section-title"><i class="fas fa-heart"></i> ỦNG HỘ</div><div class="donate-row"><div class="donate-card"><i class="fab fa-microsoft"></i><h3>MOMO</h3><img src="https://images2.imgbox.com/7b/16/QBdOOyJr_o.png" width="140"><p>Quét mã</p></div><div class="donate-card"><i class="fas fa-qrcode"></i><h3>ZALOPAY</h3><img src="https://images2.imgbox.com/64/b8/JlxuSl0x_o.png" width="140"><p>Quét mã</p></div></div></div></div>
+    <div id="page-donate" class="page">
+        <div class="glass-card">
+            <div class="section-title"><i class="fas fa-heart"></i> ỦNG HỘ</div>
+            <div class="donate-row">
+                <div class="donate-card"><i class="fab fa-microsoft"></i><h3>MOMO</h3><img src="https://images2.imgbox.com/7b/16/QBdOOyJr_o.png" width="140"><p>Quét mã</p></div>
+                <div class="donate-card"><i class="fas fa-qrcode"></i><h3>ZALOPAY</h3><img src="https://images2.imgbox.com/64/b8/JlxuSl0x_o.png" width="140"><p>Quét mã</p></div>
+            </div>
+        </div>
+    </div>
 
-    <footer class="footer"><p><i class="fas fa-crown"></i> NamMC SMP — Where blocks become stories</p><p>© 2026 NamMC | ⭐ Ủng hộ chúng tôi!</p></footer>
+    <footer class="footer">
+        <p><i class="fas fa-crown"></i> NamMC SMP — Where blocks become stories</p>
+        <p>© 2026 NamMC | ⭐ Ủng hộ chúng tôi!</p>
+    </footer>
 </div>
 
 <div id="chatbot-fixed"><img src="https://images2.imgbox.com/f9/f2/5UmO3Plu_o.png" alt="Chatbot"></div>
@@ -279,7 +324,7 @@
     for(let i=0;i<8;i++){ let cloud=document.createElement('div'); cloud.classList.add('cloud'); cloud.style.width=100+Math.random()*200+'px'; cloud.style.height=50+Math.random()*100+'px'; cloud.style.top=Math.random()*80+'%'; cloud.style.animationDuration=20+Math.random()*40+'s'; cloud.style.animationDelay=Math.random()*30+'s'; document.getElementById('cloudsContainer').appendChild(cloud); }
     for(let i=0;i<15;i++){ let star=document.createElement('div'); star.classList.add('shooting-star'); star.style.top=Math.random()*80+'%'; star.style.left=Math.random()*100+'%'; star.style.animationDuration=1+Math.random()*4+'s'; star.style.animationDelay=Math.random()*20+'s'; document.getElementById('shootingStarsContainer').appendChild(star); }
     
-    // Chatbot - Prompt tập trung vào Minecraft
+    // Chatbot
     const chatFixed=document.getElementById('chatbot-fixed');
     const chatWindow=document.getElementById('chat-window');
     const closeChat=document.getElementById('close-chat');
@@ -334,12 +379,11 @@ Trả lời ngắn gọn, thân thiện, dễ hiểu.`;
     
     function escapeHtml(str){ return str.replace(/[&<>]/g,function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
     
-    // Tab chuyển trang
+    // Tab
     const pages={
         home:document.getElementById('page-home'),
         howtoplay_java:document.getElementById('page-howtoplay_java'),
         howtoplay_pe:document.getElementById('page-howtoplay_pe'),
-        training:document.getElementById('page-training'),
         rules:document.getElementById('page-rules'),
         donate:document.getElementById('page-donate')
     };
