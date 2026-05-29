@@ -7,7 +7,6 @@
     <link rel="icon" type="image/png" href="https://images2.imgbox.com/6e/43/AM9bEJVa_o.png">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="api.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -18,6 +17,7 @@
             overflow-x: hidden;
             position: relative;
         }
+        /* Nền sao băng + mây */
         .star-bg {
             position: fixed;
             top: 0;
@@ -43,6 +43,18 @@
             70% { opacity: 1; }
             100% { transform: translateX(-300px) translateY(200px); opacity: 0; }
         }
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 60%;
+            filter: blur(40px);
+            animation: floatCloud linear infinite;
+            z-index: -1;
+        }
+        @keyframes floatCloud {
+            0% { transform: translateX(-20vw); opacity: 0.3; }
+            100% { transform: translateX(120vw); opacity: 0.6; }
+        }
         .animated-gradient {
             position: fixed;
             width: 100%;
@@ -57,6 +69,8 @@
             100% { opacity: 0.8; transform: scale(1.2); }
         }
         .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 2; }
+        
+        /* Glass Navbar */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -69,11 +83,12 @@
             backdrop-filter: blur(15px);
             border-radius: 60px;
             border: 1px solid rgba(0, 150, 255, 0.5);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 150, 255, 0.3);
+            transition: all 0.3s ease;
         }
+        .navbar:hover { border-color: #00aaff; box-shadow: 0 0 25px rgba(0, 170, 255, 0.3); }
         .logo { display: flex; align-items: center; gap: 18px; }
-        .logo img { height: 60px; filter: drop-shadow(0 0 12px #0088ff); animation: glowPulse 2s infinite; }
-        @keyframes glowPulse { 0%, 100% { filter: drop-shadow(0 0 5px #0088ff); } 50% { filter: drop-shadow(0 0 15px #00aaff); } }
+        .logo img { height: 60px; filter: drop-shadow(0 0 12px #0088ff); transition: 0.3s; }
+        .logo img:hover { filter: drop-shadow(0 0 20px #00aaff); transform: scale(1.02); }
         .rainbow-text {
             font-family: 'Orbitron', monospace;
             font-size: 2.2rem;
@@ -100,9 +115,11 @@
             cursor: pointer;
         }
         .nav-link.active, .nav-link:hover { border-bottom-color: #00aaff; color: #00aaff; text-shadow: 0 0 8px #0088ff; transform: translateY(-2px); }
-        .page { display: none; animation: fadeInUp 0.5s ease; }
+        
+        .page { display: none; animation: fadeInUp 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
         .page.active-page { display: block; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        
         .glass-card {
             background: rgba(0, 20, 40, 0.55);
             backdrop-filter: blur(16px);
@@ -110,7 +127,6 @@
             padding: 48px 40px;
             margin: 48px 0;
             border: 1px solid rgba(0, 150, 255, 0.4);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 100, 200, 0.2);
             transition: 0.3s;
         }
         .glass-card:hover { border-color: #00aaff; box-shadow: 0 0 30px rgba(0, 100, 200, 0.3); }
@@ -126,10 +142,10 @@
         .rank-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
         .rank-table th, .rank-table td { padding: 12px 15px; text-align: left; border-bottom: 1px solid rgba(0, 150, 255, 0.3); }
         .rank-table th { color: #00aaff; font-family: 'Orbitron', monospace; }
-        .rank-table tr:hover { background: rgba(0, 150, 255, 0.1); }
+        .rank-table tr:hover { background: rgba(0, 150, 255, 0.1); transition: 0.2s; }
         .rating-stars { display: flex; gap: 10px; justify-content: center; margin: 20px 0; }
         .rating-stars i { font-size: 2rem; cursor: pointer; transition: 0.2s; color: #444; }
-        .rating-stars i:hover, .rating-stars i.active { color: #ffcc00; text-shadow: 0 0 10px #ffaa00; }
+        .rating-stars i:hover, .rating-stars i.active { color: #ffcc00; text-shadow: 0 0 10px #ffaa00; transform: scale(1.1); }
         .steps-grid, .feature-grid, .rules-grid, .donate-row { display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; }
         .step-card, .feature, .rule-item, .donate-card {
             background: rgba(0, 0, 0, 0.5);
@@ -137,12 +153,11 @@
             padding: 24px;
             text-align: center;
             border: 1px solid rgba(0, 150, 255, 0.3);
-            transition: 0.3s;
             flex: 1;
             min-width: 220px;
+            transition: 0.3s;
         }
-        .step-card:hover, .feature:hover, .donate-card:hover { transform: translateY(-5px); border-color: #00aaff; }
-        .step-card i, .feature i, .donate-card i { font-size: 2rem; color: #00aaff; margin-bottom: 12px; }
+        .step-card:hover, .feature:hover, .donate-card:hover { transform: translateY(-8px); border-color: #00aaff; box-shadow: 0 0 25px rgba(0, 150, 255, 0.3); }
         .ip-badge {
             background: linear-gradient(135deg, #0066aa, #0099ff);
             display: inline-block;
@@ -153,22 +168,76 @@
             cursor: pointer;
             margin-top: 12px;
             color: white;
+            transition: 0.2s;
         }
-        .discord-notice { text-align: center; margin-top: 30px; padding: 16px; background: rgba(0, 100, 200, 0.2); border-radius: 40px; border: 1px solid #00aaff; }
-        .footer { text-align: center; padding: 35px 0 25px; border-top: 1px solid #00aaff; margin-top: 40px; background: rgba(0, 0, 0, 0.5); border-radius: 40px 40px 0 0; }
-        @media (max-width: 780px) { .container { padding: 0 20px; } .navbar { flex-direction: column; text-align: center; } .rainbow-text { font-size: 1.3rem; } .nav-links { justify-content: center; } }
+        .ip-badge:active { transform: scale(0.96); }
+        .discord-notice { text-align: center; margin-top: 30px; padding: 16px; background: rgba(0, 100, 200, 0.2); border-radius: 40px; border: 1px solid #00aaff; transition: 0.2s; }
+        .discord-notice:hover { background: rgba(0, 150, 255, 0.3); transform: scale(1.01); }
+        .footer { text-align: center; padding: 35px 0 25px; border-top: 1px solid #00aaff; margin-top: 40px; transition: 0.3s; }
+        
+        /* CHATBOT CỐ ĐỊNH */
+        #chatbot-fixed {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            cursor: pointer;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        #chatbot-fixed img {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            box-shadow: 0 0 20px #00aaff;
+            transition: 0.3s;
+            border: 2px solid #00aaff;
+        }
+        #chatbot-fixed img:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 0 35px #00aaff; }
+        .chat-window {
+            position: fixed;
+            bottom: 95px;
+            right: 20px;
+            width: 380px;
+            height: 520px;
+            background: rgba(0, 20, 40, 0.96);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid #00aaff;
+            box-shadow: 0 0 30px rgba(0, 150, 255, 0.4);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 9998;
+            animation: slideInRight 0.3s ease;
+        }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+        .chat-header { padding: 15px; background: #00aaff; color: white; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+        .chat-messages { flex: 1; padding: 15px; overflow-y: auto; max-height: 380px; }
+        .chat-input-area { display: flex; padding: 10px; gap: 8px; border-top: 1px solid #00aaff; }
+        .chat-input-area input { flex: 1; padding: 10px; border-radius: 30px; border: none; background: #111; color: white; transition: 0.2s; }
+        .chat-input-area input:focus { outline: none; box-shadow: 0 0 8px #00aaff; }
+        .chat-input-area button { background: #00aaff; border: none; border-radius: 30px; padding: 0 16px; cursor: pointer; color: white; transition: 0.2s; }
+        .chat-input-area button:hover { background: #0088dd; transform: scale(1.02); }
+        .message-user { text-align: right; margin-bottom: 10px; animation: fadeMsg 0.2s ease; }
+        .message-user span { background: #00aaff; padding: 8px 14px; border-radius: 20px; display: inline-block; }
+        .message-bot { margin-bottom: 10px; animation: fadeMsg 0.2s ease; }
+        .message-bot span { background: #1a4a6a; padding: 8px 14px; border-radius: 20px; display: inline-block; }
+        .typing-indicator span { background: #1a4a6a; padding: 8px 14px; border-radius: 20px; display: inline-block; }
+        .typing-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #fff; margin: 0 2px; animation: typingDot 1.2s infinite; }
+        @keyframes typingDot { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-6px); opacity: 1; } }
+        @keyframes fadeMsg { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 600px) { .chat-window { width: 90%; right: 5%; left: 5%; bottom: 80px; } }
     </style>
 </head>
 <body>
 <div class="star-bg"></div>
 <div class="animated-gradient"></div>
 <div id="shootingStarsContainer"></div>
+<div id="cloudsContainer"></div>
 <div class="container">
     <nav class="navbar">
-        <div class="logo">
-            <img src="https://images2.imgbox.com/6e/43/AM9bEJVa_o.png" alt="Logo">
-            <div><h1 class="rainbow-text">NamMC SMP</h1><p>Next-Gen Minecraft Server</p></div>
-        </div>
+        <div class="logo"><img src="https://images2.imgbox.com/6e/43/AM9bEJVa_o.png"><div><h1 class="rainbow-text">NamMC SMP</h1><p>Next-Gen Minecraft Server</p></div></div>
         <div class="nav-links">
             <a class="nav-link active" data-page="home">HOME</a>
             <a class="nav-link" data-page="howtoplay_java">JAVA</a>
@@ -179,157 +248,82 @@
         </div>
     </nav>
 
-    <!-- HOME -->
-    <div id="page-home" class="page active-page">
-        <div class="glass-card">
-            <div style="text-align: center;">
-                <h2 style="font-family: 'Orbitron'; font-size: 2.5rem;">NAMMC SMP</h2>
-                <p style="margin: 20px 0;">Hành Trình Sinh Tồn Đích Thực — Cộng Đồng Văn Minh</p>
-                <div class="hero-tag" style="background: rgba(0,100,200,0.2); display: inline-block; padding: 10px 25px; border-radius: 40px;">
-                    <i class="fas fa-gem"></i> No Pay-to-Win | Active Community
-                </div>
-            </div>
-            <div class="feature-grid">
-                <div class="feature"><i class="fas fa-users"></i><h3>150+</h3><p>Thành viên</p></div>
-                <div class="feature"><i class="fas fa-tachometer-alt"></i><h3>20 TPS</h3><p>Luôn mượt</p></div>
-                <div class="feature"><i class="fas fa-shield-virus"></i><h3>Anti-Cheat</h3><p>Công bằng</p></div>
-                <div class="feature"><i class="fas fa-infinity"></i><h3>Không Reset</h3><p>Vĩnh cửu</p></div>
-            </div>
-            <div style="text-align: center; margin-top: 40px;">
-                <h3><i class="fas fa-star"></i> Đánh giá máy chủ</h3>
-                <div class="rating-stars" id="starRating">
-                    <i class="far fa-star" data-value="1"></i><i class="far fa-star" data-value="2"></i><i class="far fa-star" data-value="3"></i><i class="far fa-star" data-value="4"></i><i class="far fa-star" data-value="5"></i>
-                </div>
-                <p id="ratingMessage" style="margin-top: 10px; color: #aaa;"></p>
-            </div>
-        </div>
-    </div>
-
-    <!-- JAVA -->
-    <div id="page-howtoplay_java" class="page">
-        <div class="glass-card">
-            <div class="section-title"><i class="fas fa-laptop-code"></i> JAVA EDITION</div>
-            <div class="steps-grid">
-                <div class="step-card"><i class="fas fa-download"></i><h3>Bước 1</h3><p><button class="ip-badge" id="downloadRadminBtn"><i class="fas fa-cloud-download-alt"></i> Tải Radmin</button></p></div>
-                <div class="step-card"><i class="fas fa-network-wired"></i><h3>Bước 2</h3><p>NammcZ1 / NammcZ2<br><i class="fas fa-key"></i> <strong>2113226</strong></p></div>
-                <div class="step-card"><i class="fas fa-gamepad"></i><h3>Bước 3</h3><p><span class="ip-badge" id="serverIpBox"><i class="fas fa-copy"></i> 26.161.161.70:25565</span></p></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- BEDROCK -->
-    <div id="page-howtoplay_pe" class="page">
-        <div class="glass-card">
-            <div class="section-title"><i class="fas fa-mobile-alt"></i> BEDROCK (PE)</div>
-            <div class="steps-grid">
-                <div class="step-card"><i class="fas fa-gamepad"></i><h3>Kết nối</h3><p><span class="ip-badge" id="peIpBox"><i class="fas fa-copy"></i> seen-detected.gl.at.ply.gg:30284</span></p><p>Phiên bản: 1.20.x</p></div>
-                <div class="step-card"><i class="fas fa-shield-alt"></i><h3>Bảo vệ</h3><p>Anti-Cheat Active</p></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- RANK -->
-    <div id="page-rank" class="page">
-        <div class="glass-card">
-            <div class="section-title"><i class="fas fa-trophy"></i> BẢNG XẾP HẠNG</div>
-            <table class="rank-table" id="rankTable">
-                <thead><tr><th>#</th><th>Người chơi</th><th>Kill</th><th>Rank</th><th>Thưởng</th></tr></thead>
-                <tbody id="rankBody"></tbody>
-            </table>
-            <button class="ip-badge" id="refreshRankBtn" style="margin-top: 20px;"><i class="fas fa-sync-alt"></i> Tải lại</button>
-        </div>
-    </div>
-
-    <!-- RULES -->
-    <div id="page-rules" class="page">
-        <div class="glass-card">
-            <div class="section-title"><i class="fas fa-gavel"></i> NỘI QUY</div>
-            <div class="rules-grid">
-                <div class="rule-item"><h3><i class="fas fa-comment-dots"></i> HÀNH VI</h3><ul><li>Không Toxic</li><li>Không Spam</li><li>Tôn trọng</li></ul></div>
-                <div class="rule-item"><h3><i class="fas fa-dice-d6"></i> GAMEPLAY</h3><ul><li>Cấm Hack</li><li>Cấm Griefing</li><li>Không Bug lợi</li></ul></div>
-                <div class="rule-item"><h3><i class="fas fa-vpn"></i> HỆ THỐNG</h3><ul><li>Bảo mật</li><li>Không Lag</li><li>Báo lỗi Admin</li></ul></div>
-            </div>
-            <div class="discord-notice"><i class="fab fa-discord"></i> discord.gg/TRcuDzCqK</div>
-        </div>
-    </div>
-
-    <!-- DONATE -->
-    <div id="page-donate" class="page">
-        <div class="glass-card">
-            <div class="section-title"><i class="fas fa-heart"></i> ỦNG HỘ</div>
-            <div class="donate-row">
-                <div class="donate-card"><i class="fab fa-microsoft"></i><h3>MOMO</h3><img src="https://images2.imgbox.com/7b/16/QBdOOyJr_o.png" width="140"><p>Quét mã</p></div>
-                <div class="donate-card"><i class="fas fa-qrcode"></i><h3>ZALOPAY</h3><img src="https://images2.imgbox.com/64/b8/JlxuSl0x_o.png" width="140"><p>Quét mã</p></div>
-            </div>
-        </div>
-    </div>
-
+    <div id="page-home" class="page active-page"><div class="glass-card"><div style="text-align:center;"><h2 style="font-family: 'Orbitron';">NAMMC SMP</h2><p>Hành Trình Sinh Tồn Đích Thực</p><div style="background:rgba(0,100,200,0.2);display:inline-block;padding:10px 25px;border-radius:40px;"><i class="fas fa-gem"></i> No Pay-to-Win | Active Community</div></div>
+    <div class="feature-grid"><div class="feature"><i class="fas fa-users"></i><h3>150+</h3><p>Thành viên</p></div><div class="feature"><i class="fas fa-tachometer-alt"></i><h3>20 TPS</h3><p>Luôn mượt</p></div><div class="feature"><i class="fas fa-shield-virus"></i><h3>Anti-Cheat</h3><p>Công bằng</p></div><div class="feature"><i class="fas fa-infinity"></i><h3>Không Reset</h3><p>Vĩnh cửu</p></div></div>
+    <div style="text-align:center;margin-top:40px;"><h3><i class="fas fa-star"></i> Đánh giá máy chủ</h3><div class="rating-stars" id="starRating"><i class="far fa-star" data-value="1"></i><i class="far fa-star" data-value="2"></i><i class="far fa-star" data-value="3"></i><i class="far fa-star" data-value="4"></i><i class="far fa-star" data-value="5"></i></div><p id="ratingMessage"></p></div></div></div>
+    <div id="page-howtoplay_java" class="page"><div class="glass-card"><div class="section-title"><i class="fas fa-laptop-code"></i> JAVA EDITION</div><div class="steps-grid"><div class="step-card"><i class="fas fa-download"></i><h3>Bước 1</h3><p><button class="ip-badge" id="downloadRadminBtn"><i class="fas fa-cloud-download-alt"></i> Tải Radmin</button></p></div><div class="step-card"><i class="fas fa-network-wired"></i><h3>Bước 2</h3><p>NammcZ1 / NammcZ2<br><i class="fas fa-key"></i> <strong>2113226</strong></p></div><div class="step-card"><i class="fas fa-gamepad"></i><h3>Bước 3</h3><p><span class="ip-badge" id="serverIpBox"><i class="fas fa-copy"></i> 26.161.161.70:25565</span></p></div></div></div></div>
+    <div id="page-howtoplay_pe" class="page"><div class="glass-card"><div class="section-title"><i class="fas fa-mobile-alt"></i> BEDROCK (PE)</div><div class="steps-grid"><div class="step-card"><i class="fas fa-gamepad"></i><h3>Kết nối</h3><p><span class="ip-badge" id="peIpBox"><i class="fas fa-copy"></i> seen-detected.gl.at.ply.gg:30284</span></p><p>Phiên bản: 1.20.x</p></div><div class="step-card"><i class="fas fa-shield-alt"></i><h3>Bảo vệ</h3><p>Anti-Cheat Active</p></div></div></div></div>
+    <div id="page-rank" class="page"><div class="glass-card"><div class="section-title"><i class="fas fa-trophy"></i> BẢNG XẾP HẠNG</div><table class="rank-table" id="rankTable"><thead><tr><th>#</th><th>Người chơi</th><th>Kill</th><th>Rank</th><th>Thưởng</th></tr></thead><tbody id="rankBody"></tbody></table><button class="ip-badge" id="refreshRankBtn"><i class="fas fa-sync-alt"></i> Tải lại</button></div></div>
+    <div id="page-rules" class="page"><div class="glass-card"><div class="section-title"><i class="fas fa-gavel"></i> NỘI QUY</div><div class="rules-grid"><div class="rule-item"><h3><i class="fas fa-comment-dots"></i> HÀNH VI</h3><ul><li>Không Toxic</li><li>Không Spam</li><li>Tôn trọng</li></ul></div><div class="rule-item"><h3><i class="fas fa-dice-d6"></i> GAMEPLAY</h3><ul><li>Cấm Hack</li><li>Cấm Griefing</li><li>Không Bug lợi</li></ul></div><div class="rule-item"><h3><i class="fas fa-vpn"></i> HỆ THỐNG</h3><ul><li>Bảo mật</li><li>Không Lag</li><li>Báo lỗi Admin</li></ul></div></div><div class="discord-notice"><i class="fab fa-discord"></i> discord.gg/TRcuDzCqK</div></div></div>
+    <div id="page-donate" class="page"><div class="glass-card"><div class="section-title"><i class="fas fa-heart"></i> ỦNG HỘ</div><div class="donate-row"><div class="donate-card"><i class="fab fa-microsoft"></i><h3>MOMO</h3><img src="https://images2.imgbox.com/7b/16/QBdOOyJr_o.png" width="140"><p>Quét mã</p></div><div class="donate-card"><i class="fas fa-qrcode"></i><h3>ZALOPAY</h3><img src="https://images2.imgbox.com/64/b8/JlxuSl0x_o.png" width="140"><p>Quét mã</p></div></div></div></div>
     <footer class="footer"><p><i class="fas fa-crown"></i> NamMC SMP — Where blocks become stories</p><p>© 2025 NamMC | ⭐ Đánh giá 5 sao ủng hộ chúng tôi!</p></footer>
 </div>
 
+<div id="chatbot-fixed"><img src="https://images2.imgbox.com/f9/f2/5UmO3Plu_o.png" alt="Chatbot"></div>
+<div id="chat-window" class="chat-window" style="display: none;">
+    <div class="chat-header"><span><i class="fas fa-robot"></i> NamMC AI Assistant</span><i id="close-chat" class="fas fa-times" style="cursor: pointer;"></i></div>
+    <div class="chat-messages" id="chat-messages"><div class="message-bot"><span>🤖 Chào bạn! Tôi có thể giúp gì về server NamMC?</span></div></div>
+    <div class="chat-input-area"><input type="text" id="chat-input" placeholder="Hỏi về luật, rank, cách chơi..."><button id="send-chat"><i class="fas fa-paper-plane"></i></button></div>
+</div>
+
+<script src="groq-config.js"></script>
 <script>
-    // SAO BĂNG
-    function createShootingStars() {
-        const container = document.getElementById('shootingStarsContainer');
-        for (let i = 0; i < 12; i++) {
-            const star = document.createElement('div');
-            star.classList.add('shooting-star');
-            star.style.top = Math.random() * 80 + '%';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.animationDuration = 1 + Math.random() * 3 + 's';
-            star.style.animationDelay = Math.random() * 15 + 's';
-            container.appendChild(star);
-        }
+(function(){
+    if(window.location.pathname.includes('admin.html')){ document.getElementById('chatbot-fixed').style.display='none'; document.getElementById('chat-window').style.display='none'; return; }
+    // Tạo hiệu ứng mây, sao băng
+    for(let i=0;i<8;i++){ let cloud=document.createElement('div'); cloud.classList.add('cloud'); cloud.style.width=100+Math.random()*200+'px'; cloud.style.height=50+Math.random()*100+'px'; cloud.style.top=Math.random()*80+'%'; cloud.style.animationDuration=20+Math.random()*40+'s'; cloud.style.animationDelay=Math.random()*30+'s'; document.getElementById('cloudsContainer').appendChild(cloud); }
+    for(let i=0;i<15;i++){ let star=document.createElement('div'); star.classList.add('shooting-star'); star.style.top=Math.random()*80+'%'; star.style.left=Math.random()*100+'%'; star.style.animationDuration=1+Math.random()*4+'s'; star.style.animationDelay=Math.random()*20+'s'; document.getElementById('shootingStarsContainer').appendChild(star); }
+    
+    // Chatbot logic với hiệu ứng gõ
+    const chatFixed=document.getElementById('chatbot-fixed'), chatWindow=document.getElementById('chat-window'), closeChat=document.getElementById('close-chat'), sendBtn=document.getElementById('send-chat'), chatInput=document.getElementById('chat-input'), messagesDiv=document.getElementById('chat-messages');
+    chatFixed.onclick=()=>{ chatWindow.style.display='flex'; };
+    closeChat.onclick=()=>{ chatWindow.style.display='none'; };
+    async function askGroq(question){
+        if(!window.GROQ_CONFIG||!window.GROQ_CONFIG.API_KEY) return "⚠️ API key chưa được cấu hình.";
+        const system="Bạn là trợ lý AI của server Minecraft NamMC SMP. Luật: không hack, không phá nhà, tôn trọng. Rank: NHẬP MÔN,CHIẾN BINH,THANH SẮT,HOÀNG KIM,KIM CƯƠNG,ĐẠI GIA,BẠC TỶ,LORD,CHÚA TỂ. IP Java:26.161.161.70:25565, IP Bedrock:seen-detected.gl.at.ply.gg:30284, Radmin: NammcZ1/Z2 mk2113226. Trả lời ngắn gọn, thân thiện.";
+        try{
+            const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+                method:'POST', headers:{'Content-Type':'application/json','Authorization':`Bearer ${window.GROQ_CONFIG.API_KEY}`},
+                body:JSON.stringify({model:window.GROQ_CONFIG.MODEL||'mixtral-8x7b-32768',messages:[{role:"system",content:system},{role:"user",content:question}],temperature:0.7,max_tokens:400})
+            });
+            const data=await res.json();
+            return data.choices[0].message.content;
+        }catch(e){ return "❌ Lỗi kết nối AI. Thử lại sau."; }
     }
-    createShootingStars();
-
-    // 5 SAO RATING (localStorage)
-    const stars = document.querySelectorAll('#starRating i');
-    const ratingMsg = document.getElementById('ratingMessage');
-    const saved = localStorage.getItem('serverRating');
-    if (saved) setRating(parseInt(saved));
-    stars.forEach(star => {
-        star.addEventListener('click', function() {
-            const val = parseInt(this.getAttribute('data-value'));
-            localStorage.setItem('serverRating', val);
-            setRating(val);
-            ratingMsg.innerText = `Cảm ơn bạn đã đánh giá ${val} ⭐!`;
-            if (typeof window.saveRatingToAPI === 'function') window.saveRatingToAPI(val);
-        });
-    });
-    function setRating(val) {
-        stars.forEach((star, idx) => {
-            if (idx < val) { star.classList.remove('far'); star.classList.add('fas'); star.classList.add('active'); }
-            else { star.classList.remove('fas'); star.classList.add('far'); star.classList.remove('active'); }
-        });
+    async function sendMessage(){
+        const q=chatInput.value.trim(); if(!q) return;
+        messagesDiv.innerHTML+=`<div class="message-user"><span>${escapeHtml(q)}</span></div>`;
+        chatInput.value=''; messagesDiv.scrollTop=messagesDiv.scrollHeight;
+        const typingDiv=document.createElement('div'); typingDiv.className='message-bot typing-indicator'; typingDiv.innerHTML='<span><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span> đang suy nghĩ...</span>';
+        messagesDiv.appendChild(typingDiv); messagesDiv.scrollTop=messagesDiv.scrollHeight;
+        const reply=await askGroq(q);
+        messagesDiv.removeChild(typingDiv);
+        // Hiệu ứng gõ chữ từng ký tự
+        const replyDiv=document.createElement('div'); replyDiv.className='message-bot'; replyDiv.innerHTML='<span></span>';
+        messagesDiv.appendChild(replyDiv); messagesDiv.scrollTop=messagesDiv.scrollHeight;
+        const span=replyDiv.querySelector('span');
+        for(let i=0;i<reply.length;i++){ span.innerHTML+=reply[i]; await new Promise(r=>setTimeout(r,20)); messagesDiv.scrollTop=messagesDiv.scrollHeight; }
     }
-
-    // RANK - GỌI TỪ API
-    async function loadRank() {
-        const rankBody = document.getElementById('rankBody');
-        if (!rankBody) return;
-        const players = typeof window.getPlayerRanking === 'function' ? await window.getPlayerRanking() : window.mockPlayers;
-        rankBody.innerHTML = players.map((p, idx) => `
-            <tr><td>${idx+1}</td><td>${p.name}</td><td>${p.kills}</td><td>${p.rank}</td><td>${p.reward}</td></tr>
-        `).join('');
-    }
-    document.getElementById('refreshRankBtn')?.addEventListener('click', loadRank);
-    loadRank();
-
-    // TAB
-    const pages = {
-        home: document.getElementById('page-home'), howtoplay_java: document.getElementById('page-howtoplay_java'),
-        howtoplay_pe: document.getElementById('page-howtoplay_pe'), rank: document.getElementById('page-rank'),
-        rules: document.getElementById('page-rules'), donate: document.getElementById('page-donate')
-    };
-    const navLinks = document.querySelectorAll('.nav-link');
-    function switchPage(pageId) { Object.keys(pages).forEach(k => pages[k].classList.remove('active-page')); pages[pageId].classList.add('active-page'); navLinks.forEach(l => { l.classList.remove('active'); if (l.getAttribute('data-page') === pageId) l.classList.add('active'); }); }
-    navLinks.forEach(l => l.addEventListener('click', (e) => { e.preventDefault(); switchPage(l.getAttribute('data-page')); }));
-
-    // COPY IP
-    document.getElementById('serverIpBox')?.addEventListener('click', () => { navigator.clipboard.writeText('26.161.161.70:25565'); alert('✅ Đã copy IP Java!'); });
-    document.getElementById('peIpBox')?.addEventListener('click', () => { navigator.clipboard.writeText('seen-detected.gl.at.ply.gg:30284'); alert('✅ Đã copy IP Bedrock!'); });
-    document.getElementById('downloadRadminBtn')?.addEventListener('click', () => window.open('https://www.radmin-vpn.com/'));
+    sendBtn.onclick=sendMessage;
+    chatInput.addEventListener('keypress',e=>{ if(e.key==='Enter') sendMessage(); });
+    function escapeHtml(str){ return str.replace(/[&<>]/g,function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+    
+    // 5 sao, rank, tab...
+    const stars=document.querySelectorAll('#starRating i'), ratingMsg=document.getElementById('ratingMessage');
+    const saved=localStorage.getItem('serverRating'); if(saved) setRating(parseInt(saved));
+    stars.forEach(star=>{ star.addEventListener('click',function(){ let val=parseInt(this.getAttribute('data-value')); localStorage.setItem('serverRating',val); setRating(val); ratingMsg.innerText=`Cảm ơn bạn đã đánh giá ${val} ⭐!`; }); });
+    function setRating(val){ stars.forEach((star,idx)=>{ if(idx<val){ star.classList.remove('far'); star.classList.add('fas'); star.classList.add('active'); } else { star.classList.remove('fas'); star.classList.add('far'); star.classList.remove('active'); } }); }
+    const mockPlayers=[{name:"Player1",kills:320,rank:"CHÚA TỂ",reward:"50,000"},{name:"Player2",kills:210,rank:"LORD",reward:"20,000"},{name:"Player3",kills:120,rank:"ĐẠI GIA",reward:"10,000"}];
+    function loadRank(){ let body=document.getElementById('rankBody'); if(!body) return; body.innerHTML=mockPlayers.map((p,idx)=>`<tr><td>${idx+1}</td><td>${p.name}</td><td>${p.kills}</td><td>${p.rank}</td><td>${p.reward}</td></tr>`).join(''); }
+    document.getElementById('refreshRankBtn')?.addEventListener('click',loadRank); loadRank();
+    const pages={home:document.getElementById('page-home'),howtoplay_java:document.getElementById('page-howtoplay_java'),howtoplay_pe:document.getElementById('page-howtoplay_pe'),rank:document.getElementById('page-rank'),rules:document.getElementById('page-rules'),donate:document.getElementById('page-donate')};
+    const navLinks=document.querySelectorAll('.nav-link');
+    function switchPage(pageId){ Object.keys(pages).forEach(k=>pages[k].classList.remove('active-page')); pages[pageId].classList.add('active-page'); navLinks.forEach(l=>{ l.classList.remove('active'); if(l.getAttribute('data-page')===pageId) l.classList.add('active'); }); }
+    navLinks.forEach(l=>l.addEventListener('click',e=>{ e.preventDefault(); switchPage(l.getAttribute('data-page')); }));
+    document.getElementById('serverIpBox')?.addEventListener('click',()=>{ navigator.clipboard.writeText('26.161.161.70:25565'); alert('✅ Đã copy IP Java!'); });
+    document.getElementById('peIpBox')?.addEventListener('click',()=>{ navigator.clipboard.writeText('seen-detected.gl.at.ply.gg:30284'); alert('✅ Đã copy IP Bedrock!'); });
+    document.getElementById('downloadRadminBtn')?.addEventListener('click',()=>window.open('https://www.radmin-vpn.com/'));
+})();
 </script>
 </body>
 </html>
