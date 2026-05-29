@@ -3,386 +3,333 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>NamMC SMP | Server Minecraft</title>
-    <!-- Favicon -->
+    <title>NamMC SMP | Minecraft Server</title>
     <link rel="icon" type="image/png" href="https://images2.imgbox.com/6e/43/AM9bEJVa_o.png">
-    <link rel="shortcut icon" type="image/png" href="https://images2.imgbox.com/6e/43/AM9bEJVa_o.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="api.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Inter', 'Arial', sans-serif;
-            background: linear-gradient(145deg, #b8e1fc 0%, #8fc9f0 40%, #6eb0dc 100%);
-            color: #1e2f2c;
-            line-height: 1.5;
+            font-family: 'Inter', sans-serif;
+            background: #000000;
+            color: #e0e0e0;
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
         }
-        .sky {
+        .star-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
+            background: radial-gradient(circle at 20% 30%, #0a0f1a, #000000);
+            z-index: -2;
         }
-        .cloud {
+        .shooting-star {
             position: absolute;
-            background: rgba(255, 255, 245, 0.92);
-            border-radius: 80%;
-            filter: blur(18px);
-            animation: floatCloud linear infinite;
+            width: 2px;
+            height: 2px;
+            background: #00aaff;
+            border-radius: 50%;
+            box-shadow: 0 0 6px 2px #00aaff;
+            animation: shootStar linear infinite;
+            opacity: 0;
+            z-index: -1;
         }
-        @keyframes floatCloud {
-            0% { transform: translateX(-20vw); opacity: 0.5; }
-            100% { transform: translateX(120vw); opacity: 0.95; }
+        @keyframes shootStar {
+            0% { transform: translateX(0) translateY(0); opacity: 1; }
+            70% { opacity: 1; }
+            100% { transform: translateX(-300px) translateY(200px); opacity: 0; }
         }
-        .sunlight {
+        .animated-gradient {
             position: fixed;
-            top: -20%;
-            left: -10%;
-            width: 120%;
-            height: 120%;
-            background: radial-gradient(ellipse at 30% 20%, rgba(255,245,180,0.25) 0%, transparent 70%);
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 100, 200, 0.15) 0%, transparent 80%);
+            animation: pulseGradient 6s infinite alternate;
+            z-index: -1;
             pointer-events: none;
-            z-index: 0;
-            animation: sunGlow 12s infinite alternate;
         }
-        @keyframes sunGlow {
-            0% { opacity: 0.4; transform: scale(1); }
-            100% { opacity: 0.8; transform: scale(1.05); }
+        @keyframes pulseGradient {
+            0% { opacity: 0.3; transform: scale(1); }
+            100% { opacity: 0.8; transform: scale(1.2); }
         }
-        .container { max-width: 1300px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 2; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 2; }
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 20px;
-            padding: 18px 32px;
-            margin: 20px 0;
-            background: rgba(255, 250, 225, 0.75);
-            backdrop-filter: blur(12px);
+            padding: 20px 32px;
+            margin: 25px 0;
+            background: rgba(0, 20, 40, 0.6);
+            backdrop-filter: blur(15px);
             border-radius: 60px;
-            border: 1px solid rgba(245, 200, 100, 0.6);
+            border: 1px solid rgba(0, 150, 255, 0.5);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 150, 255, 0.3);
         }
-        .logo { display: flex; align-items: center; gap: 15px; }
-        .logo img { height: 55px; border-radius: 14px; }
+        .logo { display: flex; align-items: center; gap: 18px; }
+        .logo img { height: 60px; filter: drop-shadow(0 0 12px #0088ff); animation: glowPulse 2s infinite; }
+        @keyframes glowPulse { 0%, 100% { filter: drop-shadow(0 0 5px #0088ff); } 50% { filter: drop-shadow(0 0 15px #00aaff); } }
         .rainbow-text {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(90deg, #ff0000, #ff7700, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+            font-family: 'Orbitron', monospace;
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #0088ff, #00ccff, #00ffcc, #0088ff);
+            background-size: 300% auto;
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
-            animation: shimmer 3s infinite;
+            animation: rainbowFlow 4s linear infinite;
         }
-        @keyframes shimmer { 0% { background-position: 0%; } 100% { background-position: 200%; } }
-        .logo p { font-size: 0.7rem; background: #fff6e0cc; padding: 4px 12px; border-radius: 30px; }
-        .nav-links { display: flex; gap: 36px; flex-wrap: wrap; }
+        @keyframes rainbowFlow { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
+        .logo p { font-size: 0.7rem; color: #88ccff; background: rgba(0, 100, 200, 0.3); padding: 4px 12px; border-radius: 20px; }
+        .nav-links { display: flex; gap: 30px; flex-wrap: wrap; }
         .nav-link {
-            color: #2e4a2a;
+            font-family: 'Orbitron', monospace;
+            color: #bbddff;
             text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
+            font-weight: 600;
+            font-size: 0.9rem;
             padding: 8px 0;
-            border-bottom: 3px solid transparent;
+            transition: 0.3s;
+            border-bottom: 2px solid transparent;
             cursor: pointer;
-            transition: 0.2s;
         }
-        .nav-link.active, .nav-link:hover { border-bottom-color: #f5a623; color: #c5711a; }
-        .page { display: none; animation: fadeUp 0.45s ease; }
+        .nav-link.active, .nav-link:hover { border-bottom-color: #00aaff; color: #00aaff; text-shadow: 0 0 8px #0088ff; transform: translateY(-2px); }
+        .page { display: none; animation: fadeInUp 0.5s ease; }
         .page.active-page { display: block; }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .mine-card {
-            background: rgba(255, 250, 235, 0.85);
-            backdrop-filter: blur(14px);
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .glass-card {
+            background: rgba(0, 20, 40, 0.55);
+            backdrop-filter: blur(16px);
             border-radius: 48px;
-            padding: 40px 38px;
+            padding: 48px 40px;
             margin: 48px 0;
-            border: 1px solid rgba(245, 190, 80, 0.7);
+            border: 1px solid rgba(0, 150, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 100, 200, 0.2);
+            transition: 0.3s;
         }
+        .glass-card:hover { border-color: #00aaff; box-shadow: 0 0 30px rgba(0, 100, 200, 0.3); }
         .section-title {
+            font-family: 'Orbitron', monospace;
             font-size: 2rem;
             font-weight: 800;
-            color: #3f6b2f;
-            border-left: 8px solid #f5a623;
+            color: #00aaff;
+            border-left: 5px solid #00aaff;
             padding-left: 24px;
             margin-bottom: 32px;
         }
-        .hero { text-align: center; padding: 20px 0; }
-        .hero h2 {
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, #417c2c, #f0a020);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-        .hero-tag {
-            background: rgba(30,40,20,0.65);
-            display: inline-block;
-            padding: 14px 32px;
-            border-radius: 80px;
-            color: #ffefc0;
-            border: 1px solid #f5bc6e;
-        }
-        .feature-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 32px;
-            justify-content: center;
-            margin-top: 48px;
-        }
-        .feature {
-            background: rgba(255,248,225,0.9);
-            border-radius: 40px;
-            padding: 28px 20px;
-            width: 220px;
+        .rank-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .rank-table th, .rank-table td { padding: 12px 15px; text-align: left; border-bottom: 1px solid rgba(0, 150, 255, 0.3); }
+        .rank-table th { color: #00aaff; font-family: 'Orbitron', monospace; }
+        .rank-table tr:hover { background: rgba(0, 150, 255, 0.1); }
+        .rating-stars { display: flex; gap: 10px; justify-content: center; margin: 20px 0; }
+        .rating-stars i { font-size: 2rem; cursor: pointer; transition: 0.2s; color: #444; }
+        .rating-stars i:hover, .rating-stars i.active { color: #ffcc00; text-shadow: 0 0 10px #ffaa00; }
+        .steps-grid, .feature-grid, .rules-grid, .donate-row { display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; }
+        .step-card, .feature, .rule-item, .donate-card {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 32px;
+            padding: 24px;
             text-align: center;
-            transition: 0.25s;
-            border: 1px solid #ffda99;
-        }
-        .feature:hover { transform: translateY(-10px); background: #fffff2; }
-        .feature i { font-size: 2.8rem; color: #e68a2e; margin-bottom: 16px; }
-        .feature h3 { font-size: 1.6rem; color: #4b6e2a; }
-        .quick-steps {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 25px;
-            justify-content: center;
-            margin-bottom: 40px;
-        }
-        .quick-step {
-            background: rgba(255,245,220,0.95);
-            border-radius: 48px;
-            padding: 25px;
-            flex: 1;
-            min-width: 230px;
-            text-align: center;
-            border: 1px solid #f7cf8c;
-        }
-        .quick-step i { font-size: 2.5rem; color: #e68a2e; margin-bottom: 12px; }
-        .quick-step h3 { font-size: 1.5rem; color: #bc761f; }
-        .radmin-badge {
-            background: #2c3a2a;
-            color: #f9e4b3;
-            padding: 10px 16px;
-            border-radius: 48px;
-            display: inline-block;
-            cursor: pointer;
-            font-weight: 600;
-            border: 1px solid #f5bc6e;
-            margin-top: 10px;
-        }
-        .rules-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 28px;
-        }
-        .rule-item {
-            background: rgba(255,248,228,0.95);
-            border-radius: 38px;
-            padding: 28px;
-            border-left: 6px solid #f5a623;
-        }
-        .rule-item h3 {
-            font-size: 1.6rem;
-            color: #bb771f;
-            margin-bottom: 18px;
-            border-bottom: 2px dashed #f5bc6e;
-            padding-bottom: 8px;
-        }
-        .rule-item ul { margin-left: 20px; color: #2c4824; }
-        .rule-item li { margin: 10px 0; }
-        .donate-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 48px;
-            justify-content: center;
-            margin: 30px 0 20px;
-        }
-        .donate-card {
-            background: rgba(255,245,225,0.92);
-            border-radius: 56px;
-            padding: 34px 28px;
-            text-align: center;
+            border: 1px solid rgba(0, 150, 255, 0.3);
             transition: 0.3s;
-            border: 1px solid #f5bc6e;
-            width: 280px;
+            flex: 1;
+            min-width: 220px;
         }
-        .donate-card:hover { transform: translateY(-8px); background: #fffaf0; }
-        .donate-icon { font-size: 3.8rem; color: #e68a2e; }
-        .donate-card h3 { font-size: 2rem; color: #7e591f; }
-        .qr-container img { max-width: 160px; border-radius: 24px; margin: 16px 0; }
-        .footer {
-            text-align: center;
-            padding: 36px 0 32px;
-            border-top: 1px solid #f5bc6e;
-            margin-top: 30px;
-            background: rgba(245,235,205,0.7);
-            border-radius: 40px 40px 0 0;
+        .step-card:hover, .feature:hover, .donate-card:hover { transform: translateY(-5px); border-color: #00aaff; }
+        .step-card i, .feature i, .donate-card i { font-size: 2rem; color: #00aaff; margin-bottom: 12px; }
+        .ip-badge {
+            background: linear-gradient(135deg, #0066aa, #0099ff);
+            display: inline-block;
+            padding: 10px 22px;
+            border-radius: 60px;
+            font-family: monospace;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 12px;
+            color: white;
         }
-        @media (max-width: 780px) {
-            .container { padding: 0 20px; }
-            .navbar { flex-direction: column; text-align: center; }
-            .nav-links { justify-content: center; }
-            .rainbow-text { font-size: 1.5rem; }
-        }
+        .discord-notice { text-align: center; margin-top: 30px; padding: 16px; background: rgba(0, 100, 200, 0.2); border-radius: 40px; border: 1px solid #00aaff; }
+        .footer { text-align: center; padding: 35px 0 25px; border-top: 1px solid #00aaff; margin-top: 40px; background: rgba(0, 0, 0, 0.5); border-radius: 40px 40px 0 0; }
+        @media (max-width: 780px) { .container { padding: 0 20px; } .navbar { flex-direction: column; text-align: center; } .rainbow-text { font-size: 1.3rem; } .nav-links { justify-content: center; } }
     </style>
 </head>
 <body>
-<div class="sky" id="skyLayer"></div>
-<div class="sunlight"></div>
+<div class="star-bg"></div>
+<div class="animated-gradient"></div>
+<div id="shootingStarsContainer"></div>
 <div class="container">
     <nav class="navbar">
         <div class="logo">
-            <img src="https://images2.imgbox.com/6e/43/AM9bEJVa_o.png" alt="NamMC Logo">
-            <div><h1 class="rainbow-text">NamMC SMP</h1><p>🌾Server Minecraft NamMC SMP</p></div>
+            <img src="https://images2.imgbox.com/6e/43/AM9bEJVa_o.png" alt="Logo">
+            <div><h1 class="rainbow-text">NamMC SMP</h1><p>Next-Gen Minecraft Server</p></div>
         </div>
         <div class="nav-links">
-            <a class="nav-link active" data-page="home"> Trang chủ</a>
-            <a class="nav-link" data-page="howtoplay_java"> Java (PC)</a>
-            <a class="nav-link" data-page="howtoplay_pe"> Bedrock (PE)</a>
-            <a class="nav-link" data-page="rules"> Luật lệ</a>
-            <a class="nav-link" data-page="donate"> Donate</a>
+            <a class="nav-link active" data-page="home">HOME</a>
+            <a class="nav-link" data-page="howtoplay_java">JAVA</a>
+            <a class="nav-link" data-page="howtoplay_pe">BEDROCK</a>
+            <a class="nav-link" data-page="rank">RANK</a>
+            <a class="nav-link" data-page="rules">RULES</a>
+            <a class="nav-link" data-page="donate">DONATE</a>
         </div>
     </nav>
 
-    <!-- TRANG CHỦ -->
+    <!-- HOME -->
     <div id="page-home" class="page active-page">
-        <div class="mine-card">
-            <div class="hero">
-                <h2>🌟 NamMC SMP - Hành Trình Sinh Tồn Đích Thực</h2>
-                <div class="hero-tag"><i class="fas fa-cube"></i> Cộng đồng văn minh — Không reset — Không pay-to-win</div>
-                <p style="margin-top: 32px; background: rgba(30,35,20,0.7); padding: 18px 28px; border-radius: 64px; color: #ffefcf;">
-                    <i class="fas fa-dragon"></i> Chào mừng bạn đến với NamMC SMP – Nơi những khối vuông kết nối triệu trái tim!
-                </p>
+        <div class="glass-card">
+            <div style="text-align: center;">
+                <h2 style="font-family: 'Orbitron'; font-size: 2.5rem;">NAMMC SMP</h2>
+                <p style="margin: 20px 0;">Hành Trình Sinh Tồn Đích Thực — Cộng Đồng Văn Minh</p>
+                <div class="hero-tag" style="background: rgba(0,100,200,0.2); display: inline-block; padding: 10px 25px; border-radius: 40px;">
+                    <i class="fas fa-gem"></i> No Pay-to-Win | Active Community
+                </div>
             </div>
             <div class="feature-grid">
                 <div class="feature"><i class="fas fa-users"></i><h3>150+</h3><p>Thành viên</p></div>
-                <div class="feature"><i class="fas fa-tachometer-alt"></i><h3>24/7</h3><p>Hoạt động</p></div>
+                <div class="feature"><i class="fas fa-tachometer-alt"></i><h3>20 TPS</h3><p>Luôn mượt</p></div>
                 <div class="feature"><i class="fas fa-shield-virus"></i><h3>Anti-Cheat</h3><p>Công bằng</p></div>
-                <div class="feature"><i class="fas fa-leaf"></i><h3>Không Reset</h3><p>Vĩnh cửu</p></div>
+                <div class="feature"><i class="fas fa-infinity"></i><h3>Không Reset</h3><p>Vĩnh cửu</p></div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <h3><i class="fas fa-star"></i> Đánh giá máy chủ</h3>
+                <div class="rating-stars" id="starRating">
+                    <i class="far fa-star" data-value="1"></i><i class="far fa-star" data-value="2"></i><i class="far fa-star" data-value="3"></i><i class="far fa-star" data-value="4"></i><i class="far fa-star" data-value="5"></i>
+                </div>
+                <p id="ratingMessage" style="margin-top: 10px; color: #aaa;"></p>
             </div>
         </div>
     </div>
 
-    <!-- JAVA (PC) -->
+    <!-- JAVA -->
     <div id="page-howtoplay_java" class="page">
-        <div class="mine-card">
-            <div class="section-title"><i class="fas fa-plug"></i> 💻 CÁCH CHƠI - MÁY TÍNH (JAVA)</div>
-            <div class="quick-steps">
-                <div class="quick-step"><i class="fas fa-download"></i><h3>Bước 1</h3><p>Tải <strong>Radmin VPN</strong></p><div class="radmin-badge" id="downloadRadminBtn">📥 Tải ngay</div></div>
-                <div class="quick-step"><i class="fas fa-network-wired"></i><h3>Bước 2</h3><p>Join Network: <strong>NammcZ1</strong> hoặc <strong>NammcZ2</strong><br>🔑 Mật khẩu: <strong>2113226</strong></p></div>
-                <div class="quick-step"><i class="fas fa-gamepad"></i><h3>Bước 3</h3><p>Minecraft → Multiplayer</p><div class="radmin-badge" id="serverIpBox">📌 IP: <strong>26.161.161.70:25565</strong> <i class="fas fa-copy"></i></div></div>
-            </div>
-            <div style="background: rgba(0,0,0,0.5); border-radius: 32px; padding: 20px; color: #fff0c0;">
-                <p>✅ <strong>Radmin VPN</strong> phải bật trước khi mở Minecraft</p>
-                <p>✅ Kiểm tra kết nối: <code>ping 26.161.161.70</code> trong CMD</p>
-                <p>✅ Dùng Minecraft Java Edition 1.8 → 1.20</p>
+        <div class="glass-card">
+            <div class="section-title"><i class="fas fa-laptop-code"></i> JAVA EDITION</div>
+            <div class="steps-grid">
+                <div class="step-card"><i class="fas fa-download"></i><h3>Bước 1</h3><p><button class="ip-badge" id="downloadRadminBtn"><i class="fas fa-cloud-download-alt"></i> Tải Radmin</button></p></div>
+                <div class="step-card"><i class="fas fa-network-wired"></i><h3>Bước 2</h3><p>NammcZ1 / NammcZ2<br><i class="fas fa-key"></i> <strong>2113226</strong></p></div>
+                <div class="step-card"><i class="fas fa-gamepad"></i><h3>Bước 3</h3><p><span class="ip-badge" id="serverIpBox"><i class="fas fa-copy"></i> 26.161.161.70:25565</span></p></div>
             </div>
         </div>
     </div>
 
-    <!-- BEDROCK (PE) - ĐÃ XÓA WIFI -->
+    <!-- BEDROCK -->
     <div id="page-howtoplay_pe" class="page">
-        <div class="mine-card">
-            <div class="section-title"><i class="fas fa-mobile-alt"></i> 📱 CÁCH CHƠI - ĐIỆN THOẠI (BEDROCK / PE)</div>
-            <div class="quick-steps">
-                <div class="quick-step"><i class="fas fa-globe"></i><h3>Cách 1</h3><p><strong>ZeroTier (Internet)</strong></p><div class="radmin-badge" id="ztDownload">📥 Tải ZeroTier</div><div class="radmin-badge" style="margin-top:5px">🆔 Network ID: <strong>154a350c8626105e</strong></div></div>
-                <div class="quick-step"><i class="fas fa-network-wired"></i><h3>Cách 2</h3><p><strong>Radmin (PC) + ZeroTier (điện thoại)</strong></p><p>PC dùng Radmin, điện thoại dùng ZeroTier cùng mạng</p></div>
-            </div>
-            <div style="background: rgba(0,0,0,0.5); border-radius: 32px; padding: 20px; color: #fff0c0;">
-                <h3 style="color:#ffdd99">📌 HƯỚNG DẪN ZEROTIER:</h3>
-                <p>1️⃣ Tải ZeroTier: <button class="radmin-badge" onclick="window.open('https://www.zerotier.com/download/','_blank')">Windows</button> <button class="radmin-badge" onclick="window.open('https://play.google.com/store/apps/details?id=com.zerotier.one','_blank')">Android</button> <button class="radmin-badge" onclick="window.open('https://apps.apple.com/app/zerotier-one/id1084101492','_blank')">iOS</button></p>
-                <p>2️⃣ Mở ZeroTier → Join Network → Nhập ID: <code>154a350c8626105e</code></p>
-                <p>3️⃣ Vào <strong>https://my.zerotier.com</strong> → Đăng nhập → Tick chọn thiết bị để cấp quyền</p>
-                <p>4️⃣ Lấy IP của PC (Managed IPs, ví dụ <strong>10.147.20.x</strong>) → Nhập vào Minecraft PE: <strong>10.147.20.x:19132</strong></p>
-                <p>📌 <strong>Lưu ý:</strong> Server Bedrock yêu cầu phiên bản <strong>1.20.x</strong> trở lên. Cổng mặc định: <strong>19132</strong> (UDP)</p>
-                <p>🔁 Nếu gặp khó khăn, hãy thử dùng <strong>Tailscale</strong> (dễ hơn, tương tự ZeroTier)</p>
+        <div class="glass-card">
+            <div class="section-title"><i class="fas fa-mobile-alt"></i> BEDROCK (PE)</div>
+            <div class="steps-grid">
+                <div class="step-card"><i class="fas fa-gamepad"></i><h3>Kết nối</h3><p><span class="ip-badge" id="peIpBox"><i class="fas fa-copy"></i> seen-detected.gl.at.ply.gg:30284</span></p><p>Phiên bản: 1.20.x</p></div>
+                <div class="step-card"><i class="fas fa-shield-alt"></i><h3>Bảo vệ</h3><p>Anti-Cheat Active</p></div>
             </div>
         </div>
     </div>
 
-    <!-- LUẬT LỆ -->
+    <!-- RANK -->
+    <div id="page-rank" class="page">
+        <div class="glass-card">
+            <div class="section-title"><i class="fas fa-trophy"></i> BẢNG XẾP HẠNG</div>
+            <table class="rank-table" id="rankTable">
+                <thead><tr><th>#</th><th>Người chơi</th><th>Kill</th><th>Rank</th><th>Thưởng</th></tr></thead>
+                <tbody id="rankBody"></tbody>
+            </table>
+            <button class="ip-badge" id="refreshRankBtn" style="margin-top: 20px;"><i class="fas fa-sync-alt"></i> Tải lại</button>
+        </div>
+    </div>
+
+    <!-- RULES -->
     <div id="page-rules" class="page">
-        <div class="mine-card">
-            <div class="section-title"><i class="fas fa-scroll"></i> 📜 NỘI QUY NAMMC SMP</div>
+        <div class="glass-card">
+            <div class="section-title"><i class="fas fa-gavel"></i> NỘI QUY</div>
             <div class="rules-grid">
-                <div class="rule-item"><h3><i class="fas fa-comment-dots"></i> 1. HÀNH VI</h3><ul><li>❌ Không toxic, chửi thề</li><li>❌ Không spam, quảng cáo</li><li>✅ Tôn trọng người chơi khác</li></ul></div>
-                <div class="rule-item"><h3><i class="fas fa-dice-d6"></i> 2. GAMEPLAY</h3><ul><li>🚫 Cấm hack, X-ray, fly</li><li>🚫 Không phá nhà, trộm cắp</li><li>⚠️ Không lợi dụng bug</li></ul></div>
-                <div class="rule-item"><h3><i class="fas fa-vpn"></i> 3. HỆ THỐNG</h3><ul><li>🔐 Bảo mật tài khoản</li><li>🖥️ Không gây lag server</li><li>📢 Báo lỗi cho Admin</li></ul></div>
+                <div class="rule-item"><h3><i class="fas fa-comment-dots"></i> HÀNH VI</h3><ul><li>Không Toxic</li><li>Không Spam</li><li>Tôn trọng</li></ul></div>
+                <div class="rule-item"><h3><i class="fas fa-dice-d6"></i> GAMEPLAY</h3><ul><li>Cấm Hack</li><li>Cấm Griefing</li><li>Không Bug lợi</li></ul></div>
+                <div class="rule-item"><h3><i class="fas fa-vpn"></i> HỆ THỐNG</h3><ul><li>Bảo mật</li><li>Không Lag</li><li>Báo lỗi Admin</li></ul></div>
             </div>
-            <div style="background:#2c2b1f; border-radius:48px; padding:20px; margin-top:32px; text-align:center;">
-                <p>⚠️ Hình thức xử phạt: Cảnh cáo → Mute/Kick → Ban tạm (3-30 ngày) → Ban vĩnh viễn</p>
-            </div>
+            <div class="discord-notice"><i class="fab fa-discord"></i> discord.gg/TRcuDzCqK</div>
         </div>
     </div>
 
     <!-- DONATE -->
     <div id="page-donate" class="page">
-        <div class="mine-card">
-            <div class="section-title"><i class="fas fa-hand-holding-heart"></i> Ủng hộ máy chủ</div>
+        <div class="glass-card">
+            <div class="section-title"><i class="fas fa-heart"></i> ỦNG HỘ</div>
             <div class="donate-row">
-                <div class="donate-card"><div class="donate-icon"><i class="fab fa-microsoft"></i></div><h3>MOMO</h3><div class="qr-container"><img src="https://images2.imgbox.com/7b/16/QBdOOyJr_o.png" alt="QR Momo"></div><div>Quét mã để ủng hộ</div></div>
-                <div class="donate-card"><div class="donate-icon"><i class="fas fa-qrcode"></i></div><h3>ZaloPay</h3><div class="qr-container"><img src="https://images2.imgbox.com/64/b8/JlxuSl0x_o.png" alt="QR ZaloPay"></div><div>Quét mã ủng hộ server</div></div>
+                <div class="donate-card"><i class="fab fa-microsoft"></i><h3>MOMO</h3><img src="https://images2.imgbox.com/7b/16/QBdOOyJr_o.png" width="140"><p>Quét mã</p></div>
+                <div class="donate-card"><i class="fas fa-qrcode"></i><h3>ZALOPAY</h3><img src="https://images2.imgbox.com/64/b8/JlxuSl0x_o.png" width="140"><p>Quét mã</p></div>
             </div>
         </div>
     </div>
 
-    <footer class="footer"><p><i class="fas fa-crown"></i> NamMC SMP | © 2026 Cộng đồng NamMC</p></footer>
+    <footer class="footer"><p><i class="fas fa-crown"></i> NamMC SMP — Where blocks become stories</p><p>© 2025 NamMC | ⭐ Đánh giá 5 sao ủng hộ chúng tôi!</p></footer>
 </div>
 
 <script>
-    function createClouds() {
-        const sky = document.getElementById('skyLayer');
-        for (let i = 0; i < 18; i++) {
-            const cloud = document.createElement('div');
-            cloud.classList.add('cloud');
-            cloud.style.width = (100 + Math.random() * 220) + 'px';
-            cloud.style.height = (45 + Math.random() * 85) + 'px';
-            cloud.style.top = Math.random() * 85 + '%';
-            cloud.style.animationDuration = (20 + Math.random() * 50) + 's';
-            cloud.style.animationDelay = Math.random() * -45 + 's';
-            sky.appendChild(cloud);
+    // SAO BĂNG
+    function createShootingStars() {
+        const container = document.getElementById('shootingStarsContainer');
+        for (let i = 0; i < 12; i++) {
+            const star = document.createElement('div');
+            star.classList.add('shooting-star');
+            star.style.top = Math.random() * 80 + '%';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.animationDuration = 1 + Math.random() * 3 + 's';
+            star.style.animationDelay = Math.random() * 15 + 's';
+            container.appendChild(star);
         }
     }
-    createClouds();
+    createShootingStars();
 
-    const pages = {
-        home: document.getElementById('page-home'),
-        howtoplay_java: document.getElementById('page-howtoplay_java'),
-        howtoplay_pe: document.getElementById('page-howtoplay_pe'),
-        rules: document.getElementById('page-rules'),
-        donate: document.getElementById('page-donate')
-    };
-    const navLinks = document.querySelectorAll('.nav-link');
-    function switchPage(pageId) {
-        Object.keys(pages).forEach(key => pages[key].classList.remove('active-page'));
-        pages[pageId].classList.add('active-page');
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('data-page') === pageId) link.classList.add('active');
+    // 5 SAO RATING (localStorage)
+    const stars = document.querySelectorAll('#starRating i');
+    const ratingMsg = document.getElementById('ratingMessage');
+    const saved = localStorage.getItem('serverRating');
+    if (saved) setRating(parseInt(saved));
+    stars.forEach(star => {
+        star.addEventListener('click', function() {
+            const val = parseInt(this.getAttribute('data-value'));
+            localStorage.setItem('serverRating', val);
+            setRating(val);
+            ratingMsg.innerText = `Cảm ơn bạn đã đánh giá ${val} ⭐!`;
+            if (typeof window.saveRatingToAPI === 'function') window.saveRatingToAPI(val);
+        });
+    });
+    function setRating(val) {
+        stars.forEach((star, idx) => {
+            if (idx < val) { star.classList.remove('far'); star.classList.add('fas'); star.classList.add('active'); }
+            else { star.classList.remove('fas'); star.classList.add('far'); star.classList.remove('active'); }
         });
     }
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            switchPage(link.getAttribute('data-page'));
-        });
-    });
 
-    document.getElementById('serverIpBox')?.addEventListener('click', () => {
-        navigator.clipboard.writeText('26.161.161.70:25565');
-        const old = document.getElementById('serverIpBox').innerHTML;
-        document.getElementById('serverIpBox').innerHTML = 'Đã copy IP!';
-        setTimeout(() => { document.getElementById('serverIpBox').innerHTML = old; }, 1500);
-    });
-    document.getElementById('downloadRadminBtn')?.addEventListener('click', () => window.open('https://www.radmin-vpn.com/', '_blank'));
-    document.getElementById('ztDownload')?.addEventListener('click', () => window.open('https://www.zerotier.com/download/', '_blank'));
+    // RANK - GỌI TỪ API
+    async function loadRank() {
+        const rankBody = document.getElementById('rankBody');
+        if (!rankBody) return;
+        const players = typeof window.getPlayerRanking === 'function' ? await window.getPlayerRanking() : window.mockPlayers;
+        rankBody.innerHTML = players.map((p, idx) => `
+            <tr><td>${idx+1}</td><td>${p.name}</td><td>${p.kills}</td><td>${p.rank}</td><td>${p.reward}</td></tr>
+        `).join('');
+    }
+    document.getElementById('refreshRankBtn')?.addEventListener('click', loadRank);
+    loadRank();
+
+    // TAB
+    const pages = {
+        home: document.getElementById('page-home'), howtoplay_java: document.getElementById('page-howtoplay_java'),
+        howtoplay_pe: document.getElementById('page-howtoplay_pe'), rank: document.getElementById('page-rank'),
+        rules: document.getElementById('page-rules'), donate: document.getElementById('page-donate')
+    };
+    const navLinks = document.querySelectorAll('.nav-link');
+    function switchPage(pageId) { Object.keys(pages).forEach(k => pages[k].classList.remove('active-page')); pages[pageId].classList.add('active-page'); navLinks.forEach(l => { l.classList.remove('active'); if (l.getAttribute('data-page') === pageId) l.classList.add('active'); }); }
+    navLinks.forEach(l => l.addEventListener('click', (e) => { e.preventDefault(); switchPage(l.getAttribute('data-page')); }));
+
+    // COPY IP
+    document.getElementById('serverIpBox')?.addEventListener('click', () => { navigator.clipboard.writeText('26.161.161.70:25565'); alert('✅ Đã copy IP Java!'); });
+    document.getElementById('peIpBox')?.addEventListener('click', () => { navigator.clipboard.writeText('seen-detected.gl.at.ply.gg:30284'); alert('✅ Đã copy IP Bedrock!'); });
+    document.getElementById('downloadRadminBtn')?.addEventListener('click', () => window.open('https://www.radmin-vpn.com/'));
 </script>
 </body>
 </html>
