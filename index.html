@@ -134,6 +134,36 @@
             padding-left: 24px;
             margin-bottom: 32px;
         }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .gallery-item {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 150, 255, 0.3);
+            transition: 0.3s;
+        }
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            border-color: #00aaff;
+            box-shadow: 0 0 20px rgba(0, 150, 255, 0.3);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        .gallery-item p {
+            padding: 12px;
+            text-align: center;
+            color: #88ccff;
+            font-size: 0.9rem;
+        }
         .steps-grid, .feature-grid, .rules-grid, .donate-row { display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; }
         .step-card, .feature, .rule-item, .donate-card {
             background: rgba(0, 0, 0, 0.5);
@@ -162,6 +192,20 @@
         .discord-notice { text-align: center; margin-top: 30px; padding: 16px; background: rgba(0, 100, 200, 0.2); border-radius: 40px; border: 1px solid #00aaff; transition: 0.2s; }
         .discord-notice:hover { background: rgba(0, 150, 255, 0.3); transform: scale(1.01); }
         .footer { text-align: center; padding: 35px 0 25px; border-top: 1px solid #00aaff; margin-top: 40px; transition: 0.3s; }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .footer-left { text-align: left; }
+        .footer-center { text-align: center; }
+        .footer-right { width: 150px; }
+        @media (max-width: 768px) {
+            .footer-content { flex-direction: column; text-align: center; }
+            .footer-left { text-align: center; }
+        }
         #chatbot-fixed {
             position: fixed;
             bottom: 20px;
@@ -229,6 +273,7 @@
             <a class="nav-link" data-page="howtoplay_java">JAVA</a>
             <a class="nav-link" data-page="howtoplay_pe">BEDROCK</a>
             <a class="nav-link" data-page="rules">RULES</a>
+            <a class="nav-link" data-page="gallery">ẢNH SERVER</a>
             <a class="nav-link" data-page="donate">DONATE</a>
         </div>
     </nav>
@@ -236,13 +281,7 @@
     <!-- HOME -->
     <div id="page-home" class="page active-page">
         <div class="glass-card">
-            <div style="text-align:center;">
-                <h2 style="font-family: 'Orbitron';">NAMMC SMP</h2>
-                <p>Hành Trình Sinh Tồn Đích Thực</p>
-                <div style="background:rgba(0,100,200,0.2);display:inline-block;padding:10px 25px;border-radius:40px;">
-                    <i class="fas fa-gem"></i> Active Community
-                </div>
-            </div>
+            <div style="text-align:center;"><h2 style="font-family: 'Orbitron';">NAMMC SMP</h2><p>Hành Trình Sinh Tồn Đích Thực</p><div style="background:rgba(0,100,200,0.2);display:inline-block;padding:10px 25px;border-radius:40px;"><i class="fas fa-gem"></i> Active Community</div></div>
             <div class="feature-grid">
                 <div class="feature"><i class="fas fa-users"></i><h3>150+</h3><p>Thành viên</p></div>
                 <div class="feature"><i class="fas fa-tachometer-alt"></i><h3>20 TPS</h3><p>Luôn mượt</p></div>
@@ -253,153 +292,173 @@
     </div>
 
     <!-- JAVA -->
-    <div id="page-howtoplay_java" class="page">
-        <div class="glass-card">
-            <div class="section-title"><i class="fas fa-laptop-code"></i> JAVA EDITION</div>
-            <div class="steps-grid">
-                <div class="step-card"><i class="fas fa-download"></i><h3>Bước 1</h3><p><button class="ip-badge" id="downloadRadminBtn"><i class="fas fa-cloud-download-alt"></i> Tải Radmin</button></p></div>
-                <div class="step-card"><i class="fas fa-network-wired"></i><h3>Bước 2</h3><p>NammcZ1 / NammcZ2<br><i class="fas fa-key"></i> <strong>2113226</strong></p></div>
-                <div class="step-card"><i class="fas fa-gamepad"></i><h3>Bước 3</h3><p><span class="ip-badge" id="serverIpBox"><i class="fas fa-copy"></i> 26.161.161.70:25565</span></p></div>
-            </div>
-        </div>
-    </div>
+    <div id="page-howtoplay_java" class="page"><div class="glass-card"><div class="section-title"><i class="fas fa-laptop-code"></i> JAVA EDITION</div><div class="steps-grid"><div class="step-card"><i class="fas fa-download"></i><h3>Bước 1</h3><p><button class="ip-badge" id="downloadRadminBtn"><i class="fas fa-cloud-download-alt"></i> Tải Radmin</button></p></div><div class="step-card"><i class="fas fa-network-wired"></i><h3>Bước 2</h3><p>NammcZ1 / NammcZ2<br><i class="fas fa-key"></i> <strong>2113226</strong></p></div><div class="step-card"><i class="fas fa-gamepad"></i><h3>Bước 3</h3><p><span class="ip-badge" id="serverIpBox"><i class="fas fa-copy"></i> 26.161.161.70:25565</span></p></div></div></div></div>
 
     <!-- BEDROCK -->
-    <div id="page-howtoplay_pe" class="page">
-        <div class="glass-card">
-            <div class="section-title"><i class="fas fa-mobile-alt"></i> BEDROCK (PE)</div>
-            <div class="steps-grid">
-                <div class="step-card"><i class="fas fa-gamepad"></i><h3>Kết nối</h3><p><span class="ip-badge" id="peIpBox"><i class="fas fa-copy"></i> seen-detected.gl.at.ply.gg:30284</span></p><p>Phiên bản: 1.20.x</p></div>
-                <div class="step-card"><i class="fas fa-shield-alt"></i><h3>Bảo vệ</h3><p>Anti-Cheat Active</p></div>
-            </div>
-        </div>
-    </div>
+    <div id="page-howtoplay_pe" class="page"><div class="glass-card"><div class="section-title"><i class="fas fa-mobile-alt"></i> BEDROCK (PE)</div><div class="steps-grid"><div class="step-card"><i class="fas fa-gamepad"></i><h3>Kết nối</h3><p><span class="ip-badge" id="peIpBox"><i class="fas fa-copy"></i> seen-detected.gl.at.ply.gg:30284</span></p><p>Phiên bản: 1.20.x</p></div><div class="step-card"><i class="fas fa-shield-alt"></i><h3>Bảo vệ</h3><p>Anti-Cheat Active</p></div></div></div></div>
 
     <!-- RULES -->
-    <div id="page-rules" class="page">
+    <div id="page-rules" class="page"><div class="glass-card"><div class="section-title"><i class="fas fa-gavel"></i> NỘI QUY</div><div class="rules-grid"><div class="rule-item"><h3><i class="fas fa-comment-dots"></i> HÀNH VI</h3><ul><li>Không Toxic</li><li>Không Spam</li><li>Tôn trọng</li></ul></div><div class="rule-item"><h3><i class="fas fa-dice-d6"></i> GAMEPLAY</h3><ul><li>Cấm Hack</li><li>Cấm Griefing</li><li>Không Bug lợi</li></ul></div><div class="rule-item"><h3><i class="fas fa-vpn"></i> HỆ THỐNG</h3><ul><li>Bảo mật</li><li>Không Lag</li><li>Báo lỗi Admin</li></ul></div></div><div class="discord-notice"><i class="fab fa-discord"></i> discord.gg/TRcuDzCqK</div></div></div>
+
+    <!-- GALLERY -->
+    <div id="page-gallery" class="page">
         <div class="glass-card">
-            <div class="section-title"><i class="fas fa-gavel"></i> NỘI QUY</div>
-            <div class="rules-grid">
-                <div class="rule-item"><h3><i class="fas fa-comment-dots"></i> HÀNH VI</h3><ul><li>Không Toxic</li><li>Không Spam</li><li>Tôn trọng</li></ul></div>
-                <div class="rule-item"><h3><i class="fas fa-dice-d6"></i> GAMEPLAY</h3><ul><li>Cấm Hack</li><li>Cấm Griefing</li><li>Không Bug lợi</li></ul></div>
-                <div class="rule-item"><h3><i class="fas fa-vpn"></i> HỆ THỐNG</h3><ul><li>Bảo mật</li><li>Không Lag</li><li>Báo lỗi Admin</li></ul></div>
+            <div class="section-title"><i class="fas fa-camera"></i> ẢNH SERVER</div>
+            <p style="margin-bottom: 20px;">Những khoảnh khắc đẹp trong thế giới NamMC SMP</p>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="https://images2.imgbox.com/00/55/Bg0LyZOl_o.png" alt="Ảnh 1" onerror="this.src='https://placehold.co/600x400/0a0f1a/00aaff?text=Image+1'"><p>Khu Spawn nhìn từ trên cao</p></div>
+                <div class="gallery-item"><img src="https://images2.imgbox.com/8b/73/IQPcBNEq_o.png" alt="Ảnh 2" onerror="this.src='https://placehold.co/600x400/0a0f1a/00aaff?text=Image+2'"><p>Công trình khu nhà AFK ở Spawn</p></div>
+                <div class="gallery-item"><img src="https://images2.imgbox.com/93/c1/NrBZ9SQP_o.png" alt="Ảnh 3" onerror="this.src='https://placehold.co/600x400/0a0f1a/00aaff?text=Image+3'"><p>Lobby Siêu đẹp</p></div>
+                <div class="gallery-item"><img src="https://images2.imgbox.com/f1/e7/2Hl71zVO_o.png" alt="Ảnh 4" onerror="this.src='https://placehold.co/600x400/0a0f1a/00aaff?text=Image+4'"><p>Sự kiện cùng cộng đồng</p></div>
             </div>
-            <div class="discord-notice"><i class="fab fa-discord"></i> discord.gg/TRcuDzCqK</div>
         </div>
     </div>
 
     <!-- DONATE -->
-    <div id="page-donate" class="page">
-        <div class="glass-card">
-            <div class="section-title"><i class="fas fa-heart"></i> ỦNG HỘ</div>
-            <div class="donate-row">
-                <div class="donate-card"><i class="fab fa-microsoft"></i><h3>MOMO</h3><img src="https://images2.imgbox.com/7b/16/QBdOOyJr_o.png" width="140"><p>Quét mã</p></div>
-                <div class="donate-card"><i class="fas fa-qrcode"></i><h3>ZALOPAY</h3><img src="https://images2.imgbox.com/64/b8/JlxuSl0x_o.png" width="140"><p>Quét mã</p></div>
-            </div>
-        </div>
-    </div>
+    <div id="page-donate" class="page"><div class="glass-card"><div class="section-title"><i class="fas fa-heart"></i> ỦNG HỘ</div><div class="donate-row"><div class="donate-card"><i class="fab fa-microsoft"></i><h3>MOMO</h3><img src="https://images2.imgbox.com/7b/16/QBdOOyJr_o.png" width="140"><p>Quét mã</p></div><div class="donate-card"><i class="fas fa-qrcode"></i><h3>ZALOPAY</h3><img src="https://images2.imgbox.com/64/b8/JlxuSl0x_o.png" width="140"><p>Quét mã</p></div></div></div></div>
 
+    <!-- FOOTER với 1 Flag Counter -->
     <footer class="footer">
-        <p><i class="fas fa-crown"></i> NamMC SMP — Where blocks become stories</p>
-        <p>© 2026 NamMC | ⭐ Ủng hộ chúng tôi!</p>
+        <div class="footer-content">
+            <div class="footer-left">
+                <a href="http://s01.flagcounter.com/more/k7mz">
+                    <img src="https://s01.flagcounter.com/count2/k7mz/bg_FFFFFF/txt_000000/border_CCCCCC/columns_3/maxflags_20/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0">
+                </a>
+            </div>
+            <div class="footer-center">
+                <p><i class="fas fa-crown"></i> NamMC SMP — Nơi những khối vuông làm nên câu chuyện !</p>
+                <p>© 2026 NamMC | Ủng hộ chúng tôi!</p>
+            </div>
+            <div class="footer-right"></div>
+        </div>
     </footer>
 </div>
 
 <div id="chatbot-fixed"><img src="https://images2.imgbox.com/f9/f2/5UmO3Plu_o.png" alt="Chatbot"></div>
 <div id="chat-window" class="chat-window" style="display: none;">
     <div class="chat-header"><span><i class="fas fa-robot"></i> NamMC AI Assistant</span><i id="close-chat" class="fas fa-times" style="cursor: pointer;"></i></div>
-    <div class="chat-messages" id="chat-messages"><div class="message-bot"><span>🤖 Chào bạn! Tôi có thể giúp gì về server NamMC?</span></div></div>
+    <div class="chat-messages" id="chat-messages"><div class="message-bot"><span>Chào bạn! Tôi có thể giúp gì về server NamMC?</span></div></div>
     <div class="chat-input-area"><input type="text" id="chat-input" placeholder="Hỏi về luật, rank, cách chơi..."><button id="send-chat"><i class="fas fa-paper-plane"></i></button></div>
 </div>
 
 <script src="config.js"></script>
 <script>
-(function(){
-    if(window.location.pathname.includes('admin.html')){ 
-        document.getElementById('chatbot-fixed').style.display='none'; 
-        document.getElementById('chat-window').style.display='none'; 
-        return; 
+(function() {
+    if (window.location.pathname.includes('admin.html')) { 
+        document.getElementById('chatbot-fixed').style.display = 'none';
+        document.getElementById('chat-window').style.display = 'none';
+        return;
     }
-    // Tạo hiệu ứng mây, sao băng
-    for(let i=0;i<8;i++){ let cloud=document.createElement('div'); cloud.classList.add('cloud'); cloud.style.width=100+Math.random()*200+'px'; cloud.style.height=50+Math.random()*100+'px'; cloud.style.top=Math.random()*80+'%'; cloud.style.animationDuration=20+Math.random()*40+'s'; cloud.style.animationDelay=Math.random()*30+'s'; document.getElementById('cloudsContainer').appendChild(cloud); }
-    for(let i=0;i<15;i++){ let star=document.createElement('div'); star.classList.add('shooting-star'); star.style.top=Math.random()*80+'%'; star.style.left=Math.random()*100+'%'; star.style.animationDuration=1+Math.random()*4+'s'; star.style.animationDelay=Math.random()*20+'s'; document.getElementById('shootingStarsContainer').appendChild(star); }
-    
+
+    // Tạo hiệu ứng mây và sao băng
+    for (let i = 0; i < 8; i++) {
+        let cloud = document.createElement('div');
+        cloud.classList.add('cloud');
+        cloud.style.width = 100 + Math.random() * 200 + 'px';
+        cloud.style.height = 50 + Math.random() * 100 + 'px';
+        cloud.style.top = Math.random() * 80 + '%';
+        cloud.style.animationDuration = 20 + Math.random() * 40 + 's';
+        cloud.style.animationDelay = Math.random() * 30 + 's';
+        document.getElementById('cloudsContainer').appendChild(cloud);
+    }
+    for (let i = 0; i < 15; i++) {
+        let star = document.createElement('div');
+        star.classList.add('shooting-star');
+        star.style.top = Math.random() * 80 + '%';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.animationDuration = 1 + Math.random() * 4 + 's';
+        star.style.animationDelay = Math.random() * 20 + 's';
+        document.getElementById('shootingStarsContainer').appendChild(star);
+    }
+
     // Chatbot
-    const chatFixed=document.getElementById('chatbot-fixed');
-    const chatWindow=document.getElementById('chat-window');
-    const closeChat=document.getElementById('close-chat');
-    const sendBtn=document.getElementById('send-chat');
-    const chatInput=document.getElementById('chat-input');
-    const messagesDiv=document.getElementById('chat-messages');
-    
-    chatFixed.onclick=()=>{ chatWindow.style.display='flex'; };
-    closeChat.onclick=()=>{ chatWindow.style.display='none'; };
-    
-    async function askGroq(question){
-        if(!window.GROQ_CONFIG||!window.GROQ_CONFIG.API_KEY) return "⚠️ API key chưa được cấu hình.";
-        const system = `Bạn là trợ lý AI của server Minecraft tên "NamMC SMP". 
-        Xưng hô tôi bạn không chửi bậy !
+    const chatFixed = document.getElementById('chatbot-fixed');
+    const chatWindow = document.getElementById('chat-window');
+    const closeChat = document.getElementById('close-chat');
+    const sendBtn = document.getElementById('send-chat');
+    const chatInput = document.getElementById('chat-input');
+    const messagesDiv = document.getElementById('chat-messages');
+
+    chatFixed.onclick = () => chatWindow.style.display = 'flex';
+    closeChat.onclick = () => chatWindow.style.display = 'none';
+
+    async function askGroq(question) {
+        if (!window.GROQ_CONFIG || !window.GROQ_CONFIG.API_KEY) return " API key chưa được cấu hình.";
+        const system = `Bạn là trợ lý AI của server Minecraft "NamMC SMP". 
+Xưng hô với người chơi là Bạn và Tôi không dùng từ bậy
 CHỈ trả lời các câu hỏi liên quan đến Minecraft, server NamMC, mod, cách chơi, luật lệ, IP, Radmin.
 TUYỆT ĐỐI KHÔNG trả lời bất kỳ câu hỏi nào không liên quan đến Minecraft.
 Nếu câu hỏi không liên quan, trả lời: "❌ Tôi chỉ hỗ trợ các vấn đề về Minecraft và server NamMC SMP."
 Thông tin server: Java IP 26.161.161.70:25565, Bedrock IP seen-detected.gl.at.ply.gg:30284, Radmin NammcZ1/Z2 mật khẩu 2113226.
 Trả lời ngắn gọn, thân thiện, dễ hiểu.`;
-        try{
-            const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
-                method:'POST', 
-                headers:{'Content-Type':'application/json','Authorization':`Bearer ${window.GROQ_CONFIG.API_KEY}`},
-                body:JSON.stringify({
-                    model:window.GROQ_CONFIG.MODEL||'llama-3.1-8b-instant',
-                    messages:[{role:"system",content:system},{role:"user",content:question}],
-                    temperature:0.5,
-                    max_tokens:500
+        try {
+            const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${window.GROQ_CONFIG.API_KEY}` },
+                body: JSON.stringify({
+                    model: window.GROQ_CONFIG.MODEL || 'llama-3.3-70b-versatile',
+                    messages: [{ role: "system", content: system }, { role: "user", content: question }],
+                    temperature: 0.5,
+                    max_tokens: 500
                 })
             });
-            const data=await res.json();
-            if(data.error) return `❌ Lỗi: ${data.error.message}`;
+            const data = await res.json();
+            if (data.error) return `❌ Lỗi: ${data.error.message}`;
             return data.choices[0].message.content;
-        }catch(e){ return "❌ Lỗi kết nối AI. Thử lại sau."; }
+        } catch (e) { return "❌ Lỗi kết nối AI. Thử lại sau."; }
     }
-    
-    async function sendMessage(){
-        const q=chatInput.value.trim(); if(!q) return;
-        messagesDiv.innerHTML+=`<div class="message-user"><span>${escapeHtml(q)}</span></div>`;
-        chatInput.value=''; messagesDiv.scrollTop=messagesDiv.scrollHeight;
-        const typingDiv=document.createElement('div'); typingDiv.className='message-bot typing-indicator'; typingDiv.innerHTML='<span><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span> đang suy nghĩ...</span>';
-        messagesDiv.appendChild(typingDiv); messagesDiv.scrollTop=messagesDiv.scrollHeight;
-        const reply=await askGroq(q);
+
+    async function sendMessage() {
+        const q = chatInput.value.trim();
+        if (!q) return;
+        messagesDiv.innerHTML += `<div class="message-user"><span>${escapeHtml(q)}</span></div>`;
+        chatInput.value = '';
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'message-bot typing-indicator';
+        typingDiv.innerHTML = '<span><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span> đang suy nghĩ...</span>';
+        messagesDiv.appendChild(typingDiv);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        const reply = await askGroq(q);
         messagesDiv.removeChild(typingDiv);
-        const replyDiv=document.createElement('div'); replyDiv.className='message-bot'; replyDiv.innerHTML='<span></span>';
-        messagesDiv.appendChild(replyDiv); messagesDiv.scrollTop=messagesDiv.scrollHeight;
-        const span=replyDiv.querySelector('span');
-        for(let i=0;i<reply.length;i++){ span.innerHTML+=reply[i]; await new Promise(r=>setTimeout(r,15)); messagesDiv.scrollTop=messagesDiv.scrollHeight; }
+        const replyDiv = document.createElement('div');
+        replyDiv.className = 'message-bot';
+        replyDiv.innerHTML = '<span></span>';
+        messagesDiv.appendChild(replyDiv);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        const span = replyDiv.querySelector('span');
+        for (let i = 0; i < reply.length; i++) {
+            span.innerHTML += reply[i];
+            await new Promise(r => setTimeout(r, 15));
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
     }
-    
-    sendBtn.onclick=sendMessage;
-    chatInput.addEventListener('keypress',e=>{ if(e.key==='Enter') sendMessage(); });
-    
-    function escapeHtml(str){ return str.replace(/[&<>]/g,function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
-    
-    // Tab
-    const pages={
-        home:document.getElementById('page-home'),
-        howtoplay_java:document.getElementById('page-howtoplay_java'),
-        howtoplay_pe:document.getElementById('page-howtoplay_pe'),
-        rules:document.getElementById('page-rules'),
-        donate:document.getElementById('page-donate')
+
+    sendBtn.onclick = sendMessage;
+    chatInput.addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
+    function escapeHtml(str) { return str.replace(/[&<>]/g, function(m) { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; }); }
+
+    // Chuyển tab
+    const pages = {
+        home: document.getElementById('page-home'),
+        howtoplay_java: document.getElementById('page-howtoplay_java'),
+        howtoplay_pe: document.getElementById('page-howtoplay_pe'),
+        rules: document.getElementById('page-rules'),
+        gallery: document.getElementById('page-gallery'),
+        donate: document.getElementById('page-donate')
     };
-    const navLinks=document.querySelectorAll('.nav-link');
-    function switchPage(pageId){ 
-        Object.keys(pages).forEach(k=>pages[k].classList.remove('active-page')); 
-        pages[pageId].classList.add('active-page'); 
-        navLinks.forEach(l=>{ l.classList.remove('active'); if(l.getAttribute('data-page')===pageId) l.classList.add('active'); }); 
+    const navLinks = document.querySelectorAll('.nav-link');
+    function switchPage(pageId) {
+        Object.keys(pages).forEach(k => pages[k].classList.remove('active-page'));
+        pages[pageId].classList.add('active-page');
+        navLinks.forEach(l => { l.classList.remove('active'); if (l.getAttribute('data-page') === pageId) l.classList.add('active'); });
     }
-    navLinks.forEach(l=>l.addEventListener('click',e=>{ e.preventDefault(); switchPage(l.getAttribute('data-page')); }));
-    
+    navLinks.forEach(l => l.addEventListener('click', e => { e.preventDefault(); switchPage(l.getAttribute('data-page')); }));
+
     // Copy IP
-    document.getElementById('serverIpBox')?.addEventListener('click',()=>{ navigator.clipboard.writeText('26.161.161.70:25565'); alert('✅ Đã copy IP Java!'); });
-    document.getElementById('peIpBox')?.addEventListener('click',()=>{ navigator.clipboard.writeText('seen-detected.gl.at.ply.gg:30284'); alert('✅ Đã copy IP Bedrock!'); });
-    document.getElementById('downloadRadminBtn')?.addEventListener('click',()=>window.open('https://www.radmin-vpn.com/'));
+    document.getElementById('serverIpBox')?.addEventListener('click', () => { navigator.clipboard.writeText('26.161.161.70:25565'); alert('Đã copy IP Java!'); });
+    document.getElementById('peIpBox')?.addEventListener('click', () => { navigator.clipboard.writeText('seen-detected.gl.at.ply.gg:30284'); alert('Đã copy IP Bedrock!'); });
+    document.getElementById('downloadRadminBtn')?.addEventListener('click', () => window.open('https://www.radmin-vpn.com/'));
 })();
 </script>
 </body>
