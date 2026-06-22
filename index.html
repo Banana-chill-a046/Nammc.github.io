@@ -5,343 +5,1429 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>NamMC SMP | Minecraft Server</title>
     <link rel="icon" type="image/png" href="https://images2.imgbox.com/6e/43/AM9bEJVa_o.png">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* ========== GIỮ NGUYÊN TOÀN BỘ CSS CŨ ========== */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* ============================================
+                   RESET & VARIABLES
+                ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* ====== THEME 1: MINECRAFT (DEFAULT) ====== */
+        :root {
+            --primary: #FFD700;
+            --secondary: #7CB342;
+            --accent: #8B6B4D;
+            --bg: #1a1a1a;
+            --bg-card: rgba(45, 27, 14, 0.85);
+            --border: #5a3d2b;
+            --text: #f0e6d3;
+            --text-secondary: #c4b59a;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            --font-display: 'Orbitron', monospace;
+            --font-body: 'Inter', sans-serif;
+            --transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --star-opacity: 1;
+            --btn-bg: linear-gradient(180deg, #7CB342, #558B2F);
+            --btn-border: #33691E;
+            --card-border: #3d2a1a;
+            --card-bg: rgba(0, 0, 0, 0.3);
+            --nav-bg: rgba(45, 27, 14, 0.85);
+            --footer-bg: rgba(45, 27, 14, 0.9);
+        }
+
+        /* ====== THEME 2: GAMING ====== */
+        [data-theme="gaming"] {
+            --primary: #00f0ff;
+            --secondary: #ff0040;
+            --accent: #ff6b00;
+            --bg: #0a0a0f;
+            --bg-card: rgba(0, 240, 255, 0.04);
+            --border: rgba(0, 240, 255, 0.15);
+            --text: #ffffff;
+            --text-secondary: #8899aa;
+            --shadow: 0 0 60px rgba(0, 240, 255, 0.08);
+            --star-opacity: 1;
+            --btn-bg: linear-gradient(135deg, #00f0ff, #0088ff);
+            --btn-border: #0066aa;
+            --card-border: rgba(0, 240, 255, 0.12);
+            --card-bg: rgba(0, 240, 255, 0.04);
+            --nav-bg: rgba(10, 10, 15, 0.7);
+            --footer-bg: rgba(10, 10, 15, 0.5);
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background: #000000;
-            color: #e0e0e0;
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
-            position: relative;
+            transition: all 0.6s;
         }
-        .star-bg {
+
+        /* ====== MINECRAFT SKY & GRASS ====== */
+        .mc-sky {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 20% 30%, #0a0f1a, #000000);
-            z-index: -2;
+            z-index: -1;
+            background:
+                linear-gradient(180deg,
+                    #1a2a3a 0%,
+                    #2d4a6a 30%,
+                    #4a8ab5 60%,
+                    #7cb8d4 80%,
+                    #a8d8ea 100%);
+            opacity: 0.3;
+            transition: opacity 0.6s;
+        }
+        [data-theme="gaming"] .mc-sky {
+            opacity: 0;
+        }
+
+        .mc-grass-top {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            z-index: -1;
+            background:
+                repeating-linear-gradient(90deg,
+                    #7CB342 0px, #7CB342 8px,
+                    #8BC34A 8px, #8BC34A 16px,
+                    #689F38 16px, #689F38 24px,
+                    #7CB342 24px, #7CB342 32px);
+            opacity: 0.12;
+            border-top: 2px solid #5a8a3a;
+            transition: opacity 0.6s;
+        }
+        [data-theme="gaming"] .mc-grass-top {
+            opacity: 0;
+        }
+
+        .block-texture {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            background-image:
+                linear-gradient(45deg, rgba(0, 0, 0, 0.02) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(0, 0, 0, 0.02) 25%, transparent 25%);
+            background-size: 16px 16px;
+            opacity: 0.5;
+            transition: opacity 0.6s;
+        }
+        [data-theme="gaming"] .block-texture {
+            opacity: 0;
+        }
+
+        /* ====== GAMING BACKGROUND ====== */
+        .gaming-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.6s;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(0, 240, 255, 0.06), transparent 60%),
+                radial-gradient(circle at 80% 70%, rgba(255, 0, 64, 0.04), transparent 60%);
+            pointer-events: none;
+        }
+        [data-theme="gaming"] .gaming-bg {
+            opacity: 1;
+        }
+
+        /* ====== SHOOTING STARS ====== */
+        .shooting-star-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+            opacity: var(--star-opacity);
+            transition: opacity 1s;
         }
         .shooting-star {
             position: absolute;
-            width: 2px;
-            height: 2px;
-            background: #00aaff;
+            width: 3px;
+            height: 3px;
+            background: white;
             border-radius: 50%;
-            box-shadow: 0 0 6px 2px #00aaff;
+            box-shadow: 0 0 20px 4px rgba(0, 212, 255, 0.6);
             animation: shootStar linear infinite;
-            opacity: 0;
-            z-index: -1;
+        }
+        .shooting-star::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 100px;
+            height: 1.5px;
+            background: linear-gradient(to left, rgba(255, 215, 0, 0.6), transparent);
+            transform: translateY(-50%);
+        }
+        [data-theme="gaming"] .shooting-star::after {
+            background: linear-gradient(to left, rgba(0, 240, 255, 0.6), transparent);
         }
         @keyframes shootStar {
-            0% { transform: translateX(0) translateY(0); opacity: 1; }
-            70% { opacity: 1; }
-            100% { transform: translateX(-300px) translateY(200px); opacity: 0; }
+            0% {
+                transform: translate(0, 0);
+                opacity: 0;
+            }
+            5% {
+                opacity: 1;
+            }
+            70% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-500px, 300px);
+                opacity: 0;
+            }
         }
-        .cloud {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 60%;
-            filter: blur(40px);
-            animation: floatCloud linear infinite;
-            z-index: -1;
+
+        /* ====== CONTAINER ====== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 30px;
+            position: relative;
+            z-index: 2;
         }
-        @keyframes floatCloud {
-            0% { transform: translateX(-20vw); opacity: 0.3; }
-            100% { transform: translateX(120vw); opacity: 0.6; }
-        }
-        .animated-gradient {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(0, 100, 200, 0.15) 0%, transparent 80%);
-            animation: pulseGradient 6s infinite alternate;
-            z-index: -1;
-            pointer-events: none;
-        }
-        @keyframes pulseGradient {
-            0% { opacity: 0.3; transform: scale(1); }
-            100% { opacity: 0.8; transform: scale(1.2); }
-        }
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 2; }
+
+        /* ====== NAVBAR ====== */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 20px;
-            padding: 20px 32px;
-            margin: 25px 0;
-            background: rgba(0, 20, 40, 0.6);
+            gap: 12px;
+            padding: 12px 24px;
+            background: var(--nav-bg);
             backdrop-filter: blur(15px);
-            border-radius: 60px;
-            border: 1px solid rgba(0, 150, 255, 0.5);
-            transition: all 0.3s ease;
+            border-radius: 8px;
+            border: 2px solid var(--border);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 16px;
+            z-index: 100;
+            transition: all var(--transition);
         }
-        .navbar:hover { border-color: #00aaff; box-shadow: 0 0 25px rgba(0, 170, 255, 0.3); }
-        .logo { display: flex; align-items: center; gap: 18px; }
-        .logo img { height: 60px; filter: drop-shadow(0 0 12px #0088ff); transition: 0.3s; }
-        .logo img:hover { filter: drop-shadow(0 0 20px #00aaff); transform: scale(1.02); }
-        .rainbow-text {
-            font-family: 'Orbitron', monospace;
-            font-size: 2.2rem;
-            font-weight: 900;
-            background: linear-gradient(90deg, #0088ff, #00ccff, #00ffcc, #0088ff);
-            background-size: 300% auto;
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            animation: rainbowFlow 4s linear infinite;
+        .navbar:hover {
+            border-color: var(--primary);
         }
-        @keyframes rainbowFlow { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
-        .logo p { font-size: 0.7rem; color: #88ccff; background: rgba(0, 100, 200, 0.3); padding: 4px 12px; border-radius: 20px; }
-        .nav-links { display: flex; gap: 30px; flex-wrap: wrap; align-items: center; }
-        .nav-link {
-            font-family: 'Orbitron', monospace;
-            color: #bbddff;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            padding: 8px 0;
-            transition: 0.3s;
-            border-bottom: 2px solid transparent;
-            cursor: pointer;
-        }
-        .nav-link.active, .nav-link:hover { border-bottom-color: #00aaff; color: #00aaff; text-shadow: 0 0 8px #0088ff; transform: translateY(-2px); }
-        .page { display: none; animation: fadeInUp 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
-        .page.active-page { display: block; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .glass-card {
-            background: rgba(0, 20, 40, 0.55);
-            backdrop-filter: blur(16px);
-            border-radius: 48px;
-            padding: 48px 40px;
-            margin: 48px 0;
-            border: 1px solid rgba(0, 150, 255, 0.4);
-            transition: 0.3s;
-        }
-        .glass-card:hover { border-color: #00aaff; box-shadow: 0 0 30px rgba(0, 100, 200, 0.3); }
-        .section-title {
-            font-family: 'Orbitron', monospace;
-            font-size: 2rem;
-            font-weight: 800;
-            color: #00aaff;
-            border-left: 5px solid #00aaff;
-            padding-left: 24px;
-            margin-bottom: 32px;
-        }
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
-        .gallery-item {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 24px;
-            overflow: hidden;
-            border: 1px solid rgba(0, 150, 255, 0.3);
-            transition: 0.3s;
-        }
-        .gallery-item:hover {
-            transform: translateY(-5px);
-            border-color: #00aaff;
-            box-shadow: 0 0 20px rgba(0, 150, 255, 0.3);
-        }
-        .gallery-item img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            display: block;
-        }
-        .gallery-item p {
-            padding: 12px;
-            text-align: center;
-            color: #88ccff;
-            font-size: 0.9rem;
-        }
-        .steps-grid, .feature-grid, .rules-grid, .donate-row { display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; }
-        .step-card, .feature, .rule-item, .donate-card {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 32px;
-            padding: 24px;
-            text-align: center;
-            border: 1px solid rgba(0, 150, 255, 0.3);
-            flex: 1;
-            min-width: 220px;
-            transition: 0.3s;
-        }
-        .step-card:hover, .feature:hover, .donate-card:hover { transform: translateY(-8px); border-color: #00aaff; box-shadow: 0 0 25px rgba(0, 150, 255, 0.3); }
-        .ip-badge {
-            background: linear-gradient(135deg, #0066aa, #0099ff);
-            display: inline-block;
-            padding: 10px 22px;
-            border-radius: 60px;
-            font-family: monospace;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 12px;
-            color: white;
-            transition: 0.2s;
-            border: none;
-        }
-        .ip-badge:active { transform: scale(0.96); }
-        .discord-notice { text-align: center; margin-top: 30px; padding: 16px; background: rgba(0, 100, 200, 0.2); border-radius: 40px; border: 1px solid #00aaff; transition: 0.2s; }
-        .discord-notice:hover { background: rgba(0, 150, 255, 0.3); transform: scale(1.01); }
-        .footer { text-align: center; padding: 35px 0 25px; border-top: 1px solid #00aaff; margin-top: 40px; transition: 0.3s; }
-        .footer-content {
+
+        .logo {
             display: flex;
-            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+        }
+        .logo img {
+            height: 48px;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+            transition: all 0.4s;
+        }
+        .logo img:hover {
+            transform: rotate(-8deg) scale(1.08);
+        }
+        .logo h1 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--primary);
+            text-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+            transition: color 0.4s;
+        }
+        .logo p {
+            font-size: 0.5rem;
+            color: var(--text-secondary);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 16px;
             align-items: center;
             flex-wrap: wrap;
-            gap: 20px;
         }
-        .footer-left { text-align: left; }
-        .footer-center { text-align: center; }
-        .footer-right { width: 150px; }
+        .nav-link {
+            font-family: var(--font-display);
+            color: var(--text-secondary);
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            padding: 6px 14px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: var(--card-bg);
+            border: 2px solid transparent;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary);
+            border-color: var(--primary);
+            background: rgba(255, 215, 0, 0.05);
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+        }
+        [data-theme="gaming"] .nav-link:hover,
+        [data-theme="gaming"] .nav-link.active {
+            background: rgba(0, 240, 255, 0.05);
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+        }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .theme-group {
+            display: flex;
+            gap: 3px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            padding: 3px;
+            border: 2px solid var(--card-border);
+        }
+        [data-theme="gaming"] .theme-group {
+            background: rgba(0, 240, 255, 0.05);
+            border-color: rgba(0, 240, 255, 0.15);
+        }
+        .style-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 3px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.6rem;
+            font-weight: 700;
+            transition: all 0.3s;
+            font-family: var(--font-body);
+        }
+        .style-btn.active {
+            background: var(--primary);
+            color: #1a1a1a;
+        }
+        .style-btn:hover:not(.active) {
+            color: var(--text);
+        }
+
+        .lang-group {
+            display: flex;
+            gap: 3px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            padding: 3px;
+            border: 2px solid var(--card-border);
+        }
+        [data-theme="gaming"] .lang-group {
+            background: rgba(0, 240, 255, 0.05);
+            border-color: rgba(0, 240, 255, 0.15);
+        }
+        .lang-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 3px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.6rem;
+            font-weight: 700;
+            transition: all 0.3s;
+            font-family: var(--font-body);
+        }
+        .lang-btn.active {
+            background: var(--primary);
+            color: #1a1a1a;
+        }
+        .lang-btn:hover:not(.active) {
+            color: var(--text);
+        }
+
+        /* ====== HERO ====== */
+        .hero-wrapper {
+            display: block;
+        }
+        .hero-wrapper.hidden {
+            display: none;
+        }
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 65vh;
+            text-align: center;
+            padding: 60px 20px 40px;
+        }
+        .hero-badge {
+            display: inline-block;
+            padding: 6px 20px;
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 4px;
+            font-size: 0.65rem;
+            color: var(--primary);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            font-family: var(--font-display);
+            transition: all 0.4s;
+        }
+        .hero h2 {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-shadow: 0 4px 0 rgba(0, 0, 0, 0.3), 0 8px 16px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px;
+            transition: color 0.4s;
+        }
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn {
+            padding: 14px 36px;
+            border: none;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            border-bottom: 4px solid var(--btn-border);
+            background: var(--btn-bg);
+            color: #fff;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+        .btn-discord {
+            background: linear-gradient(180deg, #5865F2, #4752C4);
+            border-bottom-color: #3B46A0;
+        }
+        .btn-discord:hover {
+            box-shadow: 0 8px 24px rgba(88, 101, 242, 0.3);
+        }
+
+        /* ====== PAGES ====== */
+        .page {
+            display: none;
+            animation: fadeUp 0.5s ease;
+        }
+        .page.active-page {
+            display: block;
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ====== MC CARD ====== */
+        .mc-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(15px);
+            border-radius: 8px;
+            padding: 40px 36px;
+            margin: 40px 0;
+            border: 2px solid var(--border);
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+        }
+        .mc-card:hover {
+            border-color: var(--primary);
+        }
+        [data-theme="gaming"] .mc-card {
+            border-color: rgba(0, 240, 255, 0.12);
+        }
+        [data-theme="gaming"] .mc-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 60px rgba(0, 240, 255, 0.05);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+            padding-left: 20px;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: color 0.4s;
+        }
+
+        /* ====== GRIDS ====== */
+        .grid-2,
+        .grid-3,
+        .grid-4 {
+            display: grid;
+            gap: 24px;
+        }
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        }
+        .grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 4px;
+            padding: 24px 20px;
+            text-align: center;
+            border: 2px solid var(--card-border);
+            transition: all var(--transition);
+            cursor: default;
+        }
+        .card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+        .card i {
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 14px;
+            display: block;
+            transition: color 0.4s;
+        }
+        .card h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        /* ====== IP BADGE ====== */
+        .ip-badge {
+            background: var(--btn-bg);
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 8px;
+            color: #fff;
+            transition: all 0.3s;
+            border: none;
+            border-bottom: 4px solid var(--btn-border);
+        }
+        .ip-badge:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+        .ip-badge:active {
+            transform: translateY(2px);
+        }
+
+        .badge-dev {
+            background: rgba(255, 107, 107, 0.15);
+            color: #ff6b6b;
+            border: 2px solid #ff6b6b;
+            font-size: 0.55rem;
+            padding: 2px 12px;
+            border-radius: 3px;
+            margin-left: 8px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        /* ====== LAUNCHER ====== */
+        .launcher-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .launcher-item {
+            background: var(--card-bg);
+            border-radius: 4px;
+            padding: 18px;
+            text-align: center;
+            border: 2px solid var(--card-border);
+            transition: all 0.3s;
+        }
+        .launcher-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+        }
+        .launcher-item h4 {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            color: var(--primary);
+            margin-bottom: 4px;
+            transition: color 0.4s;
+        }
+        .launcher-item p {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+        .btn-download {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 18px;
+            border-radius: 3px;
+            background: var(--primary);
+            color: #1a1a1a;
+            font-weight: 700;
+            font-size: 0.65rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            border-bottom: 3px solid rgba(0, 0, 0, 0.2);
+        }
+        .btn-download:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        /* ====== RADMIN ====== */
+        .radmin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 14px;
+            margin-top: 14px;
+        }
+        .radmin-item {
+            background: var(--card-bg);
+            border-radius: 4px;
+            padding: 16px;
+            text-align: center;
+            border: 2px solid var(--card-border);
+            transition: all 0.3s;
+        }
+        .radmin-item:hover {
+            border-color: var(--primary);
+        }
+        .radmin-item i {
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+            transition: color 0.4s;
+        }
+        .radmin-item h4 {
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            color: var(--primary);
+            margin-bottom: 2px;
+            transition: color 0.4s;
+        }
+        .radmin-item p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        .radmin-item .highlight {
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        /* ====== RULES ====== */
+        .rule-item {
+            background: var(--card-bg);
+            border-radius: 4px;
+            padding: 20px;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s;
+        }
+        .rule-item:hover {
+            transform: translateX(4px);
+            background: rgba(0, 0, 0, 0.2);
+        }
+        [data-theme="gaming"] .rule-item:hover {
+            background: rgba(0, 240, 255, 0.02);
+        }
+        .rule-item h3 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            transition: color 0.4s;
+        }
+        .rule-item ul {
+            list-style: none;
+            padding: 0;
+        }
+        .rule-item li {
+            padding: 4px 0;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .rule-item li::before {
+            content: '◆';
+            color: var(--primary);
+            font-size: 0.5rem;
+            transition: color 0.4s;
+        }
+
+        /* ====== DONATE ====== */
+        .donate-card {
+            background: var(--card-bg);
+            border-radius: 4px;
+            padding: 24px;
+            text-align: center;
+            border: 2px solid var(--card-border);
+            transition: all var(--transition);
+        }
+        .donate-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+        }
+        .donate-card img {
+            max-width: 140px;
+            border-radius: 4px;
+            margin: 12px 0;
+            border: 2px solid var(--card-border);
+        }
+        .donate-card i {
+            font-size: 2.4rem;
+            color: var(--primary);
+            transition: color 0.4s;
+        }
+
+        /* ====== FOOTER ====== */
+        .footer {
+            background: var(--footer-bg);
+            border-top: 2px solid var(--border);
+            margin-top: 60px;
+            padding: 40px 20px 20px;
+            border-radius: 8px 8px 0 0;
+            transition: all var(--transition);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-col h4 {
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+            transition: color 0.4s;
+        }
+        .footer-col a,
+        .footer-col p {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: block;
+            padding: 3px 0;
+            font-size: 0.75rem;
+            transition: all 0.3s;
+        }
+        .footer-col a:hover {
+            color: var(--primary);
+            padding-left: 6px;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding: 20px 20px 0;
+            border-top: 2px solid var(--border);
+            margin-top: 30px;
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+        .footer-bottom img {
+            margin-top: 10px;
+        }
+
+        /* ====== RESPONSIVE ====== */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 15px 20px;
+            }
+            .navbar {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 14px 18px;
+            }
+            .nav-links {
+                justify-content: center;
+            }
+            .toggle-group {
+                justify-content: center;
+            }
+        }
         @media (max-width: 768px) {
-            .footer-content { flex-direction: column; text-align: center; }
-            .footer-left { text-align: center; }
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            .logo h1 {
+                font-size: 1.1rem;
+            }
+            .mc-card {
+                padding: 24px 16px;
+            }
+            .section-title {
+                font-size: 1.3rem;
+            }
+            .grid-2,
+            .grid-3,
+            .grid-4 {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
-        /* ĐÃ XÓA TOÀN BỘ CSS CỦA CHATBOT CŨ */
+        @media (max-width: 480px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-link {
+                font-size: 0.55rem;
+                padding: 4px 10px;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+            border: 2px solid var(--border);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            filter: brightness(1.2);
+        }
+        ::selection {
+            background: var(--primary);
+            color: #1a1a1a;
+        }
     </style>
 </head>
 <body>
-<div class="star-bg"></div>
-<div class="animated-gradient"></div>
-<div id="shootingStarsContainer"></div>
-<div id="cloudsContainer"></div>
-<div class="container">
-    <nav class="navbar">
-        <div class="logo"><img src="https://images2.imgbox.com/6e/43/AM9bEJVa_o.png"><div><h1 class="rainbow-text">NamMC SMP</h1><p>Next-Gen Minecraft Server</p></div></div>
-        <div class="nav-links">
-            <a class="nav-link active" data-page="home">HOME</a>
-            <a class="nav-link" data-page="howtoplay_java">JAVA</a>
-            <a class="nav-link" data-page="rules">RULES</a>
-            <a class="nav-link" data-page="donate">DONATE</a>
-        </div>
-    </nav>
 
-    <!-- HOME -->
-    <div id="page-home" class="page active-page">
-        <div class="glass-card">
-            <div style="text-align:center;"><h2 style="font-family: 'Orbitron';">NAMMC SMP</h2><p>Hành Trình Sinh Tồn Đích Thực</p><div style="background:rgba(0,100,200,0.2);display:inline-block;padding:10px 25px;border-radius:40px;"><i class="fas fa-gem"></i> Active Community</div></div>
-            <div class="feature-grid">
-                <div class="feature"><i class="fas fa-users"></i><h3>150+</h3><p>Thành viên</p></div>
-                <div class="feature"><i class="fas fa-tachometer-alt"></i><h3>20 TPS</h3><p>Luôn mượt</p></div>
-                <div class="feature"><i class="fas fa-shield-virus"></i><h3>Anti-Cheat</h3><p>Công bằng</p></div>
-                <div class="feature"><i class="fas fa-infinity"></i><h3>Không Reset</h3><p>Vĩnh cửu</p></div>
+    <!-- ====== BACKGROUND LAYERS ====== -->
+    <div class="mc-sky"></div>
+    <div class="mc-grass-top"></div>
+    <div class="block-texture"></div>
+    <div class="gaming-bg"></div>
+    <div class="shooting-star-container" id="shootingStars"></div>
+
+    <!-- ====== CONTAINER ====== -->
+    <div class="container">
+
+        <!-- ====== NAVBAR ====== -->
+        <nav class="navbar" id="navbar">
+            <div class="logo">
+                <img src="https://images2.imgbox.com/6e/43/AM9bEJVa_o.png" alt="Logo">
+                <div>
+                    <h1>NamMC SMP</h1>
+                    <p id="slogan" data-key="slogan">Next-Gen Gaming</p>
+                </div>
             </div>
+            <div class="nav-links">
+                <a class="nav-link active" data-page="home" data-key="nav_home">TRANG CHỦ</a>
+                <a class="nav-link" data-page="minecraft" data-key="nav_minecraft">MINECRAFT</a>
+                <a class="nav-link" data-page="rules" data-key="nav_rules">NỘI QUY</a>
+                <a class="nav-link" data-page="donate" data-key="nav_donate">ỦNG HỘ</a>
+                <div class="toggle-group">
+                    <div class="theme-group">
+                        <button class="style-btn active" data-style="minecraft">⛏️</button>
+                        <button class="style-btn" data-style="gaming">🎮</button>
+                    </div>
+                    <div class="lang-group">
+                        <button class="lang-btn active" data-lang="vi">VI</button>
+                        <button class="lang-btn" data-lang="en">EN</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- ====== HERO ====== -->
+        <div class="hero-wrapper" id="heroWrapper">
+            <section class="hero">
+                <span class="hero-badge" data-key="badge">✦ NAM MC SMP ✦</span>
+                <h2 data-key="hero_title">Survival Multiplayer</h2>
+                <p data-key="hero_desc">Hành trình sinh tồn đích thực — cộng đồng văn minh, không pay-to-win, không reset.</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary" onclick="switchPage('minecraft')">
+                        <i class="fas fa-play"></i> <span data-key="btn_start">Bắt đầu</span>
+                    </a>
+                    <a href="https://discord.gg/r9cRXsCA9" target="_blank" class="btn btn-discord" id="discordBtn">
+                        <i class="fab fa-discord"></i> Discord
+                    </a>
+                </div>
+            </section>
+        </div>
+
+        <!-- ====== HOME ====== -->
+        <div id="page-home" class="page active-page">
+            <div class="mc-card">
+                <div style="text-align:center;margin-bottom:30px;">
+                    <h2 style="font-family:var(--font-display);font-size:2.5rem;color:var(--primary);text-shadow:0 2px 0 rgba(0,0,0,0.3);" data-key="home_title">NAMMC SMP</h2>
+                    <p style="color:var(--text-secondary);font-size:1rem;" data-key="home_sub">Hành trình sinh tồn đích thực</p>
+                </div>
+                <div class="grid-4">
+                    <div class="card"><i class="fas fa-users"></i><h3>150+</h3><p data-key="members">Thành viên</p></div>
+                    <div class="card"><i class="fas fa-tachometer-alt"></i><h3>20 TPS</h3><p data-key="tps">Luôn mượt mà</p></div>
+                    <div class="card"><i class="fas fa-shield-virus"></i><h3>Anti-Cheat</h3><p data-key="fair">Công bằng</p></div>
+                    <div class="card"><i class="fas fa-infinity"></i><h3 data-key="noreset">Không reset</h3><p data-key="forever">Vĩnh cửu</p></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== MINECRAFT ====== -->
+        <div id="page-minecraft" class="page">
+            <div class="mc-card">
+                <div class="section-title"><i class="fas fa-cube"></i> <span data-key="mc_title">MINECRAFT</span></div>
+
+                <!-- IP SERVER -->
+                <div style="margin-bottom:30px;">
+                    <h3 style="color:var(--primary);font-family:var(--font-display);font-size:1.1rem;margin-bottom:10px;"><i class="fas fa-server"></i> <span data-key="ip_title">IP MÁY CHỦ</span></h3>
+                    <div style="display:flex;flex-wrap:wrap;gap:12px;">
+                        <div class="ip-badge" onclick="copyText('java.nammc.click')"><span data-key="java_label">Java</span>: java.nammc.click <i class="fas fa-copy"></i></div>
+                        <div class="ip-badge" onclick="copyText('bedrock.nammc.click')" style="background:linear-gradient(180deg,#ff6b6b,#ee5a24);border-bottom-color:#c0392b;"><span data-key="bedrock_label">Bedrock</span>: bedrock.nammc.click <span class="badge-dev" data-key="developing">Đang phát triển</span> <i class="fas fa-copy"></i></div>
+                    </div>
+                </div>
+
+                <!-- RADMIN VPN -->
+                <div style="margin-bottom:30px;">
+                    <h3 style="color:var(--primary);font-family:var(--font-display);font-size:1.1rem;margin-bottom:10px;"><i class="fas fa-vpn"></i> <span data-key="radmin_title">RADMIN VPN</span></h3>
+                    <div class="radmin-grid">
+                        <div class="radmin-item">
+                            <i class="fas fa-download"></i>
+                            <h4 data-key="download_title">Tải Radmin</h4>
+                            <p data-key="free">Miễn phí</p>
+                            <button class="btn-download" id="downloadRadminBtn" style="background:var(--primary);color:#1a1a1a;border:none;padding:4px 16px;border-radius:3px;font-weight:700;cursor:pointer;margin-top:8px;font-size:0.65rem;border-bottom:3px solid rgba(0,0,0,0.2);">Tải ngay</button>
+                        </div>
+                        <div class="radmin-item">
+                            <i class="fas fa-network-wired"></i>
+                            <h4 data-key="network1">Mạng số 1</h4>
+                            <p><span class="highlight">NammcZ1</span></p>
+                        </div>
+                        <div class="radmin-item">
+                            <i class="fas fa-network-wired"></i>
+                            <h4 data-key="network2">Mạng số 2</h4>
+                            <p><span class="highlight">NammcZ2</span></p>
+                        </div>
+                        <div class="radmin-item">
+                            <i class="fas fa-key"></i>
+                            <h4 data-key="password">Mật khẩu</h4>
+                            <p><span class="highlight">2113226</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TẢI GAME -->
+                <div>
+                    <h3 style="color:var(--primary);font-family:var(--font-display);font-size:1.1rem;margin-bottom:10px;"><i class="fas fa-download"></i> <span data-key="download_game">TẢI GAME</span></h3>
+                    <div class="launcher-grid">
+                        <div class="launcher-item"><h4>Tlauncher</h4><p>Java Edition</p><a href="https://tlauncher.org/" target="_blank" class="btn-download" data-key="download_btn">Tải xuống</a></div>
+                        <div class="launcher-item"><h4>LegacyLauncher</h4><p>Java Edition</p><a href="https://legacy-launcher.com/" target="_blank" class="btn-download" data-key="download_btn">Tải xuống</a></div>
+                        <div class="launcher-item"><h4>MultiMC</h4><p>Java Edition</p><a href="https://multimc.org/" target="_blank" class="btn-download" data-key="download_btn">Tải xuống</a></div>
+                        <div class="launcher-item"><h4>NamLauncher</h4><p>Java Edition</p><a href="https://drive.google.com/file/d/1KAXeiFGC8QE8KfGOEMEa-dUGFfQOInBN/view?usp=drive_link" target="_blank" class="btn-download" data-key="download_btn">Tải xuống</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== RULES ====== -->
+        <div id="page-rules" class="page">
+            <div class="mc-card">
+                <div class="section-title"><i class="fas fa-gavel"></i> <span data-key="rules_title">NỘI QUY</span></div>
+                <div class="grid-3">
+                    <div class="rule-item">
+                        <h3><i class="fas fa-comment-dots"></i> <span data-key="rule1">HÀNH VI</span></h3>
+                        <ul>
+                            <li data-key="r1_1">Không toxic, chửi thề, xúc phạm</li>
+                            <li data-key="r1_2">Không spam, quảng cáo server khác</li>
+                            <li data-key="r1_3">Tôn trọng người chơi và admin</li>
+                        </ul>
+                    </div>
+                    <div class="rule-item">
+                        <h3><i class="fas fa-dice-d6"></i> <span data-key="rule2">GAMEPLAY</span></h3>
+                        <ul>
+                            <li data-key="r2_1">Nghiêm cấm hack, x-ray, fly, speed</li>
+                            <li data-key="r2_2">Cấm griefing, phá hoại công trình</li>
+                            <li data-key="r2_3">Không lợi dụng bug, exploit</li>
+                        </ul>
+                    </div>
+                    <div class="rule-item">
+                        <h3><i class="fas fa-vpn"></i> <span data-key="rule3">HỆ THỐNG</span></h3>
+                        <ul>
+                            <li data-key="r3_1">Bảo mật tài khoản, không chia sẻ</li>
+                            <li data-key="r3_2">Không gây lag server</li>
+                            <li data-key="r3_3">Báo lỗi ngay cho admin</li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="text-align:center;margin-top:30px;padding:16px;background:var(--card-bg);border-radius:4px;border:2px solid var(--card-border);">
+                    <i class="fab fa-discord" style="color:var(--primary);"></i>
+                    <a href="https://discord.gg/r9cRXsCA9" target="_blank" style="color:var(--text-secondary);text-decoration:none;"> discord.gg/r9cRXsCA9</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== DONATE ====== -->
+        <div id="page-donate" class="page">
+            <div class="mc-card">
+                <div class="section-title"><i class="fas fa-heart"></i> <span data-key="donate_title">ỦNG HỘ</span></div>
+                <div class="grid-2">
+                    <div class="donate-card">
+                        <i class="fab fa-microsoft"></i>
+                        <h3 style="margin:8px 0;">MOMO</h3>
+                        <img src="https://images2.imgbox.com/7b/16/QBdOOyJr_o.png" alt="QR Momo">
+                        <p style="color:var(--text-secondary);font-size:0.85rem;" data-key="scan">Quét mã để ủng hộ</p>
+                    </div>
+                    <div class="donate-card">
+                        <i class="fas fa-qrcode"></i>
+                        <h3 style="margin:8px 0;">ZALOPAY</h3>
+                        <img src="https://images2.imgbox.com/64/b8/JlxuSl0x_o.png" alt="QR ZaloPay">
+                        <p style="color:var(--text-secondary);font-size:0.85rem;" data-key="scan">Quét mã để ủng hộ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== FOOTER ====== -->
+        <footer class="footer">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4><i class="fas fa-crown"></i> NAMMC SMP</h4>
+                    <p data-key="footer_desc">Máy chủ Minecraft hàng đầu</p>
+                    <p data-key="footer_support">Hỗ trợ Java và Bedrock</p>
+                    <p data-key="footer_uptime">Hoạt động 24/7</p>
+                </div>
+                <div class="footer-col">
+                    <h4 data-key="links">LIÊN KẾT</h4>
+                    <a href="#" onclick="switchPage('home')" data-key="nav_home">Trang chủ</a>
+                    <a href="#" onclick="switchPage('minecraft')" data-key="nav_minecraft">MINECRAFT</a>
+                    <a href="#" onclick="switchPage('rules')" data-key="nav_rules">Nội quy</a>
+                    <a href="#" onclick="switchPage('donate')" data-key="nav_donate">Ủng hộ</a>
+                </div>
+                <div class="footer-col">
+                    <h4 data-key="legal">PHÁP LÝ</h4>
+                    <a href="#" onclick="switchPage('privacy')" data-key="privacy">Chính sách bảo mật</a>
+                    <a href="#" onclick="switchPage('terms')" data-key="terms">Điều khoản sử dụng</a>
+                    <a href="#" onclick="switchPage('cookies')" data-key="cookies">Chính sách Cookie</a>
+                </div>
+                <div class="footer-col">
+                    <h4 data-key="connect">KẾT NỐI</h4>
+                    <a href="https://discord.gg/r9cRXsCA9" target="_blank"><i class="fab fa-discord"></i> Discord</a>
+                    <a href="mailto:contact@nammc.click"><i class="fas fa-envelope"></i> Email</a>
+                    <a href="https://nammc.nammc.click"><i class="fas fa-globe"></i> Website</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-key="copyright">Bản quyền 2026 NAMMC SMP. Mọi quyền được bảo lưu.</p>
+                <div>
+                    <a href="http://s01.flagcounter.com/more/k7mz">
+                        <img src="https://s01.flagcounter.com/count2/k7mz/bg_FFFFFF/txt_000000/border_CCCCCC/columns_3/maxflags_20/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0">
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ====== HIDDEN PAGES ====== -->
+    <div id="page-privacy" class="page hidden-page">
+        <div class="mc-card" style="max-width:900px;margin:40px auto;">
+            <div class="section-title"><i class="fas fa-shield-alt"></i> <span data-key="privacy_title">CHÍNH SÁCH BẢO MẬT</span></div>
+            <h3 data-key="privacy_1">1. Thu thập thông tin</h3>
+            <p style="margin:10px 0;" data-key="privacy_1_desc">Chúng tôi thu thập tên người chơi và địa chỉ IP để duy trì hoạt động máy chủ.</p>
+            <h3 data-key="privacy_2">2. Sử dụng thông tin</h3>
+            <p style="margin:10px 0;" data-key="privacy_2_desc">Thông tin chỉ được sử dụng để quản lý máy chủ và hỗ trợ người chơi.</p>
+            <h3 data-key="privacy_3">3. Bảo vệ dữ liệu</h3>
+            <p style="margin:10px 0;" data-key="privacy_3_desc">Dữ liệu được bảo vệ và không chia sẻ với bên thứ ba.</p>
+            <h3 data-key="privacy_4">4. Liên hệ</h3>
+            <p style="margin:10px 0;">Email: <a href="mailto:contact@nammc.click" style="color:var(--primary);">contact@nammc.click</a></p>
+            <p style="margin-top:20px;opacity:0.7;" data-key="update">Cập nhật: 2026</p>
         </div>
     </div>
 
-    <!-- JAVA -->
-    <div id="page-howtoplay_java" class="page">
-        <div class="glass-card">
-            <div class="section-title"><i class="fas fa-laptop-code"></i> JAVA EDITION</div>
-            <div class="steps-grid">
-                <div class="step-card">
-                    <i class="fas fa-download"></i>
-                    <h3>Bước 1</h3>
-                    <p>Tải <strong>Radmin VPN</strong> (miễn phí)</p>
-                    <button class="ip-badge" id="downloadRadminBtn"><i class="fas fa-cloud-download-alt"></i> Tải ngay</button>
-                </div>
-                <div class="step-card">
-                    <i class="fas fa-network-wired"></i>
-                    <h3>Bước 2</h3>
-                    <p>Join Network (chọn 1 trong 2 mạng):</p>
-                    <div class="ip-badge">📡 Mạng 1: <strong>NammcZ1</strong></div>
-                    <div class="ip-badge" style="margin-top: 8px;">📡 Mạng 2: <strong>NammcZ2</strong></div>
-                    <div class="ip-badge" style="margin-top: 8px; background:#3d5436;">🔑 Mật khẩu: <strong>2113226</strong></div>
-                </div>
-                <div class="step-card">
-                    <i class="fas fa-gamepad"></i>
-                    <h3>Bước 3</h3>
-                    <p>Thêm Server trong Minecraft:</p>
-                    <div class="ip-badge">🇻🇳 Server VN: <strong>java.nammc.click</strong> <i class="fas fa-copy" onclick="copyToClipboard('java.nammc.click')"></i></div>
-                    <div class="ip-badge" style="margin-top: 8px;">🇸🇬 Server Asia: <strong>pl.nammc.click</strong> <i class="fas fa-copy" onclick="copyToClipboard('pl.nammc.click')"></i></div>
-                </div>
-            </div>
-            <p style="margin-top: 30px; text-align: center; opacity: 0.8;"><i class="fas fa-check-circle"></i> ✅ Luôn bật <strong>Radmin VPN</strong> trước khi mở Minecraft và chọn kết nối đúng mạng.</p>
+    <div id="page-terms" class="page hidden-page">
+        <div class="mc-card" style="max-width:900px;margin:40px auto;">
+            <div class="section-title"><i class="fas fa-file-contract"></i> <span data-key="terms_title">ĐIỀU KHOẢN SỬ DỤNG</span></div>
+            <h3 data-key="terms_1">1. Chấp nhận điều khoản</h3>
+            <p style="margin:10px 0;" data-key="terms_1_desc">Khi tham gia máy chủ, bạn đồng ý tuân thủ nội quy và điều khoản của NAMMC SMP.</p>
+            <h3 data-key="terms_2">2. Quyền và trách nhiệm</h3>
+            <p style="margin:10px 0;" data-key="terms_2_desc">Quản trị viên có quyền thay đổi luật lệ, xử lý vi phạm mà không cần thông báo trước.</p>
+            <h3 data-key="terms_3">3. Hành vi người chơi</h3>
+            <p style="margin:10px 0;" data-key="terms_3_desc">Người chơi phải tôn trọng lẫn nhau, không sử dụng hack hoặc lợi dụng lỗi.</p>
+            <p style="margin-top:20px;opacity:0.7;" data-key="update">Cập nhật: 2026</p>
         </div>
     </div>
 
-    <!-- RULES -->
-    <div id="page-rules" class="page"><div class="glass-card"><div class="section-title"><i class="fas fa-gavel"></i> NỘI QUY</div><div class="rules-grid"><div class="rule-item"><h3><i class="fas fa-comment-dots"></i> HÀNH VI</h3><ul><li>Không Toxic</li><li>Không Spam</li><li>Tôn trọng</li></ul></div><div class="rule-item"><h3><i class="fas fa-dice-d6"></i> GAMEPLAY</h3><ul><li>Cấm Hack</li><li>Cấm Griefing</li><li>Không Bug lợi</li></ul></div><div class="rule-item"><h3><i class="fas fa-vpn"></i> HỆ THỐNG</h3><ul><li>Bảo mật</li><li>Không Lag</li><li>Báo lỗi Admin</li></ul></div></div><div class="discord-notice"><i class="fab fa-discord"></i>discord.gg/r9cRXsCA9</div></div></div>
-
-    <!-- DONATE -->
-    <div id="page-donate" class="page"><div class="glass-card"><div class="section-title"><i class="fas fa-heart"></i> ỦNG HỘ</div><div class="donate-row"><div class="donate-card"><i class="fab fa-microsoft"></i><h3>MOMO</h3><img src="https://images2.imgbox.com/7b/16/QBdOOyJr_o.png" width="140"><p>Quét mã</p></div><div class="donate-card"><i class="fas fa-qrcode"></i><h3>ZALOPAY</h3><img src="https://images2.imgbox.com/64/b8/JlxuSl0x_o.png" width="140"><p>Quét mã</p></div></div></div></div>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-left">
-                <a href="http://s01.flagcounter.com/more/k7mz">
-                    <img src="https://s01.flagcounter.com/count2/k7mz/bg_FFFFFF/txt_000000/border_CCCCCC/columns_3/maxflags_20/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0">
-                </a>
-            </div>
-            <div class="footer-center">
-                <p><i class="fas fa-crown"></i> NamMC SMP — Where blocks become stories</p>
-                <p>© 2026 NamMC | ⭐ Ủng hộ chúng tôi!</p>
-            </div>
-            <div class="footer-right"></div>
+    <div id="page-cookies" class="page hidden-page">
+        <div class="mc-card" style="max-width:900px;margin:40px auto;">
+            <div class="section-title"><i class="fas fa-cookie-bite"></i> <span data-key="cookies_title">CHÍNH SÁCH COOKIE</span></div>
+            <h3 data-key="cookies_1">1. Cookie là gì?</h3>
+            <p style="margin:10px 0;" data-key="cookies_1_desc">Cookie là tập tin nhỏ lưu trên trình duyệt để ghi nhớ thông tin người dùng.</p>
+            <h3 data-key="cookies_2">2. Chúng tôi sử dụng cookie</h3>
+            <p style="margin:10px 0;" data-key="cookies_2_desc">Để phân tích lưu lượng và cải thiện trải nghiệm người dùng.</p>
+            <h3 data-key="cookies_3">3. Quản lý cookie</h3>
+            <p style="margin:10px 0;" data-key="cookies_3_desc">Bạn có thể tắt cookie trong cài đặt trình duyệt, nhưng có thể ảnh hưởng đến trải nghiệm.</p>
+            <p style="margin-top:20px;opacity:0.7;" data-key="update">Cập nhật: 2026</p>
         </div>
-    </footer>
-</div>
+    </div>
 
-<!-- *** ĐÃ THAY THẾ NAMBOT BẰNG FCHAT.VN *** -->
-<script type="text/javascript" src="https://cdn.fchat.vn/assets/embed/webchat.js?id=6a2cd4ca70d7a0ac2204a8f3" async="async"></script>
+    <!-- ====== SCRIPTS ====== -->
+    <script>
+        // ====== SHOOTING STARS ======
+        function createShootingStars() {
+            const container = document.getElementById('shootingStars');
+            for (let i = 0; i < 6; i++) {
+                const star = document.createElement('div');
+                star.classList.add('shooting-star');
+                star.style.top = Math.random() * 80 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.animationDuration = 3 + Math.random() * 4 + 's';
+                star.style.animationDelay = Math.random() * 25 + 's';
+                container.appendChild(star);
+            }
+        }
+        createShootingStars();
 
-<script>
-// Hàm copy IP tiện lợi
-function copyToClipboard(text) {
-    navigator.clipboard.writeText(text);
-    alert('✅ Đã copy địa chỉ: ' + text);
-}
+        // ====== THEME ======
+        const styleBtns = document.querySelectorAll('.style-btn');
+        const currentStyle = localStorage.getItem('style') || 'minecraft';
+        document.documentElement.setAttribute('data-theme', currentStyle);
+        styleBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.style === currentStyle));
 
-(function() {
-    // Tạo hiệu ứng mây và sao băng
-    for (let i = 0; i < 8; i++) {
-        let cloud = document.createElement('div');
-        cloud.classList.add('cloud');
-        cloud.style.width = 100 + Math.random() * 200 + 'px';
-        cloud.style.height = 50 + Math.random() * 100 + 'px';
-        cloud.style.top = Math.random() * 80 + '%';
-        cloud.style.animationDuration = 20 + Math.random() * 40 + 's';
-        cloud.style.animationDelay = Math.random() * 30 + 's';
-        document.getElementById('cloudsContainer').appendChild(cloud);
-    }
-    for (let i = 0; i < 15; i++) {
-        let star = document.createElement('div');
-        star.classList.add('shooting-star');
-        star.style.top = Math.random() * 80 + '%';
-        star.style.left = Math.random() * 100 + '%';
-        star.style.animationDuration = 1 + Math.random() * 4 + 's';
-        star.style.animationDelay = Math.random() * 20 + 's';
-        document.getElementById('shootingStarsContainer').appendChild(star);
-    }
+        styleBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const style = this.dataset.style;
+                document.documentElement.setAttribute('data-theme', style);
+                styleBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                localStorage.setItem('style', style);
+            });
+        });
 
-    // Chuyển tab
-    const pages = {
-        home: document.getElementById('page-home'),
-        howtoplay_java: document.getElementById('page-howtoplay_java'),
-        rules: document.getElementById('page-rules'),
-        donate: document.getElementById('page-donate')
-    };
-    const navLinks = document.querySelectorAll('.nav-link');
-    function switchPage(pageId) {
-        Object.keys(pages).forEach(k => pages[k].classList.remove('active-page'));
-        pages[pageId].classList.add('active-page');
-        navLinks.forEach(l => { l.classList.remove('active'); if (l.getAttribute('data-page') === pageId) l.classList.add('active'); });
-    }
-    navLinks.forEach(l => l.addEventListener('click', e => { e.preventDefault(); switchPage(l.getAttribute('data-page')); }));
+        // ====== LANGUAGE DATA ======
+        const langData = {
+            vi: {
+                nav_home: 'TRANG CHỦ',
+                nav_minecraft: 'MINECRAFT',
+                nav_rules: 'NỘI QUY',
+                nav_donate: 'ỦNG HỘ',
+                slogan: 'Next-Gen Gaming',
+                badge: '✦ NAM MC SMP ✦',
+                hero_title: 'Survival Multiplayer',
+                hero_desc: 'Hành trình sinh tồn đích thực — cộng đồng văn minh, không pay-to-win, không reset.',
+                btn_start: 'Bắt đầu',
+                home_title: 'NAMMC SMP',
+                home_sub: 'Hành trình sinh tồn đích thực',
+                members: 'Thành viên',
+                tps: 'Luôn mượt mà',
+                fair: 'Công bằng',
+                noreset: 'Không reset',
+                forever: 'Vĩnh cửu',
+                mc_title: 'MINECRAFT',
+                ip_title: 'IP MÁY CHỦ',
+                java_label: 'Java',
+                bedrock_label: 'Bedrock',
+                developing: 'Đang phát triển',
+                radmin_title: 'RADMIN VPN',
+                download_title: 'Tải Radmin',
+                free: 'Miễn phí',
+                download_btn: 'Tải ngay',
+                network1: 'Mạng số 1',
+                network2: 'Mạng số 2',
+                password: 'Mật khẩu',
+                download_game: 'TẢI GAME',
+                rules_title: 'NỘI QUY',
+                rule1: 'HÀNH VI',
+                r1_1: 'Không toxic, chửi thề, xúc phạm',
+                r1_2: 'Không spam, quảng cáo server khác',
+                r1_3: 'Tôn trọng người chơi và admin',
+                rule2: 'GAMEPLAY',
+                r2_1: 'Nghiêm cấm hack, x-ray, fly, speed',
+                r2_2: 'Cấm griefing, phá hoại công trình',
+                r2_3: 'Không lợi dụng bug, exploit',
+                rule3: 'HỆ THỐNG',
+                r3_1: 'Bảo mật tài khoản, không chia sẻ',
+                r3_2: 'Không gây lag server',
+                r3_3: 'Báo lỗi ngay cho admin',
+                donate_title: 'ỦNG HỘ',
+                scan: 'Quét mã để ủng hộ',
+                footer_desc: 'Máy chủ Minecraft hàng đầu',
+                footer_support: 'Hỗ trợ Java và Bedrock',
+                footer_uptime: 'Hoạt động 24/7',
+                links: 'LIÊN KẾT',
+                legal: 'PHÁP LÝ',
+                privacy: 'Chính sách bảo mật',
+                terms: 'Điều khoản sử dụng',
+                cookies: 'Chính sách Cookie',
+                connect: 'KẾT NỐI',
+                copyright: 'Bản quyền 2026 NAMMC SMP. Mọi quyền được bảo lưu.',
+                update: 'Cập nhật: 2026',
+                privacy_title: 'CHÍNH SÁCH BẢO MẬT',
+                privacy_1: '1. Thu thập thông tin',
+                privacy_1_desc: 'Chúng tôi thu thập tên người chơi và địa chỉ IP để duy trì hoạt động máy chủ.',
+                privacy_2: '2. Sử dụng thông tin',
+                privacy_2_desc: 'Thông tin chỉ được sử dụng để quản lý máy chủ và hỗ trợ người chơi.',
+                privacy_3: '3. Bảo vệ dữ liệu',
+                privacy_3_desc: 'Dữ liệu được bảo vệ và không chia sẻ với bên thứ ba.',
+                privacy_4: '4. Liên hệ',
+                terms_title: 'ĐIỀU KHOẢN SỬ DỤNG',
+                terms_1: '1. Chấp nhận điều khoản',
+                terms_1_desc: 'Khi tham gia máy chủ, bạn đồng ý tuân thủ nội quy và điều khoản của NAMMC SMP.',
+                terms_2: '2. Quyền và trách nhiệm',
+                terms_2_desc: 'Quản trị viên có quyền thay đổi luật lệ, xử lý vi phạm mà không cần thông báo trước.',
+                terms_3: '3. Hành vi người chơi',
+                terms_3_desc: 'Người chơi phải tôn trọng lẫn nhau, không sử dụng hack hoặc lợi dụng lỗi.',
+                cookies_title: 'CHÍNH SÁCH COOKIE',
+                cookies_1: '1. Cookie là gì?',
+                cookies_1_desc: 'Cookie là tập tin nhỏ lưu trên trình duyệt để ghi nhớ thông tin người dùng.',
+                cookies_2: '2. Chúng tôi sử dụng cookie',
+                cookies_2_desc: 'Để phân tích lưu lượng và cải thiện trải nghiệm người dùng.',
+                cookies_3: '3. Quản lý cookie',
+                cookies_3_desc: 'Bạn có thể tắt cookie trong cài đặt trình duyệt, nhưng có thể ảnh hưởng đến trải nghiệm.'
+            },
+            en: {
+                nav_home: 'HOME',
+                nav_minecraft: 'MINECRAFT',
+                nav_rules: 'RULES',
+                nav_donate: 'DONATE',
+                slogan: 'Next-Gen Gaming',
+                badge: '✦ NAM MC SMP ✦',
+                hero_title: 'Survival Multiplayer',
+                hero_desc: 'The ultimate survival journey — civilized community, no pay-to-win, no reset.',
+                btn_start: 'Start Now',
+                home_title: 'NAMMC SMP',
+                home_sub: 'The ultimate survival journey',
+                members: 'Members',
+                tps: 'Always smooth',
+                fair: 'Fair play',
+                noreset: 'No reset',
+                forever: 'Forever',
+                mc_title: 'MINECRAFT',
+                ip_title: 'SERVER IP',
+                java_label: 'Java',
+                bedrock_label: 'Bedrock',
+                developing: 'Developing',
+                radmin_title: 'RADMIN VPN',
+                download_title: 'Download Radmin',
+                free: 'Free',
+                download_btn: 'Download',
+                network1: 'Network 1',
+                network2: 'Network 2',
+                password: 'Password',
+                download_game: 'DOWNLOAD GAME',
+                rules_title: 'RULES',
+                rule1: 'BEHAVIOR',
+                r1_1: 'No toxic, insults, harassment',
+                r1_2: 'No spam, advertising other servers',
+                r1_3: 'Respect players and admins',
+                rule2: 'GAMEPLAY',
+                r2_1: 'No hacking, x-ray, fly, speed',
+                r2_2: 'No griefing, destroying buildings',
+                r2_3: 'No bug abuse, exploit',
+                rule3: 'SYSTEM',
+                r3_1: 'Account security, no sharing',
+                r3_2: 'No causing server lag',
+                r3_3: 'Report bugs to admin immediately',
+                donate_title: 'DONATE',
+                scan: 'Scan to support',
+                footer_desc: 'Top Minecraft Server',
+                footer_support: 'Java & Bedrock Support',
+                footer_uptime: '24/7 Uptime',
+                links: 'LINKS',
+                legal: 'LEGAL',
+                privacy: 'Privacy Policy',
+                terms: 'Terms of Service',
+                cookies: 'Cookie Policy',
+                connect: 'CONNECT',
+                copyright: 'Copyright 2026 NAMMC SMP. All rights reserved.',
+                update: 'Updated: 2026',
+                privacy_title: 'PRIVACY POLICY',
+                privacy_1: '1. Information Collection',
+                privacy_1_desc: 'We collect player names and IP addresses to maintain server operations.',
+                privacy_2: '2. Information Usage',
+                privacy_2_desc: 'Information is only used for server management and player support.',
+                privacy_3: '3. Data Protection',
+                privacy_3_desc: 'Data is protected and not shared with third parties.',
+                privacy_4: '4. Contact',
+                terms_title: 'TERMS OF SERVICE',
+                terms_1: '1. Acceptance of Terms',
+                terms_1_desc: 'By joining the server, you agree to follow the rules and terms of NAMMC SMP.',
+                terms_2: '2. Rights and Responsibilities',
+                terms_2_desc: 'Admins have the right to change rules and handle violations without prior notice.',
+                terms_3: '3. Player Conduct',
+                terms_3_desc: 'Players must respect each other, not use hacks or exploit bugs.',
+                cookies_title: 'COOKIE POLICY',
+                cookies_1: '1. What are Cookies?',
+                cookies_1_desc: 'Cookies are small files stored on your browser to remember user information.',
+                cookies_2: '2. How We Use Cookies',
+                cookies_2_desc: 'To analyze traffic and improve user experience.',
+                cookies_3: '3. Managing Cookies',
+                cookies_3_desc: 'You can disable cookies in your browser settings, but this may affect your experience.'
+            }
+        };
 
-    document.getElementById('downloadRadminBtn')?.addEventListener('click', () => window.open('https://www.radmin-vpn.com/'));
-})();
-</script>
+        // ====== LANGUAGE SWITCHER ======
+        let currentLang = localStorage.getItem('lang') || 'vi';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            const data = langData[lang];
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (data[key] !== undefined) {
+                    el.textContent = data[key];
+                }
+            });
+            document.querySelectorAll('.nav-link').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (data[key]) el.textContent = data[key];
+            });
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+        }
+
+        setLanguage(currentLang);
+
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                setLanguage(this.dataset.lang);
+            });
+        });
+
+        // ====== TAB SWITCHING ======
+        const pages = {
+            home: document.getElementById('page-home'),
+            minecraft: document.getElementById('page-minecraft'),
+            rules: document.getElementById('page-rules'),
+            donate: document.getElementById('page-donate'),
+            privacy: document.getElementById('page-privacy'),
+            terms: document.getElementById('page-terms'),
+            cookies: document.getElementById('page-cookies')
+        };
+        const navLinks = document.querySelectorAll('.nav-link');
+        const heroWrapper = document.getElementById('heroWrapper');
+        const discordBtn = document.getElementById('discordBtn');
+
+        function switchPage(pageId) {
+            Object.keys(pages).forEach(key => {
+                if (pages[key]) {
+                    pages[key].classList.remove('active-page');
+                    if (key === 'privacy' || key === 'terms' || key === 'cookies') {
+                        pages[key].style.display = 'none';
+                    }
+                }
+            });
+            if (pages[pageId]) {
+                pages[pageId].classList.add('active-page');
+                if (pageId === 'privacy' || pageId === 'terms' || pageId === 'cookies') {
+                    pages[pageId].style.display = 'block';
+                }
+            }
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-page') === pageId) link.classList.add('active');
+            });
+
+            if (pageId === 'home') {
+                heroWrapper.classList.remove('hidden');
+                if (discordBtn) discordBtn.style.display = 'inline-flex';
+            } else {
+                heroWrapper.classList.add('hidden');
+                if (discordBtn) discordBtn.style.display = 'none';
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        switchPage('home');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = link.getAttribute('data-page');
+                if (page && pages[page]) switchPage(page);
+            });
+        });
+
+        window.switchPage = switchPage;
+
+        // ====== COPY ======
+        function copyText(text) {
+            navigator.clipboard.writeText(text);
+            alert('Đã sao chép: ' + text);
+        }
+
+        // ====== DOWNLOAD RADMIN ======
+        document.getElementById('downloadRadminBtn')?.addEventListener('click', () => {
+            window.open('https://www.radmin-vpn.com/', '_blank');
+        });
+
+        console.log('⛏️ NamMC SMP - Minecraft & Gaming themes ready!');
+    </script>
 </body>
 </html>
