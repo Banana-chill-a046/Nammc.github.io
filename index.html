@@ -8,59 +8,49 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* ============================================
-                   RESET & VARIABLES
-                ============================================ */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        html {
-            scroll-behavior: smooth;
-        }
+        /* ====== BASE ====== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
-        /* ====== THEME 1: MINECRAFT (DEFAULT) ====== */
         :root {
             --primary: #FFD700;
             --secondary: #7CB342;
             --accent: #8B6B4D;
             --bg: #1a1a1a;
-            --bg-card: rgba(45, 27, 14, 0.85);
+            --bg-card: rgba(45,27,14,0.85);
             --border: #5a3d2b;
             --text: #f0e6d3;
             --text-secondary: #c4b59a;
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            --shadow: 0 8px 32px rgba(0,0,0,0.5);
             --font-display: 'Orbitron', monospace;
             --font-body: 'Inter', sans-serif;
-            --transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition: 0.5s cubic-bezier(0.4,0,0.2,1);
             --star-opacity: 1;
-            --btn-bg: linear-gradient(180deg, #7CB342, #558B2F);
+            --btn-bg: linear-gradient(180deg,#7CB342,#558B2F);
             --btn-border: #33691E;
             --card-border: #3d2a1a;
-            --card-bg: rgba(0, 0, 0, 0.3);
-            --nav-bg: rgba(45, 27, 14, 0.85);
-            --footer-bg: rgba(45, 27, 14, 0.9);
+            --card-bg: rgba(0,0,0,0.3);
+            --nav-bg: rgba(45,27,14,0.85);
+            --footer-bg: rgba(45,27,14,0.9);
         }
 
-        /* ====== THEME 2: GAMING ====== */
         [data-theme="gaming"] {
             --primary: #00f0ff;
             --secondary: #ff0040;
             --accent: #ff6b00;
             --bg: #0a0a0f;
-            --bg-card: rgba(0, 240, 255, 0.04);
-            --border: rgba(0, 240, 255, 0.15);
+            --bg-card: rgba(0,240,255,0.04);
+            --border: rgba(0,240,255,0.15);
             --text: #ffffff;
             --text-secondary: #8899aa;
-            --shadow: 0 0 60px rgba(0, 240, 255, 0.08);
+            --shadow: 0 0 60px rgba(0,240,255,0.08);
             --star-opacity: 1;
-            --btn-bg: linear-gradient(135deg, #00f0ff, #0088ff);
+            --btn-bg: linear-gradient(135deg,#00f0ff,#0088ff);
             --btn-border: #0066aa;
-            --card-border: rgba(0, 240, 255, 0.12);
-            --card-bg: rgba(0, 240, 255, 0.04);
-            --nav-bg: rgba(10, 10, 15, 0.7);
-            --footer-bg: rgba(10, 10, 15, 0.5);
+            --card-border: rgba(0,240,255,0.12);
+            --card-bg: rgba(0,240,255,0.04);
+            --nav-bg: rgba(10,10,15,0.7);
+            --footer-bg: rgba(10,10,15,0.5);
         }
 
         body {
@@ -72,94 +62,56 @@
             transition: all 0.6s;
         }
 
-        /* ====== MINECRAFT SKY & GRASS ====== */
+        /* ====== BACKGROUND ====== */
         .mc-sky {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: -1;
-            background:
-                linear-gradient(180deg,
-                    #1a2a3a 0%,
-                    #2d4a6a 30%,
-                    #4a8ab5 60%,
-                    #7cb8d4 80%,
-                    #a8d8ea 100%);
+            background: linear-gradient(180deg,#1a2a3a 0%,#2d4a6a 30%,#4a8ab5 60%,#7cb8d4 80%,#a8d8ea 100%);
             opacity: 0.3;
             transition: opacity 0.6s;
         }
-        [data-theme="gaming"] .mc-sky {
-            opacity: 0;
-        }
-
+        [data-theme="gaming"] .mc-sky { opacity: 0; }
         .mc-grass-top {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 60px;
+            bottom: 0; left: 0;
+            width: 100%; height: 60px;
             z-index: -1;
-            background:
-                repeating-linear-gradient(90deg,
-                    #7CB342 0px, #7CB342 8px,
-                    #8BC34A 8px, #8BC34A 16px,
-                    #689F38 16px, #689F38 24px,
-                    #7CB342 24px, #7CB342 32px);
+            background: repeating-linear-gradient(90deg,#7CB342 0px,#7CB342 8px,#8BC34A 8px,#8BC34A 16px,#689F38 16px,#689F38 24px,#7CB342 24px,#7CB342 32px);
             opacity: 0.12;
             border-top: 2px solid #5a8a3a;
             transition: opacity 0.6s;
         }
-        [data-theme="gaming"] .mc-grass-top {
-            opacity: 0;
-        }
-
+        [data-theme="gaming"] .mc-grass-top { opacity: 0; }
         .block-texture {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: -1;
             pointer-events: none;
-            background-image:
-                linear-gradient(45deg, rgba(0, 0, 0, 0.02) 25%, transparent 25%),
-                linear-gradient(-45deg, rgba(0, 0, 0, 0.02) 25%, transparent 25%);
+            background-image: linear-gradient(45deg,rgba(0,0,0,0.02) 25%,transparent 25%),linear-gradient(-45deg,rgba(0,0,0,0.02) 25%,transparent 25%);
             background-size: 16px 16px;
             opacity: 0.5;
             transition: opacity 0.6s;
         }
-        [data-theme="gaming"] .block-texture {
-            opacity: 0;
-        }
-
-        /* ====== GAMING BACKGROUND ====== */
+        [data-theme="gaming"] .block-texture { opacity: 0; }
         .gaming-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: -1;
             opacity: 0;
             transition: opacity 0.6s;
-            background:
-                radial-gradient(circle at 20% 30%, rgba(0, 240, 255, 0.06), transparent 60%),
-                radial-gradient(circle at 80% 70%, rgba(255, 0, 64, 0.04), transparent 60%);
+            background: radial-gradient(circle at 20% 30%,rgba(0,240,255,0.06),transparent 60%),radial-gradient(circle at 80% 70%,rgba(255,0,64,0.04),transparent 60%);
             pointer-events: none;
         }
-        [data-theme="gaming"] .gaming-bg {
-            opacity: 1;
-        }
+        [data-theme="gaming"] .gaming-bg { opacity: 1; }
 
-        /* ====== SHOOTING STARS ====== */
         .shooting-star-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             pointer-events: none;
             z-index: 1;
             overflow: hidden;
@@ -168,51 +120,31 @@
         }
         .shooting-star {
             position: absolute;
-            width: 3px;
-            height: 3px;
+            width: 3px; height: 3px;
             background: white;
             border-radius: 50%;
-            box-shadow: 0 0 20px 4px rgba(0, 212, 255, 0.6);
+            box-shadow: 0 0 20px 4px rgba(0,212,255,0.6);
             animation: shootStar linear infinite;
         }
         .shooting-star::after {
             content: '';
             position: absolute;
-            top: 50%;
-            right: 0;
-            width: 100px;
-            height: 1.5px;
-            background: linear-gradient(to left, rgba(255, 215, 0, 0.6), transparent);
+            top: 50%; right: 0;
+            width: 100px; height: 1.5px;
+            background: linear-gradient(to left,rgba(255,215,0,0.6),transparent);
             transform: translateY(-50%);
         }
         [data-theme="gaming"] .shooting-star::after {
-            background: linear-gradient(to left, rgba(0, 240, 255, 0.6), transparent);
+            background: linear-gradient(to left,rgba(0,240,255,0.6),transparent);
         }
         @keyframes shootStar {
-            0% {
-                transform: translate(0, 0);
-                opacity: 0;
-            }
-            5% {
-                opacity: 1;
-            }
-            70% {
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-500px, 300px);
-                opacity: 0;
-            }
+            0% { transform: translate(0,0); opacity: 0; }
+            5% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { transform: translate(-500px,300px); opacity: 0; }
         }
 
-        /* ====== CONTAINER ====== */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 30px;
-            position: relative;
-            z-index: 2;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px 30px; position: relative; z-index: 2; }
 
         /* ====== NAVBAR ====== */
         .navbar {
@@ -232,29 +164,21 @@
             z-index: 100;
             transition: all var(--transition);
         }
-        .navbar:hover {
-            border-color: var(--primary);
-        }
+        .navbar:hover { border-color: var(--primary); }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 14px;
         }
-        .logo img {
-            height: 48px;
-            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
-            transition: all 0.4s;
-        }
-        .logo img:hover {
-            transform: rotate(-8deg) scale(1.08);
-        }
+        .logo img { height: 48px; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); transition: all 0.4s; }
+        .logo img:hover { transform: rotate(-8deg) scale(1.08); }
         .logo h1 {
             font-family: var(--font-display);
             font-size: 1.4rem;
             font-weight: 900;
             color: var(--primary);
-            text-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
+            text-shadow: 0 2px 0 rgba(0,0,0,0.3);
             letter-spacing: 1px;
             transition: color 0.4s;
         }
@@ -287,17 +211,15 @@
             border-radius: 4px;
             text-transform: uppercase;
         }
-        .nav-link:hover,
-        .nav-link.active {
+        .nav-link:hover, .nav-link.active {
             color: var(--primary);
             border-color: var(--primary);
-            background: rgba(255, 215, 0, 0.05);
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+            background: rgba(255,215,0,0.05);
+            text-shadow: 0 0 20px rgba(255,215,0,0.1);
         }
-        [data-theme="gaming"] .nav-link:hover,
-        [data-theme="gaming"] .nav-link.active {
-            background: rgba(0, 240, 255, 0.05);
-            text-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+        [data-theme="gaming"] .nav-link:hover, [data-theme="gaming"] .nav-link.active {
+            background: rgba(0,240,255,0.05);
+            text-shadow: 0 0 20px rgba(0,240,255,0.2);
         }
 
         .toggle-group {
@@ -309,14 +231,14 @@
         .theme-group {
             display: flex;
             gap: 3px;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0,0,0,0.3);
             border-radius: 4px;
             padding: 3px;
             border: 2px solid var(--card-border);
         }
         [data-theme="gaming"] .theme-group {
-            background: rgba(0, 240, 255, 0.05);
-            border-color: rgba(0, 240, 255, 0.15);
+            background: rgba(0,240,255,0.05);
+            border-color: rgba(0,240,255,0.15);
         }
         .style-btn {
             background: none;
@@ -334,21 +256,19 @@
             background: var(--primary);
             color: #1a1a1a;
         }
-        .style-btn:hover:not(.active) {
-            color: var(--text);
-        }
+        .style-btn:hover:not(.active) { color: var(--text); }
 
         .lang-group {
             display: flex;
             gap: 3px;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0,0,0,0.3);
             border-radius: 4px;
             padding: 3px;
             border: 2px solid var(--card-border);
         }
         [data-theme="gaming"] .lang-group {
-            background: rgba(0, 240, 255, 0.05);
-            border-color: rgba(0, 240, 255, 0.15);
+            background: rgba(0,240,255,0.05);
+            border-color: rgba(0,240,255,0.15);
         }
         .lang-btn {
             background: none;
@@ -366,17 +286,11 @@
             background: var(--primary);
             color: #1a1a1a;
         }
-        .lang-btn:hover:not(.active) {
-            color: var(--text);
-        }
+        .lang-btn:hover:not(.active) { color: var(--text); }
 
         /* ====== HERO ====== */
-        .hero-wrapper {
-            display: block;
-        }
-        .hero-wrapper.hidden {
-            display: none;
-        }
+        .hero-wrapper { display: block; }
+        .hero-wrapper.hidden { display: none; }
         .hero {
             display: flex;
             flex-direction: column;
@@ -402,17 +316,17 @@
         }
         .hero h2 {
             font-family: var(--font-display);
-            font-size: clamp(3rem, 10vw, 6rem);
+            font-size: clamp(3rem,10vw,6rem);
             font-weight: 900;
             line-height: 1.1;
             margin-bottom: 20px;
             color: var(--primary);
-            text-shadow: 0 4px 0 rgba(0, 0, 0, 0.3), 0 8px 16px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 4px 0 rgba(0,0,0,0.3),0 8px 16px rgba(0,0,0,0.3);
             letter-spacing: 2px;
             transition: color 0.4s;
         }
         .hero p {
-            font-size: clamp(1rem, 2vw, 1.2rem);
+            font-size: clamp(1rem,2vw,1.2rem);
             color: var(--text-secondary);
             max-width: 600px;
             margin-bottom: 30px;
@@ -446,33 +360,23 @@
         .btn:hover {
             transform: translateY(-2px);
             filter: brightness(1.1);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
         }
         .btn-discord {
-            background: linear-gradient(180deg, #5865F2, #4752C4);
+            background: linear-gradient(180deg,#5865F2,#4752C4);
             border-bottom-color: #3B46A0;
         }
-        .btn-discord:hover {
-            box-shadow: 0 8px 24px rgba(88, 101, 242, 0.3);
-        }
+        .btn-discord:hover { box-shadow: 0 8px 24px rgba(88,101,242,0.3); }
 
         /* ====== PAGES ====== */
         .page {
             display: none;
             animation: fadeUp 0.5s ease;
         }
-        .page.active-page {
-            display: block;
-        }
+        .page.active-page { display: block; }
         @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* ====== MC CARD ====== */
@@ -486,15 +390,11 @@
             box-shadow: var(--shadow);
             transition: all var(--transition);
         }
-        .mc-card:hover {
-            border-color: var(--primary);
-        }
-        [data-theme="gaming"] .mc-card {
-            border-color: rgba(0, 240, 255, 0.12);
-        }
+        .mc-card:hover { border-color: var(--primary); }
+        [data-theme="gaming"] .mc-card { border-color: rgba(0,240,255,0.12); }
         [data-theme="gaming"] .mc-card:hover {
             border-color: var(--primary);
-            box-shadow: 0 0 60px rgba(0, 240, 255, 0.05);
+            box-shadow: 0 0 60px rgba(0,240,255,0.05);
         }
 
         .section-title {
@@ -505,26 +405,18 @@
             border-left: 4px solid var(--primary);
             padding-left: 20px;
             margin-bottom: 30px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
             transition: color 0.4s;
         }
 
         /* ====== GRIDS ====== */
-        .grid-2,
-        .grid-3,
-        .grid-4 {
+        .grid-2, .grid-3, .grid-4 {
             display: grid;
             gap: 24px;
         }
-        .grid-2 {
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        }
-        .grid-3 {
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        }
-        .grid-4 {
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        }
+        .grid-2 { grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); }
+        .grid-3 { grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); }
+        .grid-4 { grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); }
 
         .card {
             background: var(--card-bg);
@@ -578,14 +470,12 @@
         .ip-badge:hover {
             transform: translateY(-2px);
             filter: brightness(1.1);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
         }
-        .ip-badge:active {
-            transform: translateY(2px);
-        }
+        .ip-badge:active { transform: translateY(2px); }
 
         .badge-dev {
-            background: rgba(255, 107, 107, 0.15);
+            background: rgba(255,107,107,0.15);
             color: #ff6b6b;
             border: 2px solid #ff6b6b;
             font-size: 0.55rem;
@@ -599,7 +489,7 @@
         /* ====== LAUNCHER ====== */
         .launcher-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
             gap: 16px;
             margin-top: 16px;
         }
@@ -637,17 +527,14 @@
             font-size: 0.65rem;
             text-decoration: none;
             transition: all 0.3s;
-            border-bottom: 3px solid rgba(0, 0, 0, 0.2);
+            border-bottom: 3px solid rgba(0,0,0,0.2);
         }
-        .btn-download:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.1);
-        }
+        .btn-download:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
         /* ====== RADMIN ====== */
         .radmin-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit,minmax(150px,1fr));
             gap: 14px;
             margin-top: 14px;
         }
@@ -659,9 +546,7 @@
             border: 2px solid var(--card-border);
             transition: all 0.3s;
         }
-        .radmin-item:hover {
-            border-color: var(--primary);
-        }
+        .radmin-item:hover { border-color: var(--primary); }
         .radmin-item i {
             font-size: 1.6rem;
             color: var(--primary);
@@ -675,13 +560,14 @@
             margin-bottom: 2px;
             transition: color 0.4s;
         }
-        .radmin-item p {
-            font-size: 0.75rem;
+        .radmin-item p { font-size: 0.75rem; color: var(--text-secondary); }
+        .radmin-item .highlight { color: var(--text); font-weight: 700; }
+        .radmin-note {
+            font-size: 0.7rem;
             color: var(--text-secondary);
-        }
-        .radmin-item .highlight {
-            color: var(--text);
-            font-weight: 700;
+            opacity: 0.7;
+            margin-top: 4px;
+            font-style: italic;
         }
 
         /* ====== RULES ====== */
@@ -694,11 +580,9 @@
         }
         .rule-item:hover {
             transform: translateX(4px);
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0,0,0,0.2);
         }
-        [data-theme="gaming"] .rule-item:hover {
-            background: rgba(0, 240, 255, 0.02);
-        }
+        [data-theme="gaming"] .rule-item:hover { background: rgba(0,240,255,0.02); }
         .rule-item h3 {
             font-family: var(--font-display);
             font-size: 0.95rem;
@@ -706,10 +590,7 @@
             margin-bottom: 10px;
             transition: color 0.4s;
         }
-        .rule-item ul {
-            list-style: none;
-            padding: 0;
-        }
+        .rule-item ul { list-style: none; padding: 0; }
         .rule-item li {
             padding: 4px 0;
             color: var(--text-secondary);
@@ -750,6 +631,96 @@
             transition: color 0.4s;
         }
 
+        /* ====== POPUP EAGLECRAFT 1.8 ====== */
+        .popup-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.92);
+            backdrop-filter: blur(15px);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+        .popup-overlay.active { display: flex; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .popup-content {
+            background: var(--bg-card);
+            border: 3px solid var(--primary);
+            border-radius: 12px;
+            padding: 15px;
+            max-width: 95vw;
+            width: 95vw;
+            max-height: 92vh;
+            height: 92vh;
+            position: relative;
+            box-shadow: 0 0 60px rgba(0,0,0,0.9);
+            display: flex;
+            flex-direction: column;
+        }
+        .popup-close {
+            position: absolute;
+            top: 8px; right: 14px;
+            font-size: 1.8rem;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s;
+            background: none;
+            border: none;
+            font-family: var(--font-display);
+            z-index: 10;
+        }
+        .popup-close:hover {
+            transform: rotate(90deg);
+            color: #ff6b6b;
+        }
+        .popup-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+            background: #1a1a1a;
+            flex: 1;
+        }
+        .popup-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 12px;
+            flex-shrink: 0;
+        }
+        .popup-header h3 {
+            font-family: var(--font-display);
+            color: var(--primary);
+            font-size: 1rem;
+        }
+        .popup-header span {
+            color: var(--text-secondary);
+            font-size: 0.7rem;
+            opacity: 0.6;
+        }
+
+        @media (max-width: 768px) {
+            .popup-content {
+                max-width: 100vw;
+                width: 100vw;
+                max-height: 100vh;
+                height: 100vh;
+                border-radius: 0;
+                border: none;
+            }
+            .popup-close {
+                top: 4px; right: 10px;
+                font-size: 1.5rem;
+            }
+        }
+
         /* ====== FOOTER ====== */
         .footer {
             background: var(--footer-bg);
@@ -761,7 +732,7 @@
         }
         .footer-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
             gap: 30px;
             max-width: 1200px;
             margin: 0 auto;
@@ -773,8 +744,7 @@
             margin-bottom: 12px;
             transition: color 0.4s;
         }
-        .footer-col a,
-        .footer-col p {
+        .footer-col a, .footer-col p {
             color: var(--text-secondary);
             text-decoration: none;
             display: block;
@@ -795,82 +765,38 @@
             color: var(--text-secondary);
             opacity: 0.6;
         }
-        .footer-bottom img {
-            margin-top: 10px;
-        }
+        .footer-bottom img { margin-top: 10px; }
 
         /* ====== RESPONSIVE ====== */
         @media (max-width: 1024px) {
-            .container {
-                padding: 15px 20px;
-            }
-            .navbar {
-                flex-direction: column;
-                align-items: stretch;
-                padding: 14px 18px;
-            }
-            .nav-links {
-                justify-content: center;
-            }
-            .toggle-group {
-                justify-content: center;
-            }
+            .container { padding: 15px 20px; }
+            .navbar { flex-direction: column; align-items: stretch; padding: 14px 18px; }
+            .nav-links { justify-content: center; }
+            .toggle-group { justify-content: center; }
         }
         @media (max-width: 768px) {
-            .hero h2 {
-                font-size: 2.5rem;
-            }
-            .logo h1 {
-                font-size: 1.1rem;
-            }
-            .mc-card {
-                padding: 24px 16px;
-            }
-            .section-title {
-                font-size: 1.3rem;
-            }
-            .grid-2,
-            .grid-3,
-            .grid-4 {
-                grid-template-columns: 1fr;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-            }
+            .hero h2 { font-size: 2.5rem; }
+            .logo h1 { font-size: 1.1rem; }
+            .mc-card { padding: 24px 16px; }
+            .section-title { font-size: 1.3rem; }
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 480px) {
-            .footer-grid {
-                grid-template-columns: 1fr;
-            }
-            .nav-link {
-                font-size: 0.55rem;
-                padding: 4px 10px;
-            }
+            .footer-grid { grid-template-columns: 1fr; }
+            .nav-link { font-size: 0.55rem; padding: 4px 10px; }
         }
 
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 4px;
-            border: 2px solid var(--border);
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            filter: brightness(1.2);
-        }
-        ::selection {
-            background: var(--primary);
-            color: #1a1a1a;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; border: 2px solid var(--border); }
+        ::-webkit-scrollbar-thumb:hover { filter: brightness(1.2); }
+        ::selection { background: var(--primary); color: #1a1a1a; }
     </style>
 </head>
 <body>
 
-    <!-- ====== BACKGROUND LAYERS ====== -->
+    <!-- ====== BACKGROUND ====== -->
     <div class="mc-sky"></div>
     <div class="mc-grass-top"></div>
     <div class="block-texture"></div>
@@ -892,6 +818,7 @@
             <div class="nav-links">
                 <a class="nav-link active" data-page="home" data-key="nav_home">TRANG CHỦ</a>
                 <a class="nav-link" data-page="minecraft" data-key="nav_minecraft">MINECRAFT</a>
+                <a class="nav-link" data-page="lc" data-key="nav_lc" id="lcTab">🦅 EAGLECRAFT 1.8</a>
                 <a class="nav-link" data-page="rules" data-key="nav_rules">NỘI QUY</a>
                 <a class="nav-link" data-page="donate" data-key="nav_donate">ỦNG HỘ</a>
                 <div class="toggle-group">
@@ -957,6 +884,7 @@
                 <!-- RADMIN VPN -->
                 <div style="margin-bottom:30px;">
                     <h3 style="color:var(--primary);font-family:var(--font-display);font-size:1.1rem;margin-bottom:10px;"><i class="fas fa-vpn"></i> <span data-key="radmin_title">RADMIN VPN</span></h3>
+                    <p style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:10px;" data-key="radmin_note">🔹 Chỉ dành cho <strong>Java Edition</strong> | Bedrock đang phát triển</p>
                     <div class="radmin-grid">
                         <div class="radmin-item">
                             <i class="fas fa-download"></i>
@@ -992,6 +920,18 @@
                         <div class="launcher-item"><h4>NamLauncher</h4><p>Java Edition</p><a href="https://drive.google.com/file/d/1KAXeiFGC8QE8KfGOEMEa-dUGFfQOInBN/view?usp=drive_link" target="_blank" class="btn-download" data-key="download_btn">Tải xuống</a></div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- ====== EAGLECRAFT 1.8 POPUP ====== -->
+        <div class="popup-overlay" id="lcPopup">
+            <div class="popup-content">
+                <button class="popup-close" id="lcPopupClose">✕</button>
+                <div class="popup-header">
+                    <h3>🦅 EagleCraft 1.8</h3>
+                    <span>Chạy trực tiếp từ file của bạn</span>
+                </div>
+                <iframe src="https://banana-chill-a046.github.io/Nammc.github.io/mcel.html" id="eagleFrame" allow="fullscreen"></iframe>
             </div>
         </div>
 
@@ -1173,6 +1113,7 @@
             vi: {
                 nav_home: 'TRANG CHỦ',
                 nav_minecraft: 'MINECRAFT',
+                nav_lc: '🦅 EAGLECRAFT 1.8',
                 nav_rules: 'NỘI QUY',
                 nav_donate: 'ỦNG HỘ',
                 slogan: 'Next-Gen Gaming',
@@ -1193,6 +1134,7 @@
                 bedrock_label: 'Bedrock',
                 developing: 'Đang phát triển',
                 radmin_title: 'RADMIN VPN',
+                radmin_note: '🔹 Chỉ dành cho Java Edition | Bedrock đang phát triển',
                 download_title: 'Tải Radmin',
                 free: 'Miễn phí',
                 download_btn: 'Tải ngay',
@@ -1252,6 +1194,7 @@
             en: {
                 nav_home: 'HOME',
                 nav_minecraft: 'MINECRAFT',
+                nav_lc: '🦅 EAGLECRAFT 1.8',
                 nav_rules: 'RULES',
                 nav_donate: 'DONATE',
                 slogan: 'Next-Gen Gaming',
@@ -1272,6 +1215,7 @@
                 bedrock_label: 'Bedrock',
                 developing: 'Developing',
                 radmin_title: 'RADMIN VPN',
+                radmin_note: '🔹 Only for Java Edition | Bedrock is developing',
                 download_title: 'Download Radmin',
                 free: 'Free',
                 download_btn: 'Download',
@@ -1404,17 +1348,52 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        switchPage('home');
+        // ====== EAGLECRAFT POPUP ======
+        const lcTab = document.getElementById('lcTab');
+        const lcPopup = document.getElementById('lcPopup');
+        const lcPopupClose = document.getElementById('lcPopupClose');
+        const eagleFrame = document.getElementById('eagleFrame');
 
+        lcTab.addEventListener('click', function(e) {
+            e.preventDefault();
+            lcPopup.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Load file mcel.html
+            eagleFrame.src = 'https://banana-chill-a046.github.io/Nammc.github.io/mcel.html';
+        });
+
+        lcPopupClose.addEventListener('click', function() {
+            lcPopup.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        lcPopup.addEventListener('click', function(e) {
+            if (e.target === this) {
+                lcPopup.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && lcPopup.classList.contains('active')) {
+                lcPopup.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // ====== NAV LINKS ======
         navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const page = link.getAttribute('data-page');
-                if (page && pages[page]) switchPage(page);
+            link.addEventListener('click', function(e) {
+                const page = this.getAttribute('data-page');
+                if (page && pages[page]) {
+                    e.preventDefault();
+                    switchPage(page);
+                }
             });
         });
 
-        window.switchPage = switchPage;
+        // ====== SET DEFAULT ======
+        switchPage('home');
 
         // ====== COPY ======
         function copyText(text) {
@@ -1427,7 +1406,7 @@
             window.open('https://www.radmin-vpn.com/', '_blank');
         });
 
-        console.log('⛏️ NamMC SMP - Minecraft & Gaming themes ready!');
+        console.log('🦅 NamMC SMP - EagleCraft 1.8 ready!');
     </script>
 </body>
 </html>
